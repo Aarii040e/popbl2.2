@@ -1,0 +1,67 @@
+<!doctype html>
+
+<html lang="en" data-bs-theme="auto">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Web</title>
+        <link rel="icon" type="image/x-icon" href="img/mondragon.ico">
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet">
+        <link href="css/signup-login.css" rel="stylesheet">
+    </head>
+     
+    <body class="d-flex align-items-center">
+        <span class="fixedButtonTop">&times</span>
+
+        <main class="w-100 m-auto">
+            <form>
+                <h1 class="h3 mb-3 fw-normal">Sign up</h1>
+            
+                <div class="form-floating">
+                    <input type="text" class="form-control first" placeholder="Name" id="name" autocomplete="off">
+                    <label>Name</label>
+                </div>
+
+                <div class="form-floating">
+                    <input type="text" class="form-control middle" placeholder="Surname" id="surname" autocomplete="off">
+                    <label>Surname</label>
+                </div>
+
+                <div class="form-floating">
+                    <input type="email" class="form-control middle" placeholder="email" id="email" autocomplete="off">
+                    <label>Email</label>
+                </div>
+
+                <div class="form-floating">
+                    <input type="tel" class="form-control middle" placeholder="Phone number" id="phone" pattern="[0-9]{9}" autocomplete="off">
+                    <label>Phone number</label>
+                </div>
+
+                <div class="id">
+                    <div class="form-floating">
+                        <input type="date" class="form-control last" placeholder="Date of birth" id="birthdate" autocomplete="off">
+                        <label>Date of birth</label>
+                    </div>
+    
+                    <div class="form-floating">
+                        <input type="text" class="form-control first" placeholder="ID" id="id" autocomplete="off">
+                        <input type="file" accept="image/*, .pdf" class="last">
+                        <label>ID</label>
+                    </div>
+                </div>
+                
+                <button type="submit" id="bSignUp">Sign up</button>
+            </form>
+        </main>
+
+        <a class="fixedButton">
+            <div class="roundedFixedBtn modeBtn"><img class="faMode" src="img/sun.png" alt="Sun"></div>
+        </a>
+
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/signup.js"></script>
+    </body>
+</html>

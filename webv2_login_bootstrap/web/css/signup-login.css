@@ -1,0 +1,84 @@
+body {
+    height: 100vh;
+    background: var(--bg-2);
+}
+
+main {
+    max-width: 420px;
+    min-width: 330px;
+    padding: 1rem;
+}
+
+main .form-floating {
+    z-index: 20;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+main.w-100.m-auto .form-floating label::after {
+    background: none;
+}
+
+main.w-100.m-auto .form-floating label {
+    color: white;
+}
+
+main input[type="text"] {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    margin: 0;
+    border: none;
+}
+
+main input.first {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    margin: 0;
+    border: none;
+}
+
+main input[type="text"]:focus, main input[type="password"]:focus, main input[type="tel"]:focus, main input[type="email"]:focus, main input[type="date"]:focus, main input[type="file"]:focus {
+    background: var(--bg);
+    color: var(--font);
+    border: none;
+}
+
+main input[type="password"] {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin: 0;
+    border: none;
+    border-top: 1px solid var(--bg-2) !important;
+}
+
+main input.last {
+    border-radius: 0 0 6px 6px;
+    margin: 0 0 5px 0;
+    border: none;
+    border-top: 1px solid var(--bg-2) !important;
+}
+
+main input.middle {
+    border-radius: 0;
+    margin: 0;
+    border: none;
+    border-top: 1px solid var(--bg-2) !important;
+}
+
+#id {
+    margin-top: 10px;
+}
+
+input[type="file"] {
+    width: 100%;
+}
+
+main input[type="checkbox"] {
+    margin: 0 5px 0 0;
+}
+
+button {
+    width: 100%;
+}
