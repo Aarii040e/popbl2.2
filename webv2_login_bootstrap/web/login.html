@@ -1,0 +1,49 @@
+<!doctype html>
+
+<html lang="en" data-bs-theme="auto">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Web</title>
+        <link rel="icon" type="image/x-icon" href="img/mondragon.ico">
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet">
+        <link href="css/signup-login.css" rel="stylesheet">
+    </head>
+     
+    <body class="d-flex align-items-center">
+        <span class="fixedButtonTop">&times</span>
+
+        <main class="w-100 m-auto">
+            <form>
+                <h1 class="h3 mb-3 fw-normal">Log in</h1>
+            
+                <div class="form-floating">
+                    <input type="text" class="form-control" placeholder="Username" id="username" autocomplete="off">
+                    <label>Username</label>
+                </div>
+
+                <div class="form-floating">
+                    <input type="password" class="form-control" placeholder="Password" id="password">
+                    <label>Password</label>
+                </div>
+            
+                <div class="text-start my-3">
+                    <input type="checkbox" value="remember-me" id="rememberme">
+                    <label>Remember me</label>
+                </div>
+                
+                <button type="submit" id="bLogIn">Log in</button>
+            </form>
+        </main>
+
+        <a class="fixedButton">
+            <div class="roundedFixedBtn modeBtn"><img class="faMode" src="img/sun.png" alt="Sun"></div>
+        </a>
+
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/login.js"></script>
+    </body>
+</html>

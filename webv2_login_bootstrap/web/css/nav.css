@@ -1,0 +1,149 @@
+nav {
+    background: var(--nav-bg);
+    box-sizing: border-box;
+    width: 100%;
+    z-index: 10;
+    padding: 10px;
+}
+
+nav ul {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    list-style: none;
+    padding: 10px 0;
+}
+
+nav li {
+    height: 45px;
+}
+
+li, li > *, .d-item {
+    color: var(--font-nav);
+    text-decoration: none;
+    transition: color .2s;
+}
+
+li a {
+    padding: 10px 25px;
+}
+
+#dropdown {
+    user-select: none;
+    padding: 0 25px;
+}
+
+#sub-dropdown {
+    position: absolute;
+    transform: translateX(-25%) translateY(-15%);
+    border: 1.5px solid var(--font-nav);
+    background: var(--nav-bg);
+    border-radius: 3px;
+    padding: 5px;
+    margin: 3px;
+}
+
+.d-item {
+    display: block;
+    padding: 10px;
+}
+
+.hidden {
+    animation: hide .3s both;
+}
+
+.shown {
+    animation: show .3s forwards;
+}
+
+.up {
+    animation: rotate-up .5s forwards;
+}
+
+.down {
+    animation: rotate-down .5s forwards;
+}
+
+i {
+    margin-left: 8px;
+}
+
+.bNav {
+    margin: 10px;
+}
+
+nav li:not(.active) a:hover, #dropdown li:hover, #dropdown li:hover i, #sub-dropdown a:hover {
+    color: var(--medium-hover);
+}
+
+nav ul a.bNav:hover {
+    background: var(--link-hover);
+    color: var(--font-nav);
+}
+
+@keyframes rotate-up {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(-180deg);
+    }
+}
+
+@keyframes rotate-down {
+    0% {
+        transform: rotate(-180deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes hide {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
+@keyframes show {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .right {
+        margin-left: auto;
+    }
+
+    nav {
+        position: fixed;
+    }
+
+    nav ul {
+        flex-flow: row;
+    }
+
+    nav li {
+        height: 20px;
+    }
+
+    li:last-child {
+        margin-right: 10px;
+    }
+
+    #sub-dropdown {
+        transform: translateX(-25%) translateY(15%);
+    }
+}
