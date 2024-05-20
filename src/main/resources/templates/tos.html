@@ -8,7 +8,6 @@
     <link rel="icon" type="image/x-icon" href="/images/mondragon.ico">
     <link rel="stylesheet" type="text/css" href="assets/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/signup.css">
     <link rel="stylesheet" type="text/css" href="css/header_nav_lang.css">
     <link rel="stylesheet" type="text/css" href="css/tos.css">
     <link
@@ -19,9 +18,10 @@
 
 <body>
     <div th:insert="fragments/language.html"></div>
-    <div th:insert="fragments/nav_main.html"></div>
 
-    <main>
+    <div th:insert="fragments/header_login.html"></div>
+
+    <main class="d-flex flex-column position-relative">
         <h1 class="pad_1em" th:text="#{tos}">Elkarrekin Términos de Servicio</h1>
 
         <h2 class="pad_15em" th:text="#{term_1}">1. Términos</h2>
@@ -75,7 +75,7 @@
             Estos términos y condiciones se rigen e interpretan de acuerdo con las leyes globales y usted se somete irrevocablemente a la jurisdicción exclusiva de los tribunales en ese estado o ubicación.
         </p>
     </main>
-    <div th:insert="fragments/header_login.html"></div>
+    <div th:insert="fragments/nav_main.html"></div>
 </body>
 
 </html>

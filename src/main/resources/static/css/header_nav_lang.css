@@ -19,10 +19,8 @@ header, footer {
 header {
     background: var(--bg-languages);
     order: 0;
-}
-
-.selected, div button:hover {
-    background: var(--link-lighter-2);
+    position: fixed;
+    margin-top: var(--h-languages);
 }
 
 header button {
@@ -59,7 +57,6 @@ footer a:not(.active):hover > * {
 @media screen and (min-width: 992px) {
     header {
         order: 200;
-        position: fixed;
         bottom: 0;
     }
 
