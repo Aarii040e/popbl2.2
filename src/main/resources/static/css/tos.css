@@ -1,4 +1,9 @@
-h2 {
-  background-color: var(--bg-sec-darker);
+main {
+    height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-footer-small));
+    top: calc(var(--h-languages) + var(--h-header));
 }
-
+    
+h2 {
+    background-color: var(--bg-sec-darker);
+}
+    
