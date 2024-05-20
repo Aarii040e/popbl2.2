@@ -1,0 +1,78 @@
+:root {
+    --width: 220px;
+}
+
+.fixedButton {
+    font-size: 16px;
+}
+
+.roundedFixedBtn {
+    position: fixed;
+    width: 20px;
+    right: 0;
+    bottom: 70px;
+    border-radius: 30px 0 0 30px;
+    background: var(--bg-footer);
+    cursor: pointer;
+}
+
+.filters {
+    position: fixed;
+    top: var(--h-header);
+    right: 0;
+    height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-footer-small));
+    width: var(--width);
+    background: var(--bg-footer);
+}
+
+.hidden {
+    right: calc(var(--width) * -1);
+}
+
+.hiddenButton {
+    right: calc(var(--width) - 1px);
+}
+
+input, select {
+    box-sizing: border-box;
+    background: var(--bg-primary);
+    transition: background .2s;
+}
+
+form div input[type="date"], form div input[type="time"], select {
+    width: 65%;
+    height: 30px;
+}
+
+input:hover, select:hover {
+    background: var(--bg-sec-darker);
+    cursor: pointer;
+}
+
+form hr {
+    background: linear-gradient(to left, var(--bg-footer), var(--bg-primary), var(--bg-primary), var(--bg-footer));
+}
+
+@media screen and (min-width: 768px) {
+    :root {
+        --width: 250px;
+    }
+
+    .roundedFixedBtn {
+        bottom: 80px;
+    }
+
+    .filters {
+        height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-footer-big));
+    }
+}
+
+@media screen and (min-width: 992px) {
+    :root {
+        --width: 300px;
+    }
+
+    .filters {
+        top: var(--h-footer-big);
+    }
+}

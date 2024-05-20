@@ -1,0 +1,101 @@
+main {
+    background: var(--bg-primary);
+}
+
+.banner {
+    margin: -16px 0 0 -16px;
+    width: 100vw;
+    height: 80px;
+    background-image: linear-gradient(to top, var(--bg-sec-lighter), var(--bg-footer));
+    background-size: cover;
+    transition: filter .3s;
+}
+
+#file {
+    display: none;
+}
+
+.pfp {
+    width: 70px;
+    height: 70px;
+    right: 20px;
+    top: 41px;
+    border: 4px solid var(--bg-primary);
+    transition: filter .3s;
+}
+
+.editable:hover {
+    filter: brightness(90%);
+    cursor: pointer;
+}
+
+.name {
+    font-size: 20px;
+}
+
+.handle {
+    color: var(--bg-sec-darker-2);
+}
+
+.biography {
+    text-align: justify;
+}
+
+.fa-circle-user {
+    color: var(--font);
+}
+
+.stats i {
+    color: var(--gold);
+}
+
+.stats p, .stats b, .identity p, .specific-stats div p, .specific-stats div b {
+    color: var(--bg-sec-darker-2);
+}
+
+button {
+    background: var(--bg-footer);
+    transition: background .3s;
+}
+
+button:hover {
+    background: var(--link-lighter-2);
+}
+
+hr {
+    background: linear-gradient(to left, var(--bg-primary), var(--bg-footer), var(--bg-primary));
+}
+
+.title {
+    font-size: 20px;
+}
+
+@media screen and (min-width: 768px) {
+    .banner {
+        height: 100px;
+    }
+
+    .pfp {
+        width: 100px;
+        height: 100px;
+        right: 50px;
+        top: var(--h-header);
+    }
+}
+
+@media screen and (min-width: 992px) {
+    main {
+        margin-top: var(--h-footer-big);
+    }
+
+    .banner {
+        height: 125px;
+    }
+
+    .pfp {
+        width: 125px;
+        height: 125px;
+        right: 75px;
+        top: 58.5px;
+    }
+}

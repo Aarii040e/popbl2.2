@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="icon" type="image/x-icon" href="/images/mondragon.ico">
+    <link rel="stylesheet" type="text/css" href="assets/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/header_nav_lang.css">
+    <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/7ec78ffc94.js" crossorigin="anonymous"></script>
+</head>
+<body class="d-flex flex-column">
+    <div th:insert="fragments/language.html"></div>
+
+    <!-- Mensajes  -->
+    <!-- <div class="message" th:if="${param.error}">
+        Invalid Username or Password
+     </div>
+     <div class="message" th:if="${param.logout}">
+        Logout Successfuly
+     </div> -->
+
+    <!-- HEADER logo signup login  -->
+    <div th:insert="fragments/header_login.html"></div>
+
+    <main class="d-flex mx-auto">
+        <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0 px-4 px-md-6" th:action="@{/login}" method="post">
+            <h1 class="mb-3" th:text="#{login}">Log In</h1>
+        
+            <div class="form-floating">
+                <input name="username" type="text" class="form-control rounded-top" placeholder="Username" id="username" autocomplete="off" required>
+                <label for="username" th:text="#{username}">Username</label>
+            </div>
+
+            <div class="form-floating">
+                <input name="password" type="password" class="form-control rounded-bottom" placeholder="Password" id="password" required>
+                <label for="password" th:text="#{password}">Password</label>
+            </div>
+            
+            <button type="submit" class="rounded-1 py-2 mt-3 w-100 border-0" th:text="#{login}">Log in</button>
+        
+            <div class="d-flex align-items-center">
+                <p class="py-2" th:text="#{not_account_yet}">Don't have an account?</p>
+                <a class="link ms-1" href="/registration/step1" th:text="#{signup}">Sign Up</a>
+            </div>
+            
+        </form>
+    </main>
+    
+    <!-- Menu sin hacer login -->
+    <div th:insert="fragments/nav_main.html"></div>
+</body>
+</html>

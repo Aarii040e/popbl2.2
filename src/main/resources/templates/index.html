@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Elkar-Ekin</title>
+        <!-- Tab icon -->
+        <link rel="icon" type="image/x-icon" href="/images/mondragon.ico">
+        <!-- CSS files -->
+        <link rel="stylesheet" type="text/css" href="assets/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <link rel="stylesheet" type="text/css" href="css/header_nav_lang.css">
+        <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/7ec78ffc94.js" crossorigin="anonymous"></script>
+    </head>
+
+    <body class="d-flex flex-column">  
+        <!-- Language selection bar -->
+        <!-- Una barra oscura con los idiomas en la derecha -->     
+        <div th:insert="fragments/language.html"></div>
+        
+        <!-- HEADERS (ELKARREKIN Signup Login ) En todos los displays arriba y que sea sticky-->
+        <div th:if="${role != null}" th:insert="fragments/header_logout.html"></div>
+        <div th:if="${role == null}" th:insert="fragments/header_login.html"></div>
+
+        <!-- NAVIGATIONS ()-->
+        <div th:if="${role == 'client'}" th:insert="fragments/nav_client.html"></div>
+        <div th:if="${role == 'volunteer'}" th:insert="fragments/nav_volunteer.html"></div>
+        <div th:if="${role == 'admin'}" th:insert="fragments/nav_admin.html"></div>
+        <div th:if="${role == null}" th:insert="fragments/nav_main.html"></div>
+        
+    </body>
+</html>

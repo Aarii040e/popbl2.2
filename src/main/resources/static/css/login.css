@@ -1,0 +1,55 @@
+body {
+    background: var(--bg-sec-lighter);
+}
+
+main {
+    background: var(--bg-primary);
+    flex-flow: column;
+    height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-footer-small));
+    width: 100%;
+}
+
+div button {
+    background: var(--bg-footer);
+}
+
+h1 {
+    font-size: 30px;
+}
+
+form .form-control {
+    background: var(--bg-sec-lighter);
+    box-sizing: border-box;
+}
+
+@media screen and (min-width: 768px) {
+    main {
+        height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-footer-big));
+        flex-flow: row;
+        width: 60vw;
+    }
+    
+    .gender, .birthdate {
+        width: 50%;
+    }
+
+    form {
+        height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-footer-big));
+        box-sizing: border-box;
+        overflow-y: auto;
+        margin-bottom: var(--h-footer-big);
+    }
+}
+
+@media screen and (min-width: 992px) {
+    main {
+        height: calc(100vh - var(--h-languages) - var(--h-footer-big) - var(--h-header));
+        margin-bottom: var(--h-header);
+        margin-top: var(--h-footer-big);
+        width: 40vw;
+    }
+
+    header {
+        z-index: 100;
+    }
+}
