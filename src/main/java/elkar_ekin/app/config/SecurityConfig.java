@@ -31,16 +31,44 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 	
+	// //1. saiakera
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+		
+		http.csrf(c -> c.disable())
+		
+		.authorizeHttpRequests(request -> request
+				.requestMatchers("/admin-view").hasAuthority("A")
+				.requestMatchers("/volunteer-view").hasAuthority("V")
+				.requestMatchers("/client-view").hasAuthority("C")
+				.requestMatchers("/registration/**","/login", "/index", "/tos").permitAll()
+				.requestMatchers("/css/**", "/js/**", "/images/**", "/assets/**").permitAll()
+				.anyRequest().authenticated())
+		
+		.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
+				.successHandler(customSuccessHandler).permitAll())
+		
+		.logout(form -> form.invalidateHttpSession(true).clearAuthentication(true)
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/login?logout").permitAll());
+		
+		return http.build();
+	}
 	
+
 	// @Bean
 	// public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		
 	// 	http.csrf(c -> c.disable())
 		
-	// 	.authorizeHttpRequests(request -> request.requestMatchers("/volunteer-view")
-	// 			.hasAuthority("V").requestMatchers("/client-view").hasAuthority("C")
-	// 			.requestMatchers("/registration", "/css/**").permitAll()
-	// 			.anyRequest().authenticated())
+	// 	.authorizeHttpRequests(request -> request
+	// 		.requestMatchers("/**").permitAll())
+	// 		// .requestMatchers(PathRequest.toH2Console()).permitAll()
+	// 		// .antMatchers("/", "/index").permitAll()
+	// 		// .antMatchers("/volunteer-view").hasAuthority("V")
+	// 		// .antMatchers("/client-view").hasAuthority("C")
+	// 		// .antMatchers("/registration", "/css/**").permitAll()
+	// 		// .anyRequest().authenticated())
 		
 	// 	.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
 	// 			.successHandler(customSuccessHandler).permitAll())
@@ -52,32 +80,6 @@ public class SecurityConfig {
 	// 	return http.build();
 		
 	// }
-	
-
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-		
-		//http.csrf(c -> c.disable())
-		
-		http.authorizeHttpRequests(request -> request
-			.requestMatchers("/**").permitAll())
-			// .requestMatchers(PathRequest.toH2Console()).permitAll()
-			// .antMatchers("/", "/index").permitAll()
-			// .antMatchers("/volunteer-view").hasAuthority("V")
-			// .antMatchers("/client-view").hasAuthority("C")
-			// .antMatchers("/registration", "/css/**").permitAll()
-			// .anyRequest().authenticated())
-		
-		.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
-				.successHandler(customSuccessHandler).permitAll())
-		
-		.logout(form -> form.invalidateHttpSession(true).clearAuthentication(true)
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/login?logout").permitAll());
-				
-		return http.build();
-		
-	}
 
 
 
