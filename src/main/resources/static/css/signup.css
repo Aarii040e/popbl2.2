@@ -2,6 +2,7 @@ main {
     background: var(--bg-primary);
     flex-flow: column;
     height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-footer-small));
+    margin-top: calc(var(--h-languages) + var(--h-header));
     width: 100%;
 }
 
@@ -110,7 +111,7 @@ textarea {
     main {
         height: calc(100vh - var(--h-languages) - var(--h-footer-big) - var(--h-header));
         margin-bottom: var(--h-header);
-        margin-top: var(--h-footer-big);
+        margin-top: calc(var(--h-languages) + var(--h-footer-big));
     }
 
     header {
