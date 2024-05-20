@@ -1,0 +1,123 @@
+main {
+    background: var(--bg-primary);
+    flex-flow: column;
+    height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-footer-small));
+    width: 100%;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+.pfp-container {
+    height: 174px;
+    box-sizing: border-box;
+    background: var(--bg-sec-lighter);
+}
+
+.pfp {
+    width: 116px;
+    height: 116px;
+    transition: filter .3s;
+}
+
+.iconbtn {
+    background: var(--button);
+    margin: -0.5rem;
+    transition: background .2s;
+}
+
+.iconbtn:hover {
+    background: var(--button-darker);
+    cursor: pointer;
+}
+
+.file {
+    display: none;
+}
+
+form .form-control, select, input[type="date"], textarea {
+    background: var(--bg-sec-lighter);
+    box-sizing: border-box;
+}
+
+select, input[type="date"], textarea, .pfp-container {
+    border: 1px solid #ced4da;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+.gender, .birthdate {
+    width: 100%;
+}
+
+select, input[type="date"] {
+    width: 150px;
+    height: 30px;
+}
+
+textarea {
+    width: 70%;
+    max-height: 400px;
+    height: 100px;
+}
+
+.rounded-bottom-left {
+    border-radius: 0 0 0 .25rem;
+}
+
+.rounded-bottom-right {
+    border-radius: 0 0 .25rem 0;
+}
+
+.rounded-top-left {
+    border-radius: 0 .25rem 0 0;
+}
+
+.rounded-top-right {
+    border-radius: .25rem 0 0 0;
+}
+
+.hidden {
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    main {
+        height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-footer-big));
+        flex-flow: row;
+    }
+    
+    .gender, .birthdate, .desc {
+        width: 100%;
+    }
+
+    textarea {
+        width: 75%;
+    }
+
+    form {
+        height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-footer-big));
+        box-sizing: border-box;
+        overflow-y: auto;
+        margin-bottom: var(--h-footer-big);
+    }
+}
+
+@media screen and (min-width: 992px) {
+    main {
+        height: calc(100vh - var(--h-languages) - var(--h-footer-big) - var(--h-header));
+        margin-bottom: var(--h-header);
+        margin-top: var(--h-footer-big);
+    }
+
+    header {
+        z-index: 100;
+    }
+
+    .gender, .birthdate, .desc {
+        width: 60%;
+    }
+}

@@ -1,0 +1,71 @@
+header, footer {
+    box-sizing: border-box;
+    z-index: 100;
+}
+
+.language {
+    background: var(--bg-languages);
+}
+
+.language a {
+    color: var(--bg-primary);
+    font-weight: 700;
+}
+
+.language a:hover {
+    color: var(--bg-sec-darker);
+}
+
+header {
+    background: var(--bg-languages);
+    order: 0;
+}
+
+.selected, div button:hover {
+    background: var(--link-lighter-2);
+}
+
+header button {
+    height: 30px;
+    padding: 0 7px;
+    background: var(--bg-footer);
+}
+
+header > * {
+    color: var(--font-languages);
+}
+
+header button:hover {
+    background: var(--link-lighter-2);
+}
+
+footer {
+    background: var(--bg-footer);
+    position: fixed;
+}
+
+footer a > * {
+    transition: color .3s;
+}
+
+footer a:not(.active):hover > * {
+    color: var(--font-lighter);
+}
+
+.active > * {
+    color: var(--link-lighter-2);
+}
+
+@media screen and (min-width: 992px) {
+    header {
+        order: 200;
+        position: fixed;
+        bottom: 0;
+    }
+
+    footer {
+        position: fixed;
+        height: var(--h-footer-big);
+        top: var(--h-languages);
+    }
+}
