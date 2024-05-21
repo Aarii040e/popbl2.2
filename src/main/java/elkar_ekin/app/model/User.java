@@ -7,9 +7,12 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
@@ -30,26 +33,54 @@ public class User {
     private String surname2;
     private String gender;
     private Date birthDate;
-    private Long postCode;
-    private String direction;
-    private String town;
-    private String province;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "locationID", nullable = false)
+    private Location location;
+    // private Long postCode;
+    // private String direction;
+    // private String town;
+    // private String province;
     private String telephone;
     private String email;
     private String description;
     private String imagePath;
 	
-	// @CreationTimestamp
-    // @Column(name = "createdAt", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	// private LocalDate createdAt;
+	@CreationTimestamp
+    @Column(name = "createdAt", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private LocalDate createdAt;
 
 	public User() {
 		super();
 	}
 
+	
+
+
+	// public User(String username, String password, String role, String name, String surname1, String surname2,
+	// 		String gender, Date birthDate, Long postCode, String direction, String town, String province,
+	// 		String telephone, String email, String description, String imagePath) {
+	// 	this.username = username;
+	// 	this.password = password;
+	// 	this.role = role;
+	// 	this.name = name;
+	// 	this.surname1 = surname1;
+	// 	this.surname2 = surname2;
+	// 	this.gender = gender;
+	// 	this.birthDate = birthDate;
+	// 	this.postCode = postCode;
+	// 	this.direction = direction;
+	// 	this.town = town;
+	// 	this.province = province;
+	// 	this.telephone = telephone;
+	// 	this.email = email;
+	// 	this.description = description;
+	// 	this.imagePath = imagePath;
+	// }
+
 	public User(String username, String password, String role, String name, String surname1, String surname2,
-			String gender, Date birthDate, Long postCode, String direction, String town, String province,
-			String telephone, String email, String description, String imagePath) {
+			String gender, Date birthDate, Location location, String telephone, String email, String description,
+			String imagePath) {
 		this.username = username;
 		this.password = password;
 		this.role = role;
@@ -58,10 +89,7 @@ public class User {
 		this.surname2 = surname2;
 		this.gender = gender;
 		this.birthDate = birthDate;
-		this.postCode = postCode;
-		this.direction = direction;
-		this.town = town;
-		this.province = province;
+		this.location = location;
 		this.telephone = telephone;
 		this.email = email;
 		this.description = description;
@@ -133,29 +161,37 @@ public class User {
 	}
 
 	
-	public String getDirection() {
-		return direction;
-	}
+	// public String getDirection() {
+	// 	return direction;
+	// }
 
-	public void setDirection(String direction) {
-		this.direction = direction;
-	}
+	// public void setDirection(String direction) {
+	// 	this.direction = direction;
+	// }
 
-	public String getTown() {
-		return town;
-	}
+	// public String getTown() {
+	// 	return town;
+	// }
 
-	public void setTown(String town) {
-		this.town = town;
-	}
+	// public void setTown(String town) {
+	// 	this.town = town;
+	// }
 
-	public String getProvince() {
-		return province;
-	}
+	// public String getProvince() {
+	// 	return province;
+	// }
 
-	public void setProvince(String province) {
-		this.province = province;
-	}
+	// public void setProvince(String province) {
+	// 	this.province = province;
+	// }
+	
+	// public Long getPostCode() {
+	// 	return postCode;
+	// }
+
+	// public void setPostCode(Long postCode) {
+	// 	this.postCode = postCode;
+	// }
 
 	public String getTelephone() {
 		return telephone;
@@ -189,13 +225,6 @@ public class User {
 		this.imagePath = imagePath;
 	}
 
-	public Long getPostCode() {
-		return postCode;
-	}
-
-	public void setPostCode(Long postCode) {
-		this.postCode = postCode;
-	}
 
 	public Long getUserID() {
 		return userID;
@@ -204,4 +233,13 @@ public class User {
 	public void setUserID(Long userID) {
 		this.userID = userID;
 	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
 }

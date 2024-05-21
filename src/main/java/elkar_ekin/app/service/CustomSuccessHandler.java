@@ -23,15 +23,15 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 		
 		if (roles.orElse("").equals("V")) {
 			//The user is a volunteer
-			response.sendRedirect("/volunteer-view");
+			response.sendRedirect("/volunteer-view/index");
 		} else if (roles.orElse("").equals("C")) {
 			//The user is a client
-			response.sendRedirect("/client-view");
+			response.sendRedirect("/client-view/index");
 		} else if (roles.orElse("").equals("A")) {
 			//The user is a client
-			response.sendRedirect("/admin-view");
+			response.sendRedirect("/admin-view/index");
 		} else {
-			response.sendRedirect("/error");
+			response.sendRedirect("/index");
 		}
 		
 	}

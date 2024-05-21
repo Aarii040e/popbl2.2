@@ -14,6 +14,12 @@ public class PageController {
 		return "index";
 	}
 
+	@GetMapping("/login")
+	public String showLoginForm(Model model) {
+		model.addAttribute("currentPage", "login");
+		return "login";
+	}
+
 	@GetMapping({"/volunteerList"})
 	public String getVolunteerList(Model model) {
 		model.addAttribute("currentPage", "volunteerList");
