@@ -32,6 +32,10 @@ public class CustomUserDetail implements UserDetails {
 		return user.getUsername();
 	}
 
+	public String getRole() {
+		return user.getRole();
+	}
+
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub

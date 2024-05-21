@@ -12,46 +12,42 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class UserController {
 
-	@Autowired
-	UserDetailsService userDetailsService;
+	// @Autowired
+	// UserDetailsService userDetailsService;
 	
-	@GetMapping({"/logout"})
-	public String logout(Model model) {
-		model.addAttribute("currentPage", "index");
-		return "index";
-	}
+	// @GetMapping({"/logout"})
+	// public String logout(Model model) {
+	// 	model.addAttribute("currentPage", "index");
+	// 	return "index";
+	// }
 
-	@GetMapping("/login")
-	public String showLoginForm(Model model) {
-		model.addAttribute("currentPage", "login");
-		return "login";
-	}
 
-	@GetMapping("/volunteer-view")
-	public String volunteerPage (Model model, Principal principal) {
-		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		model.addAttribute("user", userDetails);
-		model.addAttribute("role", "volunteer");
-		model.addAttribute("currentPage", "index");
-		return "index";
-	}
+
+	// @GetMapping("/volunteer-view")
+	// public String volunteerPage (Model model, Principal principal) {
+	// 	UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+	// 	model.addAttribute("user", userDetails);
+	// 	// model.addAttribute("role", "volunteer");
+	// 	model.addAttribute("currentPage", "index");
+	// 	return "index";
+	// }
 	
-	@GetMapping("/client-view")
-	public String clientPage (Model model, Principal principal) {
-		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		model.addAttribute("role", "client");
-		model.addAttribute("user", userDetails);
-		model.addAttribute("currentPage", "index");
-		return "index";
-	}
+	// @GetMapping("/client-view")
+	// public String clientPage (Model model, Principal principal) {
+	// 	UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+	// 	// model.addAttribute("role", "client");
+	// 	model.addAttribute("user", userDetails);
+	// 	model.addAttribute("currentPage", "index");
+	// 	return "index";
+	// }
 
-	@GetMapping("/admin-view")
-	public String adminPage (Model model, Principal principal) {
-		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		model.addAttribute("role", "admin");
-		model.addAttribute("user", userDetails);
-		model.addAttribute("currentPage", "index");
-		return "index";
-	}
+	// @GetMapping("/admin-view")
+	// public String adminPage (Model model, Principal principal) {
+	// 	UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+	// 	// model.addAttribute("role", "admin");
+	// 	model.addAttribute("user", userDetails);
+	// 	model.addAttribute("currentPage", "index");
+	// 	return "index";
+	// }
 
 }

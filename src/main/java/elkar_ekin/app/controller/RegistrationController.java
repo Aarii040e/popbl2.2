@@ -4,9 +4,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import elkar_ekin.app.service.LocationService;
 import elkar_ekin.app.service.UserService;
 import jakarta.validation.Valid;
 import elkar_ekin.app.dto.UserDto;
+import elkar_ekin.app.dto.LocationDto;
+import elkar_ekin.app.model.Location;
 
 @Controller
 @RequestMapping("/registration")
@@ -14,14 +17,22 @@ import elkar_ekin.app.dto.UserDto;
 public class RegistrationController {
 
     private final UserService userService;
+    private final LocationService locationService;
+    private Location userLocation;
 
-    public RegistrationController(UserService userService) {
+    public RegistrationController(UserService userService, LocationService locationService) {
         this.userService = userService;
+        this.locationService = locationService;
     }
 
     @ModelAttribute("userDto")
     public UserDto userDto() {
         return new UserDto();
+    }
+
+    @ModelAttribute("locationDto")
+    public LocationDto locationDto() {
+        return new LocationDto();
     }
 
     // Step 1: Personal Info
@@ -46,10 +57,11 @@ public class RegistrationController {
     }
 
     @PostMapping("/step2")
-    public String processStep2(@Valid @ModelAttribute("userDto") UserDto userDto, BindingResult result) {
+    public String processStep2(@Valid @ModelAttribute("locationDto") LocationDto locationDto, BindingResult result) {
         if (result.hasErrors()) {
             return "signup/signup_step2";
         }
+        userLocation = locationService.saveLocation(locationDto);
         return "redirect:/registration/step3";
     }
 
@@ -89,11 +101,10 @@ public class RegistrationController {
 
     @PostMapping("/step5")
     public String processStep4(@Valid @ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            System.out.println("ERROREAK!!!!" + result.getAllErrors());
-            
+        if (result.hasErrors()) {          
             return "signup/signup_step5";
         }
+        userDto.setLocation(userLocation);
         userService.save(userDto);
         model.addAttribute("message", "Registered Successfully!");
         return "/index";

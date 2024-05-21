@@ -32,54 +32,55 @@ public class SecurityConfig {
 	}
 	
 	// //1. saiakera
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-		
-		http.csrf(c -> c.disable())
-		
-		.authorizeHttpRequests(request -> request
-				.requestMatchers("/admin-view").hasAuthority("A")
-				.requestMatchers("/volunteer-view").hasAuthority("V")
-				.requestMatchers("/client-view").hasAuthority("C")
-				.requestMatchers("/registration/**","/login", "/index", "/tos").permitAll()
-				.requestMatchers("/css/**", "/js/**", "/images/**", "/assets/**").permitAll()
-				.anyRequest().authenticated())
-		
-		.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
-				.successHandler(customSuccessHandler).permitAll())
-		
-		.logout(form -> form.invalidateHttpSession(true).clearAuthentication(true)
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/login?logout").permitAll());
-		
-		return http.build();
-	}
-	
-
 	// @Bean
 	// public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		
 	// 	http.csrf(c -> c.disable())
 		
 	// 	.authorizeHttpRequests(request -> request
-	// 		.requestMatchers("/**").permitAll())
-	// 		// .requestMatchers(PathRequest.toH2Console()).permitAll()
-	// 		// .antMatchers("/", "/index").permitAll()
-	// 		// .antMatchers("/volunteer-view").hasAuthority("V")
-	// 		// .antMatchers("/client-view").hasAuthority("C")
-	// 		// .antMatchers("/registration", "/css/**").permitAll()
-	// 		// .anyRequest().authenticated())
+	// 			.requestMatchers("/admin-view/**").hasAuthority("A")
+	// 			.requestMatchers("/volunteer-view/**").hasAuthority("V")
+	// 			.requestMatchers("/client-view/**").hasAuthority("C")
+	// 			.requestMatchers("/registration/**","/login", "/index", "/tos").permitAll()
+	// 			.requestMatchers("/css/**", "/js/**", "/images/**", "/assets/**")
+	// 			.permitAll()
+	// 			.anyRequest().authenticated())
 		
-	// 	.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
+	// 	.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/userLogin")
 	// 			.successHandler(customSuccessHandler).permitAll())
 		
 	// 	.logout(form -> form.invalidateHttpSession(true).clearAuthentication(true)
 	// 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 	// 			.logoutSuccessUrl("/login?logout").permitAll());
-				
-	// 	return http.build();
 		
+	// 	return http.build();
 	// }
+	
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+		
+		http.csrf(c -> c.disable())
+		
+		.authorizeHttpRequests(request -> request
+			.requestMatchers("/**").permitAll())
+			// .requestMatchers(PathRequest.toH2Console()).permitAll()
+			// .antMatchers("/", "/index").permitAll()
+			// .antMatchers("/volunteer-view").hasAuthority("V")
+			// .antMatchers("/client-view").hasAuthority("C")
+			// .antMatchers("/registration", "/css/**").permitAll()
+			// .anyRequest().authenticated())
+		
+		.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/userLogin")
+				.successHandler(customSuccessHandler).permitAll())
+		
+		.logout(form -> form.invalidateHttpSession(true).clearAuthentication(true)
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/login?logout").permitAll());
+				
+		return http.build();
+		
+	}
 
 
 
