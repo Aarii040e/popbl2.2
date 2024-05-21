@@ -99,6 +99,21 @@ public class RegistrationController {
         return "signup/signup_step5";
     }
 
+    
+    @PostMapping("/step5")
+    public String processStep5(@Valid @ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model,
+        @RequestParam(name = "checkbox_client", required = false) String checkbox1,
+        @RequestParam(name = "checkbox_volunteer", required = false) String checkbox2) {
+        
+        userDto.setRole(roleCheckboxes(checkbox1, checkbox2, model));
+        userDto.setLocation(userLocation);
+        if (result.hasErrors()) {          
+            return "signup/signup_step5";
+        }
+        userService.save(userDto);
+        model.addAttribute("message", "Registered Successfully!");
+        return "/index";
+    }
     public String roleCheckboxes(
         @RequestParam(name = "checkbox_client", required = false) String checkbox1,
         @RequestParam(name = "checkbox_volunteer", required = false) String checkbox2,
@@ -117,20 +132,5 @@ public class RegistrationController {
             emaitza="V";
         }
         return emaitza;
-    }
-
-    @PostMapping("/step5")
-    public String processStep5(@Valid @ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model,
-        @RequestParam(name = "checkbox_client", required = false) String checkbox1,
-        @RequestParam(name = "checkbox_volunteer", required = false) String checkbox2) {
-        
-        userDto.setRole(roleCheckboxes(checkbox1, checkbox2, model));
-        userDto.setLocation(userLocation);
-        if (result.hasErrors()) {          
-            return "signup/signup_step5";
-        }
-        userService.save(userDto);
-        model.addAttribute("message", "Registered Successfully!");
-        return "/index";
     }
 }
