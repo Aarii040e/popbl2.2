@@ -5,12 +5,13 @@ body {
 main {
     background: var(--bg-primary);
     flex-flow: column;
-    height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-footer-small));
+    height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-small));
+    margin-top: calc(var(--h-languages) + var(--h-header));
     width: 100%;
 }
 
 div button {
-    background: var(--bg-footer);
+    background: var(--bg-menu_bar);
 }
 
 h1 {
@@ -24,7 +25,7 @@ form .form-control {
 
 @media screen and (min-width: 768px) {
     main {
-        height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-footer-big));
+        height: calc(100vh - var(--h-languages) - var(--h-header) - var(  --h-menu_bar-big));
         flex-flow: row;
         width: 60vw;
     }
@@ -34,18 +35,18 @@ form .form-control {
     }
 
     form {
-        height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-footer-big));
+        height: calc(100vh - var(--h-languages) - var(--h-header) - var(  --h-menu_bar-big));
         box-sizing: border-box;
         overflow-y: auto;
-        margin-bottom: var(--h-footer-big);
+        margin-bottom: var(--h-menu_bar-big);
     }
 }
 
 @media screen and (min-width: 992px) {
     main {
-        height: calc(100vh - var(--h-languages) - var(--h-footer-big) - var(--h-header));
+        height: calc(100vh - var(--h-languages) - var(--h-menu_bar-big) - var(--h-header));
         margin-bottom: var(--h-header);
-        margin-top: var(--h-footer-big);
+        margin-top: calc(var(--h-languages) + var(--h-menu_bar-big));
         width: 40vw;
     }
 

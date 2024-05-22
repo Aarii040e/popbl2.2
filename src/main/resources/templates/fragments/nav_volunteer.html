@@ -1,4 +1,6 @@
-<footer class="d-flex bottom-0 z-2 justify-content-around w-100 py-2 order-lg-last">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<nav class="d-flex bottom-0 z-2 justify-content-around w-100 py-2 order-lg-last" th:fragment="nav">
     <a href="/volunteer-view/index" class="d-flex flex-column text-center text-decoration-none" th:classappend="${currentPage == 'index'} ? 'active' : ''">
         <i class="fa-solid fa-home p-1"></i>
         <span class="d-none d-md-block m-0" th:text="#{home}">Home</span>
@@ -28,4 +30,5 @@
         <i class="fa-solid fa-user text-center p-1"></i>
         <span class="d-none d-md-block m-0" th:text="#{profile}">Profile</span>
     </a>
-</footer>
+</nav>
+</html>

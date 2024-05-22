@@ -21,8 +21,8 @@ public class ClientController {
 	@Autowired
 	UserDetailsService userDetailsService;
 
-	// @Autowired
-	// private UserRepository repository;
+	@Autowired
+	private UserRepository repository;
 	
 	// @GetMapping({"/logout"})
 	// public String logout(Model model) {
@@ -30,18 +30,18 @@ public class ClientController {
 	// 	return "index";
 	// }
 
-	// @ModelAttribute
-	// public void commonUser (Model model, Principal principal) {
-	// 	// UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-	// 	// model.addAttribute("role", "client");
-	// 	String username=principal.getName();
-	// 	User user = repository.findByUsername(username);
-	// 	model.addAttribute("user", user);
-	// 	// model.addAttribute("currentPage", "index");
-	// }
+	@ModelAttribute
+	public void commonUser (Model model, Principal principal) {
+		// UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+		// model.addAttribute("role", "client");
+		String username=principal.getName();
+		User user = repository.findByUsername(username);
+		model.addAttribute("user", user);
+		// model.addAttribute("currentPage", "index");
+	}
 
 	@GetMapping("/index")
-	public String clientPage (Model model, Principal principal) {
+	public String clientIndex (Model model, Principal principal) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		// model.addAttribute("role", "client");
 		model.addAttribute("user", userDetails);

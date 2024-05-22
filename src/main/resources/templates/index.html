@@ -1,32 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout_main}">
+
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Elkar-Ekin</title>
-        <!-- Tab icon -->
-        <link rel="icon" type="image/x-icon" th:href="@{/images/mondragon.ico}">
-        <!-- CSS files -->
-        <link rel="stylesheet" type="text/css" th:href="@{/assets/bootstrap.css}">
-        <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
-        <link rel="stylesheet" type="text/css" th:href="@{/css/header_nav_lang.css}">
-        <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-        <script src="https://kit.fontawesome.com/7ec78ffc94.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"> tos
     </head>
-
     <body class="d-flex flex-column">  
-        <!-- Language selection bar -->
-        <div th:insert="fragments/language.html"></div>
-        
-        <!-- HEADERS (ELKARREKIN Signup Login )-->
-        <div th:if="${user == null}" th:insert="fragments/header_login.html"></div>
-        <div th:if="${user != null}" th:insert="fragments/header_logout.html"></div>
-
-        <!-- NAVIGATIONS ()-->
-        <div th:if="${user == null}" th:insert="fragments/nav_main.html"></div>
-        <div  th:if="${user != null and user.role == 'C'}" th:insert="fragments/nav_client.html"></div>
-        <div  th:if="${user != null and user.role == 'V'}" th:insert="fragments/nav_volunteer.html"></div>
-        <div  th:if="${user != null and user.role == 'A'}" th:insert="fragments/nav_admin.html"></div>
-        
+        <section layout:fragment="content">
+            <!-- Código para visualizar en index -->
+            
+        </section>
     </body>
 </html>
