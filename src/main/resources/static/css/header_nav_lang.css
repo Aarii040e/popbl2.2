@@ -1,6 +1,7 @@
 .login_logout, .menu_bar {
     box-sizing: border-box;
     z-index: 100;
+    position: fixed;
 }
 
 .language {
@@ -19,6 +20,7 @@
 .login_logout {
     background: var(--bg-languages);
     order: 0;
+    margin-top: var(--h-languages);
 }
 
 .selected, .language button:hover {
@@ -41,7 +43,6 @@
 
 .menu_bar {
     background: var(--bg-menu_bar);
-    position: fixed;
 }
 
 .menu_bar a > * {
