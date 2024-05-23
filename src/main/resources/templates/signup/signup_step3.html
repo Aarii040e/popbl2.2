@@ -1,22 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout_main}">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elkar-Ekin</title>
-    <link rel="icon" type="image/x-icon" href="/images/mondragon.ico">
-    <link rel="stylesheet" type="text/css" href="/assets/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
-    <link rel="stylesheet" type="text/css" href="/css/signup.css">
-    <link rel="stylesheet" type="text/css" href="/css/header_nav_lang.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-        rel="stylesheet">
-    <script src="https://kit.fontawesome.com/7ec78ffc94.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/signup.css}">
 </head>
 
-<body class="d-flex flex-column">
+<section layout:fragment="content" class="d-flex flex-column">
     <div th:insert="fragments/language.html"></div>
 
     <div class="message" th:if="${message != null}">
@@ -67,6 +58,5 @@
             </div>      
         </form>
     </main>
-    <div th:insert="fragments/nav_main.html"></div>
-</body>
+</section>
 </html>

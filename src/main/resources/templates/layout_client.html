@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="eu" class="w-100 h-100">
+<head>
+    <!-- Tab icon -->
+    <link rel="icon" type="image/x-icon" th:href="@{/images/mondragon.ico}">
+    <!-- CSS files -->    
+    <title th:fragment="title">Elkar-Ekin</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header_nav_lang.css}">
+
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/volunteering_list.css}"> volunteering tasks -->
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/filters.css}"> volunteer tasks -->
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/tos.css}"> tos -->
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/user.css}">perfil -->
+    <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/7ec78ffc94.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <!--  HEADER (ELKARREKIN Signup Login )-->
+    <header th:replace="fragments/header_logout :: header_logout"></header>
+    
+    <!-- Language selection -->
+    <div th:replace="fragments/language :: language_div"></div>
+    
+    <!-- Main content -->
+    <div layout:fragment="content"></div>
+    
+    <!-- NAVIGATION -->
+    <div th:replace="fragments/nav_client :: nav"></div>
+</body>
+</html>

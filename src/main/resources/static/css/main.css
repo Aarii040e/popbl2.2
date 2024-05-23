@@ -3,7 +3,7 @@
     --bg-sec-lighter: #F7F7F7;
     --bg-sec-darker: #CCC;
     --bg-sec-darker-2: #888;
-    --bg-footer: #A3BCE1;
+    --bg-menu_bar: #A3BCE1;
     --bg-languages: #282E33;
     
     --link-darker: #05F;
@@ -26,33 +26,8 @@
 
     --h-languages: 37px;
     --h-header: 46px;
-    --h-footer-big: 59px;
-    --h-footer-small: 38px;
-
-    /*
-    --bg-primary: #1D2125;
-    --bg-sec-lighter: #161A1D;
-    --bg-sec-darker: #282E33;
-    --bg-sec-darker-2: #1D2125;
-    --bg-footer: #161A1D;
-    
-    --link-darker: #05F;
-    --link-lighter: #27F;
-    --link-lighter-2: #4078d8;
-
-    --font: #DEE4EA;   
-    --font-lighter: #C8C8C8;
-
-    --button: #27F;
-    --button-darker: #4078d8;
-    
-    --gold: #C78F15;
-
-    --educative: #48E;
-    --environmental: #4A4;
-    --sports: #F84;
-    --social: #E9E;
-    */
+    --h-menu_bar-big: 59px;
+    --h-menu_bar-small: 38px;
 }
 
 body * {
@@ -92,9 +67,11 @@ button:hover, .buttons a:hover {
 }
 
 hr {
-    height: 1.5px;
+    height: 1.5px !important;
+    border: none;
     box-sizing: border-box;
     width: 85%;
+    background: linear-gradient(to left, var(--bg-menu_bar), var(--bg-primary), var(--bg-primary), var(--bg-menu_bar));
 }
 
 .pfp {
