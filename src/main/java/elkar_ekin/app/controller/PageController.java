@@ -32,4 +32,19 @@ public class PageController {
 		return "tos";
 	}
 
+    @GetMapping("/admin-view")
+    public String adminView() {
+        return "layout_admin"; // Nombre de la vista para administradores
+    }
+
+    @GetMapping("/volunteer-view")
+    public String volunteerView() {
+        return "layout_volunteer"; // Nombre de la vista para voluntarios
+    }
+
+    @GetMapping("/client-view")
+    public String clientView() {
+        return "layout_client"; // Nombre de la vista para clientes
+    }
+
 }

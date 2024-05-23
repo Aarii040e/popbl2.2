@@ -1,94 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout_main}">
+    <head>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/tos.css}"> tos
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="icon" type="image/x-icon" th:href="@{/images/mondragon.ico}">
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/bootstrap.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/signup.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/header_nav_lang.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/tos.css}">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-        rel="stylesheet">
-    <script src="https://kit.fontawesome.com/7ec78ffc94.js" crossorigin="anonymous"></script>
-</head>
+<section layout:fragment="content" class="d-flex flex-column position-relative">
+    <h1 class="mt-2 mx-3 py-3" th:text="#{tos}">Terms of Service</h1>
 
-<body>
-    <div th:insert="fragments/language.html"></div>
+    <details class="my-2 mx-3">
+        <summary class="p-2" th:text="#{term_1}">1. Terms</summary>
+        <p class="pt-2" th:text="#{term_1_p}">
+            By accessing the website on Elkarrekin, you agree to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree to any of these terms, you are prohibited from using or accessing this site. The materials contained in this website are protected by applicable copyright and trademark laws.
+        </p>
+    </details>
 
-    <div th:insert="fragments/header_login.html"></div>
+    <details class="my-2 mx-3">
+        <summary class="p-2" th:text="#{term_2}">2. Use of Licence</summary>
+        <p class="pt-2" th:text="#{term_2_p1}">
+            Permission is granted to temporarily download one copy of the materials (information or software) on Elkarrekin's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
+        </p>
+        <p class="pt-2" th:text="#{term_2_p2}">
+            Modify or copy the materials; use the materials for any commercial purpose, or for any public display (commercial or non-commercial); attempt to decompile or reverse engineer any software contained on the Elkarrekin website; remove any Copyright or other proprietary notations from the materials; or transfer the materials to another person or "mirror" the materials on any other server.
+        </p>
+        <p class="pt-2" th:text="#{term_2_p3}">
+            This license shall automatically terminate if you violate any of these restrictions and may be terminated by Elkarrekin at any time. Upon terminating your viewing of these materials or upon the termination of this license, you must destroy any downloaded materials in your possession whether in electronic or printed format.
+        </p>
+    </details>
 
-    <main class="d-flex flex-column position-relative">
-        <h1 class="mt-2 mx-3 py-3" th:text="#{tos}">Terms of Service</h1>
+    <details class="my-2 mx-3">
+        <summary class="p-2" th:text="#{term_3}">3. Responsibility</summary>
+        <p class="pt-2" th:text="#{term_3_p}">
+            The materials on Elkarrekin's website are provided "as is." Elkarrekin makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties, including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights. Further, Elkarrekin does not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on its website or otherwise relating to such materials or on any sites linked to this location.
+        </p>
+    </details>
 
-        <details class="my-2 mx-3">
-            <summary class="p-2" th:text="#{term_1}">1. Terms</summary>
-            <p class="pt-2" th:text="#{term_1_p}">
-                By accessing the website on Elkarrekin, you agree to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree to any of these terms, you are prohibited from using or accessing this site. The materials contained in this website are protected by applicable copyright and trademark laws.
-            </p>
-        </details>
+    <details class="my-2 mx-3">
+        <summary class="p-2" th:text="#{term_4}">4. Limitations</summary>
+        <p class="pt-2" th:text="#{term_4_p}">
+            In no event shall Elkarrekin or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Elkarrekin's website. Elkarrekin, even if Elkarrekin or an authorized representative of Elkarrekin has been notified orally or in writing of the possibility of such damage. Because some jurisdictions do not allow limitations on implied warranties, or limitations of liability for consequential or incidental damages, these limitations may not apply to you.
+        </p>
+    </details>
 
-        <details class="my-2 mx-3">
-            <summary class="p-2" th:text="#{term_2}">2. Use of Licence</summary>
-            <p class="pt-2" th:text="#{term_2_p1}">
-                Permission is granted to temporarily download one copy of the materials (information or software) on Elkarrekin's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
-            </p>
-            <p class="pt-2" th:text="#{term_2_p2}">
-                Modify or copy the materials; use the materials for any commercial purpose, or for any public display (commercial or non-commercial); attempt to decompile or reverse engineer any software contained on the Elkarrekin website; remove any Copyright or other proprietary notations from the materials; or transfer the materials to another person or "mirror" the materials on any other server.
-            </p>
-            <p class="pt-2" th:text="#{term_2_p3}">
-                This license shall automatically terminate if you violate any of these restrictions and may be terminated by Elkarrekin at any time. Upon terminating your viewing of these materials or upon the termination of this license, you must destroy any downloaded materials in your possession whether in electronic or printed format.
-            </p>
-        </details>
+    <details class="my-2 mx-3">
+        <summary class="p-2" th:text="#{term_5}">5. Specificity</summary>
+        <p class="pt-2" th:text="#{term_5_p}">
+            The materials appearing on Elkarrekin's website could include technical, typographical, or photographic errors. Elkarrekin does not warrant that any of the materials on its website are accurate, complete or current. Elkarrekin may make changes to the materials contained on its website at any time without notice. However, Elkarrekin does not undertake to update the materials.
+        </p>
+    </details>
 
-        <details class="my-2 mx-3">
-            <summary class="p-2" th:text="#{term_3}">3. Responsibility</summary>
-            <p class="pt-2" th:text="#{term_3_p}">
-                The materials on Elkarrekin's website are provided "as is." Elkarrekin makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties, including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights. Further, Elkarrekin does not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on its website or otherwise relating to such materials or on any sites linked to this location.
-            </p>
-        </details>
+    <details class="my-2 mx-3">
+        <summary class="p-2" th:text="#{term_6}">6. Links</summary>
+        <p class="pt-2" th:text="#{term_6_p}">
+            Elkarrekin has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. Elkarrekin can add link(s) or text to the embedded code. The inclusion of any link does not imply endorsement by Elkarrekin of the site. Use of any linked website is at the user's own risk.
+        </p>
+    </details>
 
-        <details class="my-2 mx-3">
-            <summary class="p-2" th:text="#{term_4}">4. Limitations</summary>
-            <p class="pt-2" th:text="#{term_4_p}">
-                In no event shall Elkarrekin or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Elkarrekin's website. Elkarrekin, even if Elkarrekin or an authorized representative of Elkarrekin has been notified orally or in writing of the possibility of such damage. Because some jurisdictions do not allow limitations on implied warranties, or limitations of liability for consequential or incidental damages, these limitations may not apply to you.
-            </p>
-        </details>
+    <details class="my-2 mx-3">
+        <summary class="p-2" th:text="#{term_7}">7. Modifications</summary>
+        <p class="pt-2" th:text="#{term_7_p}">
+            Elkarrekin may revise these terms of service for its website at any time without notice. By using this website, you agree to be bound by the then current version of these terms of service.
+        </p>
+    </details>
 
-        <details class="my-2 mx-3">
-            <summary class="p-2" th:text="#{term_5}">5. Specificity</summary>
-            <p class="pt-2" th:text="#{term_5_p}">
-                The materials appearing on Elkarrekin's website could include technical, typographical, or photographic errors. Elkarrekin does not warrant that any of the materials on its website are accurate, complete or current. Elkarrekin may make changes to the materials contained on its website at any time without notice. However, Elkarrekin does not undertake to update the materials.
-            </p>
-        </details>
+    <details class="my-2 mx-3">
+        <summary class="p-2" th:text="#{term_8}">8. Applicable Law</summary>
+        <p class="pt-2" th:text="#{term_8_p}">
+            These terms and conditions are governed by and construed in accordance with global laws and you irrevocably submit to the exclusive jurisdiction of the courts in that state or location.
+        </p>
+    </details>
 
-        <details class="my-2 mx-3">
-            <summary class="p-2" th:text="#{term_6}">6. Links</summary>
-            <p class="pt-2" th:text="#{term_6_p}">
-                Elkarrekin has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. Elkarrekin can add link(s) or text to the embedded code. The inclusion of any link does not imply endorsement by Elkarrekin of the site. Use of any linked website is at the user's own risk.
-            </p>
-        </details>
-
-        <details class="my-2 mx-3">
-            <summary class="p-2" th:text="#{term_7}">7. Modifications</summary>
-            <p class="pt-2" th:text="#{term_7_p}">
-                Elkarrekin may revise these terms of service for its website at any time without notice. By using this website, you agree to be bound by the then current version of these terms of service.
-            </p>
-        </details>
-
-        <details class="my-2 mx-3">
-            <summary class="p-2" th:text="#{term_8}">8. Applicable Law</summary>
-            <p class="pt-2" th:text="#{term_8_p}">
-                These terms and conditions are governed by and construed in accordance with global laws and you irrevocably submit to the exclusive jurisdiction of the courts in that state or location.
-            </p>
-        </details>
-
-    </main>
-    <div th:insert="fragments/nav_main.html"></div>
-</body>
+</section>
 
 </html>

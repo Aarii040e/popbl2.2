@@ -1,7 +1,5 @@
 package elkar_ekin.app.service;
 
-
-import elkar_ekin.app.dto.LocationDto;
 import elkar_ekin.app.dto.UserDto;
 import elkar_ekin.app.model.User;
 
