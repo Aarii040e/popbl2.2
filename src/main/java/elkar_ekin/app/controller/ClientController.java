@@ -51,9 +51,9 @@ public class ClientController {
 
 	@GetMapping("/createTask")
 	public String clientCreateTask (Model model, Principal principal) {
-		TaskDetail taskDetails = userDetailsService.loadUserByUsername(principal.getName());
+		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		// model.addAttribute("role", "client");
-		model.addAttribute("task", taskDetails);
+		model.addAttribute("task", userDetails);
 		model.addAttribute("currentPage", "create_task");
 		return "client/create_task_1";
 	}
