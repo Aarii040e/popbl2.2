@@ -1,4 +1,4 @@
-header, footer {
+.login_logout, .menu_bar {
     box-sizing: border-box;
     z-index: 100;
 }
@@ -16,37 +16,39 @@ header, footer {
     color: var(--bg-sec-darker);
 }
 
-header {
+.login_logout {
     background: var(--bg-languages);
     order: 0;
-    position: fixed;
-    margin-top: var(--h-languages);
 }
 
-header button {
-    height: 30px;
-    padding: 0 7px;
-    background: var(--bg-footer);
-}
-
-header > * {
-    color: var(--font-languages);
-}
-
-header button:hover {
+.selected, .language button:hover {
     background: var(--link-lighter-2);
 }
 
-footer {
-    background: var(--bg-footer);
+.login_logout button {
+    height: 30px;
+    padding: 0 7px;
+    background: var(--bg-menu_bar);
+}
+
+.login_logout > * {
+    color: var(--font-languages);
+}
+
+.login_logout button:hover {
+    background: var(--link-lighter-2);
+}
+
+.menu_bar {
+    background: var(--bg-menu_bar);
     position: fixed;
 }
 
-footer a > * {
+.menu_bar a > * {
     transition: color .3s;
 }
 
-footer a:not(.active):hover > * {
+.menu_bar a:not(.active):hover > * {
     color: var(--font-lighter);
 }
 
@@ -55,14 +57,15 @@ footer a:not(.active):hover > * {
 }
 
 @media screen and (min-width: 992px) {
-    header {
+    .login_logout {
         order: 200;
+        position: fixed;
         bottom: 0;
     }
 
-    footer {
+    .menu_bar {
         position: fixed;
-        height: var(--h-footer-big);
+        height: var(--h-menu_bar-big);
         top: var(--h-languages);
     }
 }

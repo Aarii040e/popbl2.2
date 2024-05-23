@@ -20,6 +20,10 @@ public class VolunteerController {
 
 	@Autowired
 	private UserRepository repository;
+
+	@Autowired
+	UserDetailsService userDetailsService;
+
 	
 	// @GetMapping({"/logout"})
 	// public String logout(Model model) {
@@ -37,10 +41,15 @@ public class VolunteerController {
 		// model.addAttribute("currentPage", "index");
 	}
 
-    @GetMapping("/index")
-    public String getIndexPage(){
-        return "index";
-    }
+	@GetMapping("/index")
+	public String volunteerIndex (Model model, Principal principal) {
+		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+		// model.addAttribute("role", "client");
+		model.addAttribute("user", userDetails);
+		model.addAttribute("currentPage", "index");
+		return "index";
+	}
+
 
 	
 }

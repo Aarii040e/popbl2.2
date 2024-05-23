@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 
 import elkar_ekin.app.service.LocationService;
 import elkar_ekin.app.service.UserService;
-import jakarta.validation.Valid;
 import elkar_ekin.app.dto.UserDto;
 import elkar_ekin.app.dto.LocationDto;
 import elkar_ekin.app.model.Location;
@@ -43,21 +42,21 @@ public class RegistrationController {
     }
 
     @PostMapping("/step1")
-    public String processStep1(@Valid @ModelAttribute("userDto") UserDto userDto, BindingResult result) {
+    public String processStep1(@ModelAttribute("userDto") UserDto userDto, BindingResult result) {
         if (result.hasErrors()) {
             return "signup/signup_step1";
         }
         return "redirect:/registration/step2";
     }
 
-    // Step 2: Account Info
+    // Step 2: Location Info
     @GetMapping("/step2")
     public String showStep2Form(Model model) {
         return "signup/signup_step2";
     }
 
     @PostMapping("/step2")
-    public String processStep2(@Valid @ModelAttribute("locationDto") LocationDto locationDto, BindingResult result) {
+    public String processStep2(@ModelAttribute("locationDto") LocationDto locationDto, BindingResult result) {
         if (result.hasErrors()) {
             return "signup/signup_step2";
         }
@@ -72,28 +71,28 @@ public class RegistrationController {
     }
 
     @PostMapping("/step3")
-    public String processStep3(@Valid @ModelAttribute("userDto") UserDto userDto, BindingResult result) {
+    public String processStep3(@ModelAttribute("userDto") UserDto userDto, BindingResult result) {
         if (result.hasErrors()) {
             return "signup/signup_step3";
         }
         return "redirect:/registration/step4";
     }
 
-    // Step 4: Contact Info
+    // Step 2: Account Info
     @GetMapping("/step4")
     public String showStep4Form(Model model) {
         return "signup/signup_step4";
     }
 
     @PostMapping("/step4")
-    public String processStep4(@Valid @ModelAttribute("userDto") UserDto userDto, BindingResult result) {
+    public String processStep4(@ModelAttribute("userDto") UserDto userDto, BindingResult result) {
         if (result.hasErrors()) {
             return "signup/signup_step4";
         }
         return "redirect:/registration/step5";
     }
 
-    // Step 5: Additional Info
+    // Step 5: Profile Info
     @GetMapping("/step5")
     public String showStep5Form(Model model) {
         return "signup/signup_step5";
@@ -120,15 +119,16 @@ public class RegistrationController {
     }
     
     @PostMapping("/step5")
-    public String processStep5(@Valid @ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model,
+    public String processStep5(@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model,
         @RequestParam(name = "checkbox_client", required = false) String checkbox1,
         @RequestParam(name = "checkbox_volunteer", required = false) String checkbox2) {
         
         userDto.setRole(roleCheckboxes(checkbox1, checkbox2, model));
         userDto.setLocation(userLocation);
-        if (result.hasErrors()) {          
-            return "signup/signup_step5";
-        }
+        //Erroreak dauden edo ez ziurtatu
+        // if (result.hasErrors()) {          
+        //     return "signup/signup_step5";
+        // }
         userService.save(userDto);
         model.addAttribute("message", "Registered Successfully!");
         return "/index";
