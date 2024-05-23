@@ -17,7 +17,7 @@ import elkar_ekin.app.repositories.UserRepository;
 @Controller
 @RequestMapping("/admin-view")
 public class AdminController {
-
+	//hola
 	@Autowired
 	private UserRepository repository;
 	
