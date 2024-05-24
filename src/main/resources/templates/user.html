@@ -35,36 +35,32 @@
 
         <main>
             <div class="position-relative p-3">
-                <div><div class="banner"></div></div>
-
-                <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0" th:action="@{/client-view/user/update}" method="post" role="form" th:object="${userDto}">             
+                <form>                   
+                    <div><div class="banner"></div></div>
                     <div><div class="pfp rounded-circle position-absolute"></div></div>
                     <h1 class="name title mt-3" th:text="${user.name} + ' ' + ${user.surname1} + ' ' + ${user.surname2}">Name Surname</h1>
                     <h2 class="handle" th:text="'@' + ${user.username}">@username</h2>
-
-                    <!-- <input type="text" class="biography py-2 my-2" name="description" id="description" th:field="*{description}" disabled> -->
-
-                    <input name="description" class="biography py-2 my-2 border-0" type="text" autocomplete="off" th:value="${user.description}" disabled/>
-                                
-                    <div class="identity d-flex py-1">
-                        <i class="fa-solid fa-circle-user me-1"></i>
-                        <div th:switch="${user.role}" class="role">
-                            <div th:case="'C'"><p th:text="#{client}">Client</p></div>
-                            <div th:case="'V'"><p th:text="#{volunteer}">Volunteer</p></div>
-                            <div th:case="'A'"><p th:text="#{admin}">Administrator</p></div>
-                            <div th:case="*"><p th:text="#{c&a}">Client & Volunteer</p></div>
-                        </div>
-                    </div>
-                    <div class="stats d-flex pt-1 pb-3">
-                        <i class="fa-solid fa-award me-1"></i>
-                        <p>This user has volunteered <b>15</b> times!</p>
-                    </div>
-                    <div class="d-flex">
-                        <button class="edit border-0 rounded-1 py-1 px-2 me-1" th:text="#{edit}">Edit profile</button>
-                        <button type="submit" class="apply d-none border-0 rounded-1 py-1 px-2 me-1" th:text="#{apply}">Apply changes</button>
-                        <button class="settings border-0 rounded-1 py-1 px-2" th:text="#{settings}">Settings</button>
-                    </div>
+                    <p class="biography py-2 my-2" th:text="${user.description}">Description</p>
                 </form>
+                
+                <div class="identity d-flex py-1">
+                    <i class="fa-solid fa-circle-user me-1"></i>
+                    <div th:switch="${user.role}">
+                        <div th:case="'C'"><p th:text="#{client}">Client</p></div>
+                        <div th:case="'V'"><p th:text="#{volunteer}">Volunteer</p></div>
+                        <div th:case="'A'"><p th:text="#{admin}">Administrator</p></div>
+                        <div th:case="*"><p th:text="#{c&a}">Client & Volunteer</p></div>
+                    </div>
+                </div>
+                <div class="stats d-flex pt-1 pb-3">
+                    <i class="fa-solid fa-award me-1"></i>
+                    <p>This user has volunteered <b>15</b> times!</p>
+                </div>
+                <div class="d-flex">
+                    <button class="edit border-0 rounded-1 py-1 px-2 me-1" th:text="#{edit}">Edit profile</button>
+                    <button class="apply d-none border-0 rounded-1 py-1 px-2 me-1" th:text="#{apply}">Apply changes</button>
+                    <button class="settings border-0 rounded-1 py-1 px-2" th:text="#{settings}">Settings</button>
+                </div>
             </div>
 
             <hr class="border-0 m-auto">
@@ -104,21 +100,6 @@
                 <a href="volunteering_list.html" class="link" th:text="#{details}">See more details here.</a>
             </div>
         </main>
-
-        <!-- <main class="d-flex mx-auto">
-            <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0 px-4 px-md-6" th:action="@{/client-view/user/update}"
-                method="post" role="form" th:object="${userDto}">
-                <h1 class="mt-3 mb-3" th:text="#{signup}">Sign up</h1>
-    
-                <div class="form-floating">
-                    <input name="name" th:field="*{name}" type="text" class="form-control rounded-top"
-                        placeholder="First name" id="name" autocomplete="off" required />
-                    <label for="name" th:text="#{name}">Name</label>
-                </div>
-    
-                <button type="submit" class="rounded-1 py-2 w-100 border-0 mb-5 mb-md-3" th:text="#{continue}">Continue</button>
-            </form>
-        </main> -->
 
         <script src="/js/header_logout.js"></script>
         <script src="/js/user.js"></script>

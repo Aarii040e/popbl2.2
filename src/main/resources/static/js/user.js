@@ -2,9 +2,10 @@
 
 let edit = document.querySelector(".edit");
 let apply = document.querySelector(".apply");
+let settings = document.querySelector(".settings");
 
 let pfp = document.querySelector(".pfp");
-let description = document.querySelector("input[type='text']");
+let biography = document.querySelector(".biography");
 
 let input = document.createElement("input");
 input.type = "file";
@@ -12,27 +13,34 @@ input.id = "file";
 input.accept = "image/*";
 
 const enableChanges = () => {
-    description.disabled = false;
-    pfp.classList.add("editable");
+    edit.textContent = "Apply changes";
 
+    biography.contentEditable = true;
+
+    pfp.classList.add("editable");
     pfp.appendChild(input);
     pfp.addEventListener("click", () => input.click());
 }
 
-edit.addEventListener("click", e => {   
-    e.preventDefault();
-    enableChanges();
+const disableChanges = () => {
+    edit.textContent = "Edit profile";
 
+    biography.contentEditable = false;
+
+    pfp.classList.remove("editable");
+    pfp.removeChild(input);
+    
+    document.querySelector("form").submit();
+}
+
+edit.addEventListener("click", () => {
+    enableChanges();
     edit.classList.add("d-none");
     apply.classList.remove("d-none");
 });
 
-apply.addEventListener("click", e => {
-    e.preventDefault();
-
-    if (document.querySelector(".role p").textContent.includes("Volunteer")) {
-        document.querySelector("form").action = "/volunteer-view/user/update";
-    }
-
-    document.querySelector("form").submit();
+apply.addEventListener("click", () => {
+    disableChanges();
+    edit.classList.remove("d-none");
+    apply.classList.add("d-none");
 });

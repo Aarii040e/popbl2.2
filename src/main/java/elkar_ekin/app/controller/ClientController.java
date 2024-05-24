@@ -94,10 +94,15 @@ public class ClientController {
 	}
 
 	@GetMapping("/user")
-	public String clientUser(Model model) {
+	public String clientUser (Model model, Principal principal) {
 		model.addAttribute("currentPage", "user");
 		return "user";
 	}
+
+    // @GetMapping("/index")
+    // public String getIndexPage(){
+    //     return "index";
+    // }
 
 	@PostMapping("/user/update")
 	public String clientUpdateUser(@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model,
