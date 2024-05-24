@@ -42,6 +42,15 @@ main {
 
 .biography {
     text-align: justify;
+    width: 85%;
+    height: auto;
+    background: none;
+}
+
+.biography:focus {
+    outline: none;
+    padding: 5px;
+    background: var(--bg-sec-lighter);
 }
 
 .fa-circle-user {
