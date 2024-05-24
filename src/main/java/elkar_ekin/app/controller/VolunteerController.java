@@ -50,6 +50,10 @@ public class VolunteerController {
 		return "index";
 	}
 
-
+	@GetMapping("/user")
+	public String clientUser (Model model, Principal principal) {
+		model.addAttribute("currentPage", "user");
+		return "user";
+	}
 	
 }
