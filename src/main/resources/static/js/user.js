@@ -1,49 +1,46 @@
 // Código habilitar/deshabilitar cambios en el perfil
 
 let edit = document.querySelector(".edit");
+let apply = document.querySelector(".apply");
 let settings = document.querySelector(".settings");
 
-let banner = document.querySelector(".banner");
 let pfp = document.querySelector(".pfp");
 let biography = document.querySelector(".biography");
 
 let input = document.createElement("input");
 input.type = "file";
 input.id = "file";
-
-let input2 = document.createElement("input");
-input2.type = "file";
-input2.id = "file";
+input.accept = "image/*";
 
 const enableChanges = () => {
     edit.textContent = "Apply changes";
 
-    banner.classList.add("editable");
-    pfp.classList.add("editable");
     biography.contentEditable = true;
 
-    banner.appendChild(input);
-    pfp.appendChild(input2);
+    pfp.classList.add("editable");
+    pfp.appendChild(input);
+    pfp.addEventListener("click", () => input.click());
 }
 
 const disableChanges = () => {
     edit.textContent = "Edit profile";
 
-    banner.classList.remove("editable");
-    pfp.classList.remove("editable");
     biography.contentEditable = false;
 
-    banner.removeChild(input);
-    pfp.removeChild(input2);
+    pfp.classList.remove("editable");
+    pfp.removeChild(input);
     
     document.querySelector("form").submit();
 }
 
 edit.addEventListener("click", () => {
-    (edit.textContent == "Edit profile") ? enableChanges() : disableChanges();
+    enableChanges();
+    edit.classList.add("d-none");
+    apply.classList.remove("d-none");
 });
 
-/*
-input.addEventListener("change", () => {
-    console.log(input.files[0].name);
-});*/
+apply.addEventListener("click", () => {
+    disableChanges();
+    edit.classList.remove("d-none");
+    apply.classList.add("d-none");
+});

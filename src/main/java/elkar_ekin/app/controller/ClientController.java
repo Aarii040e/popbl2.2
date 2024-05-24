@@ -49,6 +49,12 @@ public class ClientController {
 		return "index";
 	}
 
+	@GetMapping("/user")
+	public String clientUser (Model model, Principal principal) {
+		model.addAttribute("currentPage", "user");
+		return "user";
+	}
+
     // @GetMapping("/index")
     // public String getIndexPage(){
     //     return "index";

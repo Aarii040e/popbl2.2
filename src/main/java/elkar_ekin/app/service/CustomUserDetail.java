@@ -36,6 +36,26 @@ public class CustomUserDetail implements UserDetails {
 		return user.getRole();
 	}
 
+	public String getName() {
+		return user.getName();
+	}
+
+	public String getSurname1() {
+		return user.getSurname1();
+	}
+
+	public String getSurname2() {
+		return user.getSurname2();
+	}
+
+	public String getDescription() {
+		return user.getDescription();
+	}
+
+	public String getImagePath() {
+		return user.getImagePath();
+	}
+
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
