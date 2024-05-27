@@ -93,19 +93,11 @@ public class ClientController {
 		return "index";
 	}
 
-	@GetMapping("/user")
+    @GetMapping("/user")
 	public String clientUser (Model model) {
 		model.addAttribute("currentPage", "user");
 		return "user";
 	}
-
-	// @PostMapping("/user/update")
-    // public String clientUpdateUser (Model model, Principal principal, @ModelAttribute("userDto") UserDto userDto) {
-	// 	UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-    //     userService.update(userDetails);
-    //     model.addAttribute("message", "Updated Successfully!");
-    //     return "user";
-    // }
 
 	@PostMapping("/user/update")
     public String clientUpdateUser (@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model, Principal principal) {
