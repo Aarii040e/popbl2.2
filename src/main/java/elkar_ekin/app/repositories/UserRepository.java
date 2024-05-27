@@ -10,4 +10,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
 	//This function uses the naming convention, Do NOT change the name!
 	User findByUsername (String username);
+	
+	boolean existsByUsername(String username);
+
 }

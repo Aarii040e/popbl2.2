@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="/assets/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="/css/main.css">
         <link rel="stylesheet" type="text/css" href="/css/header_nav_lang.css">
-        <link rel="stylesheet" type="text/css" href="/css/index.css">
+        <link rel="stylesheet" type="text/css" href="/css/newsItem.css">
         <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
         <script src="https://kit.fontawesome.com/7ec78ffc94.js" crossorigin="anonymous"></script>
     </head>
@@ -40,12 +40,27 @@
                 <div th:replace="fragments/nav_main.html :: nav"></div>
             </div>
         </div>
-        <a href="/newsItem/list" style="margin-top: 200px;">NewsItemList</a>
-        <!-- <section class="content">
-            <span>Ambietal</span>
-            <span>Social</span>
-            <span>Educativo</span>
-            <span>Deportivo</span>
-        </section> -->
+        <main layout:fragment="content" class="mx-auto container">
+            <div>
+                <form id="myform" action="/newsItem/search" method="GET">
+                    <label style="color: white;" for="gsearch">Search Blogs Here:</label>
+                    <input type="search" placeholder="Search Blog" id="gsearch" name="keyword">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="card" th:each="newsItem,iter : ${newsItemList}">
+                    <h2 th:text="${newsItem.title}">TITLE HEADING</h2>
+                    <!-- <h2 th:text="${newsItem.createdAt}">Title description, Dec 7,2017</h2> -->
+                    <p class="truncated-content" th:utext="${newsItem.body}">Sunt in culpa qui
+                        officia deserunt mollit anim id est laborum consectetur
+                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco.</p>
+                    <a th:href="@{'/newsItem/' + ${newsItem.newsItemID}}">Load More...</a>
+                </div>
+            </div> 
+            <script src="/js/newsItemList.js"></script>              
+        </main>
     </body>
 </html>
