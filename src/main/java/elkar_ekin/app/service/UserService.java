@@ -5,6 +5,7 @@ import elkar_ekin.app.model.User;
 
 
 public interface UserService {
+	
 	User save (UserDto userDto);
 
 	//HEMENDIK JARRAITU

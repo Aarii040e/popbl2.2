@@ -7,8 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import elkar_ekin.app.model.User;
@@ -47,15 +49,6 @@ public class ClientController {
 		model.addAttribute("user", userDetails);
 		model.addAttribute("currentPage", "index");
 		return "index";
-	}
-
-	@GetMapping("/createTask")
-	public String clientCreateTask (Model model, Principal principal) {
-		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		// model.addAttribute("role", "client");
-		model.addAttribute("task", userDetails);
-		model.addAttribute("currentPage", "create_task");
-		return "client/create_task_1";
 	}
 
     // @GetMapping("/index")

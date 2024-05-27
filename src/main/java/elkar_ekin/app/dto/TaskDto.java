@@ -14,24 +14,24 @@ public class TaskDto {
     private String state;
     private Date startTime;
     private Date endTime;
-    private Location locationId;
-    private Category categoryId;
-    private User volunteerId;
+    private Location location;
+    private Category category;
+    private User volunteer;
     
     public TaskDto() {
     }
 
     public TaskDto(String description, float estimatedTime, Date date, String state, Date startTime, Date endTime,
-            Location locationId, Category categoryId, User volunteerId) {
+            Location location, Category category, User volunteer) {
         this.description = description;
         this.estimatedTime = estimatedTime;
         this.date = date;
         this.state = state;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.locationId = locationId;
-        this.categoryId = categoryId;
-        this.volunteerId = volunteerId;
+        this.location = location;
+        this.category = category;
+        this.volunteer = volunteer;
     }
 
     public String getDescription() {
@@ -82,28 +82,28 @@ public class TaskDto {
         this.endTime = endTime;
     }
 
-    public Location getLocationId() {
-        return locationId;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLocationId(Location locationId) {
-        this.locationId = locationId;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
-    public Category getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(Category categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public User getVolunteerId() {
-        return volunteerId;
+    public User getVolunteer() {
+        return volunteer;
     }
 
-    public void setVolunteerId(User volunteerId) {
-        this.volunteerId = volunteerId;
+    public void setVolunteer(User volunteer) {
+        this.volunteer = volunteer;
     }
 
     
