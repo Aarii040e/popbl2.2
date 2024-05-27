@@ -1,7 +1,7 @@
 package elkar_ekin.app.model;
 
 import java.sql.Date;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,7 +49,7 @@ public class User {
 	
 	@CreationTimestamp
     @Column(name = "createdAt", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	private LocalDate createdAt;
+	private LocalDateTime createdAt;
 
 	public User() {
 		super();
@@ -226,7 +226,6 @@ public class User {
 		this.imagePath = imagePath;
 	}
 
-
 	public Long getUserID() {
 		return userID;
 	}
@@ -242,5 +241,14 @@ public class User {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
 
 }

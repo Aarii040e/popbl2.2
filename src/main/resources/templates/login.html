@@ -4,20 +4,19 @@
       layout:decorate="~{/layout_main}">
 
     <head>
-        <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"> tos
+        <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
     </head>
 
     <body class="d-flex flex-column">
         <main layout:fragment="content" class="d-flex mx-auto">
-            <!-- Mensajes  -->
-            <!-- <div class="message" th:if="${param.error}">
-            Invalid Username or Password
-            </div>
-            <div class="message" th:if="${param.logout}">
-            Logout Successfuly
-            </div> -->
-    
+            
             <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0 px-4 px-md-6" action="/userLogin" method="post">
+                <!-- Mensajes  -->
+                <div th:if="${param.error}">
+                    <span class="message" th:text="#{error.wrong_credentials}"></span>
+                </div>
+                <div class="message" th:if="${param.logout}"></div>
+
                 <h1 class="mb-3" th:text="#{login}">Log In</h1>
             
                 <div class="form-floating">

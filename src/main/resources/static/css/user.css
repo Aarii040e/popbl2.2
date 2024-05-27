@@ -1,12 +1,15 @@
 main {
     background: var(--bg-primary);
+    height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-small));
+    margin-top: calc(var(--h-languages) + var(--h-header));
+    overflow-y: auto;
 }
 
 .banner {
     margin: -16px 0 0 -16px;
     width: 100vw;
     height: 80px;
-    background-image: linear-gradient(to top, var(--bg-sec-lighter), var(--bg-footer));
+    background-image: linear-gradient(to top, var(--bg-sec-lighter), var(--bg-menu_bar));
     background-size: cover;
     transition: filter .3s;
 }
@@ -39,6 +42,15 @@ main {
 
 .biography {
     text-align: justify;
+    width: 85%;
+    height: auto;
+    background: none;
+}
+
+.biography:focus {
+    outline: none;
+    padding: 5px;
+    background: var(--bg-sec-lighter);
 }
 
 .fa-circle-user {
@@ -54,7 +66,7 @@ main {
 }
 
 button {
-    background: var(--bg-footer);
+    background: var(--bg-menu_bar);
     transition: background .3s;
 }
 
@@ -63,7 +75,7 @@ button:hover {
 }
 
 hr {
-    background: linear-gradient(to left, var(--bg-primary), var(--bg-footer), var(--bg-primary));
+    background: linear-gradient(to left, var(--bg-primary), var(--bg-menu_bar), var(--bg-primary));
 }
 
 .title {
@@ -85,7 +97,7 @@ hr {
 
 @media screen and (min-width: 992px) {
     main {
-        margin-top: var(--h-footer-big);
+        margin-top: calc(var(--h-languages) + var(--h-menu_bar-big));
     }
 
     .banner {

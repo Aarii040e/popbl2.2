@@ -1,43 +1,25 @@
-body {
-    background: var(--bg-sec-lighter);
-}
-
 main {
     background: var(--bg-primary);
-    flex-flow: column;
     height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-small));
     margin-top: calc(var(--h-languages) + var(--h-header));
     width: 100%;
 }
 
-div button {
-    background: var(--bg-menu_bar);
+.card {
+    border: 1px solid #ddd; /* Border for each card */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    background-color: #fff; /* Background color for each card */
+    padding: 20px; /* Padding inside each card */
 }
 
-h1 {
-    font-size: 30px;
-}
-
-form .form-control {
-    background: var(--bg-sec-lighter);
-    box-sizing: border-box;
+h2, p {
+    margin: 0 0 10px 0; /* Adjust margin as needed */
 }
 
 @media screen and (min-width: 768px) {
     main {
         height: calc(100vh - var(--h-languages) - var(--h-header) - var(  --h-menu_bar-big));
-        flex-flow: row;
-        width: 60vw;
-    }
-    
-    .gender, .birthdate {
-        width: 50%;
-    }
-
-    form {
-        height: calc(100vh - var(--h-languages) - var(--h-header) - var(  --h-menu_bar-big));
-        box-sizing: border-box;
-        margin-bottom: var(--h-menu_bar-big);
     }
 }
 
@@ -46,6 +28,5 @@ form .form-control {
         height: calc(100vh - var(--h-languages) - var(--h-menu_bar-big) - var(--h-header));
         margin-bottom: var(--h-header);
         margin-top: calc(var(--h-languages) + var(--h-menu_bar-big));
-        width: 40vw;
     }
 }

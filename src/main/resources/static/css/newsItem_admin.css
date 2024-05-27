@@ -1,7 +1,3 @@
-body {
-    background: var(--bg-sec-lighter);
-}
-
 main {
     background: var(--bg-primary);
     flex-flow: column;
@@ -10,34 +6,17 @@ main {
     width: 100%;
 }
 
-div button {
-    background: var(--bg-menu_bar);
+thead{
+    font-weight: bold;
+    text-align: center;
 }
 
-h1 {
-    font-size: 30px;
-}
-
-form .form-control {
-    background: var(--bg-sec-lighter);
-    box-sizing: border-box;
-}
 
 @media screen and (min-width: 768px) {
     main {
         height: calc(100vh - var(--h-languages) - var(--h-header) - var(  --h-menu_bar-big));
         flex-flow: row;
         width: 60vw;
-    }
-    
-    .gender, .birthdate {
-        width: 50%;
-    }
-
-    form {
-        height: calc(100vh - var(--h-languages) - var(--h-header) - var(  --h-menu_bar-big));
-        box-sizing: border-box;
-        margin-bottom: var(--h-menu_bar-big);
     }
 }
 

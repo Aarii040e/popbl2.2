@@ -3,6 +3,8 @@
     margin-top: var(--h-header);
 }
 
+
+
 @media screen and (min-width: 768px) {
     section {
         height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-big));
