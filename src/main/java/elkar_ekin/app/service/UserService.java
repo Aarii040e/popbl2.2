@@ -7,9 +7,10 @@ import elkar_ekin.app.model.User;
 
 
 public interface UserService {
-	User save (UserDto userDto);
+	public User save (UserDto userDto);
+
+	public boolean usernameExists(String username);
+
 	User update (UserDto userDto, UserDetails userDetails);
 
-	//HEMENDIK JARRAITU
-	// void saveLocationInUser(UserDto userDto, LocationDto locationDto);
 }

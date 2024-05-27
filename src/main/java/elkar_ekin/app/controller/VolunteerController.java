@@ -34,27 +34,17 @@ public class VolunteerController {
         this.userService = userService;
     }
 
-	
-	// @GetMapping({"/logout"})
-	// public String logout(Model model) {
-	// 	model.addAttribute("currentPage", "index");
-	// 	return "index";
-	// }
 
 	@ModelAttribute
 	public void commonUser (Model model, Principal principal) {
-		// UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		// model.addAttribute("role", "client");
 		String username=principal.getName();
 		User user = repository.findByUsername(username);
 		model.addAttribute("user", user);
-		// model.addAttribute("currentPage", "index");
 	}
 
 	@GetMapping("/index")
 	public String volunteerIndex (Model model, Principal principal) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		// model.addAttribute("role", "client");
 		model.addAttribute("user", userDetails);
 		model.addAttribute("currentPage", "index");
 		return "index";
@@ -76,5 +66,5 @@ public class VolunteerController {
         model.addAttribute("message", "Updated Successfully!");
         return "user";
     }
-	
+
 }

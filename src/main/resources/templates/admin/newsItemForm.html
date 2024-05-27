@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout_admin}">
+
+    <head>
+        <link rel="stylesheet" href="/css/newsItem_admin.css">
+		<!-- <script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script> -->
+		<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+
+	</head>
+    <body class="d-flex flex-column">
+		<main layout:fragment="content" class="d-flex mx-auto">
+			<script>
+				window.onload = function() {
+					CKEDITOR.replace('textarea');
+				};
+			</script>
+            <div class="justify-content-center">
+				<form th:action="${isEdit} ? '/admin-view/editNewsItem' : '/admin-view/createNewsItem'" th:object="${newsItemDto}" method="post">
+					<input hidden="true" type="text" class="form-control" th:field="*{newsItemID}" value="-1">  
+					<div class="form-group">
+						<label for="title1">Title</label>
+						<input type="text" class="form-control" id="title1" placeholder="Title" required="required" th:field="*{title}"/> <!-- th:value="${newsItem.title}" -->
+					</div>
+					<div class="form-group">
+						<label for="textarea">Content</label>
+						<textarea class="form-control" id="textarea" rows="3" required="required" th:field="*{body}"></textarea> <!--  -->
+					</div>
+					<!-- <button type="submit" class="form-control btn btn-primary submit px-3">POST</button> -->
+					<button type="submit" class="form-control btn btn-primary submit px-3" th:text="${isEdit} ? 'Update' : 'Post'">Post</button>
+				</form>
+			</div>
+        </main>
+    </body>
+</html>

@@ -1,4 +1,8 @@
 package elkar_ekin.app.controller;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,7 +38,7 @@ public class RegistrationController {
         return new LocationDto();
     }
 
-    // Step 1: Personal Info
+    // Step 1: Personal Information
     @GetMapping("/step1")
     public String showStep1Form(Model model) {
         model.addAttribute("currentPage", "registration");
@@ -42,12 +46,22 @@ public class RegistrationController {
     }
 
     @PostMapping("/step1")
-    public String processStep1(@ModelAttribute("userDto") UserDto userDto, BindingResult result) {
-        if (result.hasErrors()) {
+    public String processStep1(@ModelAttribute("userDto") UserDto userDto, Model model, BindingResult result) {
+        if (hasErrorsPage1(userDto, model)) {
             return "signup/signup_step1";
         }
         return "redirect:/registration/step2";
     }
+
+    //Error detection
+    public boolean hasErrorsPage1(UserDto userDto, Model model){
+        if(userDto.getTelephone().length()!=9){
+            model.addAttribute("error", "error.wrongTelephone");
+            return true;
+        }
+        return false;
+    }
+
 
     // Step 2: Location Info
     @GetMapping("/step2")
@@ -56,12 +70,21 @@ public class RegistrationController {
     }
 
     @PostMapping("/step2")
-    public String processStep2(@ModelAttribute("locationDto") LocationDto locationDto, BindingResult result) {
-        if (result.hasErrors()) {
+    public String processStep2(@ModelAttribute("locationDto") LocationDto locationDto, Model model, BindingResult result) {
+        if (hasErrorsPage2(locationDto,model)) {
             return "signup/signup_step2";
         }
         userLocation = locationService.saveLocation(locationDto);
         return "redirect:/registration/step3";
+    }
+
+    //Error detection
+    public boolean hasErrorsPage2(LocationDto locationDto, Model model){
+        if(locationDto.getPostCode().toString().length()!=5){
+            model.addAttribute("error", "error.wrongPostCode");
+            return true;
+        }
+        return false;
     }
 
     // Step 3: Contact Info
@@ -71,12 +94,25 @@ public class RegistrationController {
     }
 
     @PostMapping("/step3")
-    public String processStep3(@ModelAttribute("userDto") UserDto userDto, BindingResult result) {
-        if (result.hasErrors()) {
+    public String processStep3(@ModelAttribute("userDto") UserDto userDto,Model model, BindingResult result) {
+        if (hasErrorsPage3(userDto,model)) {
             return "signup/signup_step3";
         }
         return "redirect:/registration/step4";
     }
+
+    //Error detection
+    public boolean hasErrorsPage3(UserDto userDto, Model model){
+        LocalDate currentDate = LocalDate.now();
+        LocalDate date18YearsAgo = currentDate.minusYears(18);
+        LocalDate birthLocalDate = userDto.getBirthDate().toLocalDate();
+        if(birthLocalDate.isAfter(date18YearsAgo)){
+            model.addAttribute("error", "error.notOldEnough");
+            return true;
+        }
+        return false;
+    }
+
 
     // Step 2: Account Info
     @GetMapping("/step4")
@@ -85,12 +121,26 @@ public class RegistrationController {
     }
 
     @PostMapping("/step4")
-    public String processStep4(@ModelAttribute("userDto") UserDto userDto, BindingResult result) {
-        if (result.hasErrors()) {
+    public String processStep4(@RequestParam("password") String password, @RequestParam("password_confirmation") String passwordConfirmation,
+                            @ModelAttribute("userDto") UserDto userDto, Model model, BindingResult result) {
+        if (hasErrorsPage4(userDto,password,passwordConfirmation, model)) {
             return "signup/signup_step4";
         }
         return "redirect:/registration/step5";
     }
+    //Error detection
+    public boolean hasErrorsPage4(UserDto userDto, String p1, String p2, Model model){
+        if (userService.usernameExists(userDto.getUsername())) {
+            model.addAttribute("error", "error.userAlreayExists");
+            return true;
+        }
+        if(!p1.equals(p2)){
+            model.addAttribute("error", "error.wrongPasswordConfirmation");
+            return true;
+        }
+        return false;
+    }
+    
 
     // Step 5: Profile Info
     @GetMapping("/step5")
@@ -131,7 +181,7 @@ public class RegistrationController {
         // }
         userService.save(userDto);
         model.addAttribute("message", "Registered Successfully!");
-        return "/index";
+        return "redirect:/index";
     }
     
 }

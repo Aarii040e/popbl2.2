@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-                .antMatchers("/registration/**", "/login", "/index", "/tos").permitAll()
+                .antMatchers("/registration/**", "/login/*", "/index", "/tos", "/locale/*", "/newsItem/*").permitAll()
                 .antMatchers("/css/**", "/js/**", "/images/**", "/assets/**").permitAll()
                 .antMatchers("/admin-view/**").hasAuthority("A")
                 .antMatchers("/volunteer-view/**").hasAuthority("V")
@@ -72,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .loginProcessingUrl("/userLogin")
                 .successHandler(customSuccessHandler)
+                .failureUrl("/login?error=true")
                 .permitAll()
             .and()
             .logout()
