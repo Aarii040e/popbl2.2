@@ -30,30 +30,30 @@ public class Task {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "locationID", nullable = false)
-    private Location locationId;
+    private Location location;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "locationID", nullable = false, insertable = false, updatable = false)
-    private Category categoryId;
+    @JoinColumn(name = "categoryID", nullable = false, insertable = false, updatable = false)
+    private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userID", nullable = false)
-    private User volunteerId;
+    private User volunteer;
 
     public Task() {
     }
 
     public Task(String description, float estimatedTime, Date date, String state, Date startTime, Date endTime,
-            Location locationId, Category categoryId, User volunteerId) {
+            Location location, Category category, User volunteer) {
         this.description = description;
         this.estimatedTime = estimatedTime;
         this.date = date;
         this.state = state;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.locationId = locationId;
-        this.categoryId = categoryId;
-        this.volunteerId = volunteerId;
+        this.location = location;
+        this.category = category;
+        this.volunteer = volunteer;
     }
 
     public Long getTaskID() {
@@ -112,28 +112,28 @@ public class Task {
         this.endTime = endTime;
     }
 
-    public Location getLocationId() {
-        return locationId;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLocationId(Location locationId) {
-        this.locationId = locationId;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
-    public Category getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(Category categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public User getVolunteerId() {
-        return volunteerId;
+    public User getVolunteer() {
+        return volunteer;
     }
 
-    public void setVolunteerId(User volunteerId) {
-        this.volunteerId = volunteerId;
+    public void setVolunteer(User volunteer) {
+        this.volunteer = volunteer;
     }
 
 }
