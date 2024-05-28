@@ -1,6 +1,8 @@
 package elkar_ekin.app.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,44 +23,63 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Horrek primary keya automatikoki sortzen du
     private Long taskID;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "taskDefaultID", nullable = false)
+    private DefaultTask taskDefaultID;
+
+	@Column(columnDefinition = "TEXT")
     private String description;
-    private float estimatedTime;
-    private Date date;
+
+    private LocalDate date;
     private String state;
-    private Date startTime;
-    private Date endTime;
+    private LocalTime  startTime;
+    private LocalTime  endTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "locationID", nullable = false)
     private Location location;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoryID", nullable = false, insertable = false, updatable = false)
-    private Category category;
+    @JoinColumn(name = "clientID", nullable = false)
+    private User client;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userID", nullable = false)
+    @JoinColumn(name = "volunteerID", nullable = true)
     private User volunteer;
 
     public Task() {
     }
 
-    public Task(String description, float estimatedTime, Date date, String state, Date startTime, Date endTime,
-            Location location, Category category, User volunteer) {
+    public Task(DefaultTask taskDefaultID, String description, LocalDate date, String state, LocalTime startTime,
+            LocalTime endTime, Location location, User client, User volunteer) {
+        this.taskDefaultID = taskDefaultID;
         this.description = description;
-        this.estimatedTime = estimatedTime;
         this.date = date;
         this.state = state;
         this.startTime = startTime;
         this.endTime = endTime;
         this.location = location;
-        this.category = category;
+        this.client = client;
         this.volunteer = volunteer;
     }
+
+    
 
     public Long getTaskID() {
         return taskID;
     }
+
+    // public Task(DefaultTask taskDefaultID, String description, LocalDate date, String state, LocalTime startTime,
+    //         LocalTime endTime, Location location, User client) {
+    //     this.taskDefaultID = taskDefaultID;
+    //     this.description = description;
+    //     this.date = date;
+    //     this.state = state;
+    //     this.startTime = startTime;
+    //     this.endTime = endTime;
+    //     this.location = location;
+    //     this.client = client;
+    // }
 
     public void setTaskID(Long taskID) {
         this.taskID = taskID;
@@ -72,44 +93,12 @@ public class Task {
         this.description = description;
     }
 
-    public float getEstimatedTime() {
-        return estimatedTime;
-    }
-
-    public void setEstimatedTime(float estimatedTime) {
-        this.estimatedTime = estimatedTime;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public String getState() {
         return state;
     }
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
     }
 
     public Location getLocation() {
@@ -120,14 +109,6 @@ public class Task {
         this.location = location;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     public User getVolunteer() {
         return volunteer;
     }
@@ -135,5 +116,46 @@ public class Task {
     public void setVolunteer(User volunteer) {
         this.volunteer = volunteer;
     }
+
+    public DefaultTask getTaskDefaultID() {
+        return taskDefaultID;
+    }
+
+    public void setTaskDefaultID(DefaultTask taskDefaultID) {
+        this.taskDefaultID = taskDefaultID;
+    }
+
+    public User getClient() {
+        return client;
+    }
+
+    public void setClient(User client) {
+        this.client = client;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+    
 
 }

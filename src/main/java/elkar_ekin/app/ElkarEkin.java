@@ -1,4 +1,4 @@
- package elkar_ekin.app;
+package elkar_ekin.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

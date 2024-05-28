@@ -15,7 +15,7 @@ public class Category {
     @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Horrek primary keya automatikoki sortzen du
-    private Long categoryId;
+    private Long categoryID;
 
     private String name;
 
@@ -26,20 +26,20 @@ public class Category {
     public Category(String name) {
         this.name = name;
     }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryID) {
-        this.categoryId = categoryID;
-    }
-
+    
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(Long categoryID) {
+        this.categoryID = categoryID;
     }
 }

@@ -1,37 +1,47 @@
 package elkar_ekin.app.dto;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-import elkar_ekin.app.model.Category;
+import elkar_ekin.app.model.DefaultTask;
 import elkar_ekin.app.model.Location;
 import elkar_ekin.app.model.User;
 
 public class TaskDto {
     
+    private DefaultTask taskDefaultID;
     private String description;
-    private float estimatedTime;
-    private Date date;
+    private LocalDate date;
     private String state;
-    private Date startTime;
-    private Date endTime;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private Location location;
-    private Category category;
     private User volunteer;
+    private User client;
     
     public TaskDto() {
     }
 
-    public TaskDto(String description, float estimatedTime, Date date, String state, Date startTime, Date endTime,
-            Location location, Category category, User volunteer) {
+
+    public TaskDto(DefaultTask taskDefaultID, String description, LocalDate date, String state, LocalTime startTime,
+            LocalTime endTime, Location location, User volunteer, User client) {
+        this.taskDefaultID = taskDefaultID;
         this.description = description;
-        this.estimatedTime = estimatedTime;
         this.date = date;
         this.state = state;
         this.startTime = startTime;
         this.endTime = endTime;
         this.location = location;
-        this.category = category;
         this.volunteer = volunteer;
+        this.client = client;
+    }
+
+    public DefaultTask getTaskDefaultID() {
+        return taskDefaultID;
+    }
+
+    public void setTaskDefaultID(DefaultTask taskDefaultID) {
+        this.taskDefaultID = taskDefaultID;
     }
 
     public String getDescription() {
@@ -42,44 +52,12 @@ public class TaskDto {
         this.description = description;
     }
 
-    public float getEstimatedTime() {
-        return estimatedTime;
-    }
-
-    public void setEstimatedTime(float estimatedTime) {
-        this.estimatedTime = estimatedTime;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public String getState() {
         return state;
     }
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
     }
 
     public Location getLocation() {
@@ -90,14 +68,6 @@ public class TaskDto {
         this.location = location;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     public User getVolunteer() {
         return volunteer;
     }
@@ -106,5 +76,36 @@ public class TaskDto {
         this.volunteer = volunteer;
     }
 
-    
+    public User getClient() {
+        return client;
+    }
+
+    public void setClient(User client) {
+        this.client = client;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+   
 }

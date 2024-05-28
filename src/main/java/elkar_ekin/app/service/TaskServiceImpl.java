@@ -15,11 +15,21 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public Task save(TaskDto taskDto) {
-		// Pass data from UserDto to User
-		Task task = new Task(taskDto.getDescription(), taskDto.getEstimatedTime(), taskDto.getDate(),
-				taskDto.getState(), taskDto.getStartTime(), taskDto.getEndTime(),
-				taskDto.getLocation(), taskDto.getCategory(), taskDto.getVolunteer());
-		return taskRepository.save(task);
-	}
+		Task task = new Task(taskDto.getTaskDefaultID(), taskDto.getDescription(), taskDto.getDate(), taskDto.getState(),
+		 taskDto.getStartTime(), taskDto.getEndTime(), taskDto.getLocation(), taskDto.getClient(), taskDto.getVolunteer());
+		 return taskRepository.save(task);
 
+	}
+	// @Override
+	// public Task save(TaskDto taskDto) {
+	// 	Task task = new Task(taskDto.getTaskDefaultID(), taskDto.getDescription(), taskDto.getDate(), taskDto.getState(),
+	// 	 taskDto.getStartTime(), taskDto.getEndTime(), taskDto.getLocation(), taskDto.getClient());
+	// 	 return taskRepository.save(task);
+
+	// }
+
+	
+
+
+	
 }
