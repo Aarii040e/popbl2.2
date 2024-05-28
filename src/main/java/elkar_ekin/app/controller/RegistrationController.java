@@ -106,8 +106,13 @@ public class RegistrationController {
         LocalDate currentDate = LocalDate.now();
         LocalDate date18YearsAgo = currentDate.minusYears(18);
         LocalDate birthLocalDate = userDto.getBirthDate().toLocalDate();
+        LocalDate date100YearsAgo = currentDate.minusYears(100);
         if(birthLocalDate.isAfter(date18YearsAgo)){
             model.addAttribute("error", "error.notOldEnough");
+            return true;
+        }
+        else if(birthLocalDate.isBefore(date100YearsAgo)){
+            model.addAttribute("error", "error.userTooOld");
             return true;
         }
         return false;
