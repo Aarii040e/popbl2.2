@@ -43,26 +43,16 @@ public class AdminController {
 	@Autowired
 	NewsItemService newsItemService;
 
-	// @GetMapping({"/logout"})
-	// public String logout(Model model) {
-	// 	model.addAttribute("currentPage", "index");
-	// 	return "index";
-	// }
-
 	@ModelAttribute
 	public void commonUser (Model model, Principal principal) {
-		// UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		// model.addAttribute("role", "client");
 		String username=principal.getName();
 		user = repository.findByUsername(username);
 		model.addAttribute("user", user);
-		// model.addAttribute("currentPage", "index");
 	}
 
 	@GetMapping("/index")
 	public String adminIndex (Model model, Principal principal) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		// model.addAttribute("role", "client");
 		model.addAttribute("user", userDetails);
 		model.addAttribute("currentPage", "index");
 		return "index";
@@ -71,7 +61,7 @@ public class AdminController {
 	@GetMapping({"/newsItem/", "/newsItem/list"})
 	public String listNewsItem (Model model, Principal principal) {
 		List<NewsItem> allNewsItems = newsItemService.getAllNewsItems();
-		model.addAttribute("currentPage", "newsList");
+		model.addAttribute("currentPage", "newsItemList");
 		if (allNewsItems == null) {
 			model.addAttribute("message", "No hay noticias disponibles.");
 		} else {
@@ -83,6 +73,7 @@ public class AdminController {
 	@GetMapping({"/newsItem/create"})
 	public String showNewsForm(Model model) {
 		NewsItemDto newsItemDto = new NewsItemDto();
+		model.addAttribute("currentPage", "newsItemCreate");
 		model.addAttribute("newsItemDto", newsItemDto);
 		return "admin/newsItemForm";
 	}
@@ -137,4 +128,53 @@ public class AdminController {
 		return "redirect:/admin-view/newsItem/list";
 	}
 
+	@GetMapping({"/clients/list", "/clients/"})
+	public String listClients (Model model, Principal principal) {
+		model.addAttribute("currentPage", "clientList");
+		List<User> userList = repository.getUsersByRole("C");
+		if (userList == null) {
+			model.addAttribute("message", "No hay clientes disponibles.");
+		} else {
+			model.addAttribute("userList", userList);
+		}
+		return "admin/userList";
+	}
+
+	@GetMapping(value = "/clients/{clientID}/delete")
+	public String deleteClient(@PathVariable("clientID") String clientID, Model model) {
+		repository.deleteById(Long.parseLong(clientID));
+		return "redirect:/admin-view/clients/list";
+	}
+	
+	@GetMapping(value = "/clients/{clientID}")
+	public String viewClient(@PathVariable("clientID") String clientID, Model model) {
+		User client = repository.findByUserID(Long.parseLong(clientID));
+		model.addAttribute("user", client);
+		return "user";
+	}
+
+	@GetMapping({"/volunteers/list", "/volunteers/"})
+	public String listVolunteers (Model model, Principal principal) {
+		model.addAttribute("currentPage", "volunteerList");
+		List<User> userList = repository.getUsersByRole("V");
+		if (userList == null) {
+			model.addAttribute("message", "No hay clientes disponibles.");
+		} else {
+			model.addAttribute("userList", userList);
+		}
+		return "admin/userList";
+	}
+
+	@GetMapping("/volunteers/{volunteerID}/delete")
+	public String deleteVolunteer(@PathVariable("volunteerID") String volunteerID, Model model) {
+		repository.deleteById(Long.parseLong(volunteerID));
+		return "redirect:/admin-view/volunteers/list";
+	}
+	
+	@GetMapping(value = "/volunteers/{volunteerID}")
+	public String viewVolunteer(@PathVariable("volunteerID") String volunteerID, Model model) {
+		User volunteer = repository.findByUserID(Long.parseLong(volunteerID));
+		model.addAttribute("user", volunteer);
+		return "user";
+	}
 }
