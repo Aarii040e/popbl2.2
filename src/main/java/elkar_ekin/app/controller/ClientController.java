@@ -93,27 +93,23 @@ public class ClientController {
 		return "index";
 	}
 
-    @GetMapping("/user")
-	public String clientUser (Model model) {
+	@GetMapping("/user")
+	public String clientUser(Model model) {
 		model.addAttribute("currentPage", "user");
 		return "user";
 	}
 
 	@PostMapping("/user/update")
-    public String clientUpdateUser (@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model, Principal principal) {
+	public String clientUpdateUser(@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model,
+			Principal principal) {
 		if (result.hasErrors()) {
-            return "user";
-        }
+			return "user";
+		}
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-        userService.update(userDto, userDetails);
-        model.addAttribute("message", "Updated Successfully!");
-        return "user";
-    }
-
-    // @GetMapping("/index")
-    // public String getIndexPage(){
-    //     return "index";
-    // }
+		userService.update(userDto, userDetails);
+		model.addAttribute("message", "Updated Successfully!");
+		return "user";
+	}
 
 	@GetMapping("/createTask/step1")
 	public String createTask_step1(Model model) {
