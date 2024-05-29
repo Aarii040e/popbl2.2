@@ -9,7 +9,6 @@
 <section class="d-flex flex-column">
     <main layout:fragment="content" class="d-flex mx-auto">
 
-
         <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0 px-4 px-md-6"
         th:action="@{/client-view/createTask/step1}" method="post" th:object="${defaultTask}">
 
@@ -19,7 +18,6 @@
                 <div class="form-check">
                     <input th:field="*{name}" class="form-check-input me-2" type="radio" value ="cleaning" name="radio" id="cleaning" data-category="environmental" data-type="event" >
                     <label class="form-check-label" for="cleaning" th:text="#{task.cleaning}">Environmental cleaning</label>
-                    <!-- HIRU HIZKUNTZETARAKO MOLDATU LOS LABELS (está creada la traducción) -->
                 </div>
 
                 <div class="form-check">
@@ -73,10 +71,11 @@
                 </div>
             </div>
             <div class="cont p-0 mt-1 mb-3 mx-0"></div>
-            <button type="submit" class="rounded-1 py-2 w-100 border-0 mb-5 mb-md-3" th:text="#{continue}">Continue</button>
+            <button type="submit" class="rounded-1 py-2 w-100 border-0" th:text="#{continue}">Continue</button>
         </form>
+        
+        <script src="/js/task_form_step1.js"></script>
     </main>
-    <script src="/js/task_form_step1.js"></script>
 </section>
 
 </html>
