@@ -27,6 +27,10 @@ form button {
     box-sizing: border-box;
 }
 
+h2, .body {
+    margin-bottom: 10px;
+}
+
 .card {
     margin: 10px 0;
 }
