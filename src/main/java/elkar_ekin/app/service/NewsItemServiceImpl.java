@@ -35,7 +35,7 @@ public class NewsItemServiceImpl implements NewsItemService {
         // List<NewsItem> newsItems = newsItemRepository.findAll();
         List<NewsItem> newsItems = newsItemRepository.findAllByOrderByCreatedAtDesc();
 
-        // Si necesitas transformar los datos de alguna manera, puedes hacerlo aquí
+        // Si necesitas transformar los datos de alguna manera, puedes hacerlo aqui
         return newsItems.stream().map(item -> {
             NewsItem newsItem = new NewsItem();
             newsItem.setNewsItemID(item.getNewsItemID());
