@@ -96,7 +96,6 @@ textarea {
     .user {
         flex-flow: row;
     }
-
     form {
         height: calc(100vh - var(--h-languages) - var(--h-header) - var(  --h-menu_bar-big));
         box-sizing: border-box;
