@@ -14,16 +14,20 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import elkar_ekin.app.dto.LocationDto;
+import elkar_ekin.app.dto.NewsItemDto;
 import elkar_ekin.app.dto.TaskDto;
 import elkar_ekin.app.dto.UserDto;
 import elkar_ekin.app.model.DefaultTask;
 import elkar_ekin.app.model.Location;
+import elkar_ekin.app.model.NewsItem;
+import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.DefaultTaskRepository;
 import elkar_ekin.app.repositories.UserRepository;
@@ -178,13 +182,44 @@ public class ClientController {
 		// Error detection
 		if (!hasErrorsTask(taskDto, model)) {
 			taskService.save(taskDto);
-			return "redirect:/client-view//createTask/step2";
+			return "redirect:/client-view/index";
 		}
-		return "redirect:/client-view/taskList";
+		return "redirect:/client-view/createTask/step2";
 	}
 
+	@GetMapping(value = "/task/{taskID}/delete")
+	public String deleteTask(@PathVariable("taskID") String taskID, Model model) {
+		taskService.deleteTask(Long.parseLong(taskID));
+		return "redirect:/client-view/index";
+	}
+
+	@GetMapping({"/task/{taskID}/edit"})
+	public String showTaskForm(@PathVariable("taskID") Long taskID, Model model) {
+		TaskDto taskDto = new TaskDto();
+		if (taskID != null) {
+			Task task = taskService.getTaskByID(taskID);
+			if (task != null) {
+				taskDto.setTaskDefaultID(task.getTaskDefaultID());
+				taskDto.setTaskID(taskID);
+				taskDto.setDescription(task.getDescription());
+				taskDto.setDate(task.getDate());
+				taskDto.setState(task.getState());
+				taskDto.setStartTime(task.getStartTime());
+				taskDto.setEndTime(task.getEndTime());
+				taskDto.setLocation(task.getLocation());
+				taskDto.setClient(task.getClient());
+				taskDto.setVolunteer(task.getVolunteer());
+			}
+		}
+		model.addAttribute("taskDto", taskDto);
+		model.addAttribute("isEdit", taskID != null);
+		return "client/createTask_2";
+	}
+
+
+
 	// Error detection
-	public boolean hasErrorsTask(TaskDto taskDto, Model model) {
+	public boolean 	hasErrorsTask(TaskDto taskDto, Model model) {
 		LocalTime startTime = taskDto.getStartTime();
 		LocalTime endTime = taskDto.getEndTime();
 		Location location = taskDto.getLocation();
@@ -192,7 +227,7 @@ public class ClientController {
 			model.addAttribute("error", "error.wrongPostCode");
 			return true;
 		}
-		if (endTime.isAfter(startTime)) {
+		if (startTime.isAfter(endTime)) {
 			model.addAttribute("error", "error.wrongStartEndTimes");
 			return true;
 		}
