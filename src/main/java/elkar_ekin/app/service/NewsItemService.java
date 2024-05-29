@@ -14,6 +14,8 @@ public interface NewsItemService {
 
 	public List<NewsItem> getAllNewsItems();
 
+	public List<NewsItem> getLastFiveNewsItems();
+
     public void editNewsItem(Long newsItemID, NewsItemDto newsItemDto);
 
 	public String deleteNewsItem(Long newsItemID);

@@ -19,8 +19,8 @@
 
 .login_logout {
     background: var(--bg-languages);
-    order: 0;
-    margin-top: var(--h-languages);
+    top: var(--h-languages);
+    height: var(--h-header);
 }
 
 .selected, .language button:hover {
@@ -58,15 +58,9 @@
 }
 
 @media screen and (min-width: 992px) {
-    .login_logout {
-        order: 200;
-        position: fixed;
-        bottom: 0;
-    }
-
     .menu_bar {
         position: fixed;
         height: var(--h-menu_bar-big);
-        top: var(--h-languages);
+        top: calc(var(--h-languages) + var(--h-header));
     }
 }

@@ -5,12 +5,14 @@
 
     <head>
         <link rel="stylesheet" href="/css/newsItem_admin.css">
+		<script src="/js/cut_content.js"></script>
+		<script src="/js/newsItemList.js" defer></script>
     </head>
 
     <body class="d-flex flex-column">
-        <main layout:fragment="content" class="d-flex mx-auto">
-            <table class="news_list_table table table-striped table-bordered table-hover" th:if="newsItemList != null">
-				<thead>
+        <main layout:fragment="content" class="d-flex mx-auto p-3">
+            <table class="news_list_table table table-striped table-bordered" th:if="newsItemList != null">
+				<thead class="text-center">
 					<tr>
 						<td th:text="#{newsItemID}">News Item ID</td>
 						<td th:text="#{newsItem_title}">News Item Title</td>
@@ -21,13 +23,15 @@
 				</thead>
 				<tbody>
 					<tr th:each="newsItem,iter : ${newsItemList}">
-						<td th:text="${newsItem.newsItemID}">NewsItem ID</td>
+						<td th:text="${newsItem.newsItemID}" class="text-center">NewsItem ID</td>
 						<td th:text="${newsItem.title}">NewsItem Title</td>
-						<td th:utext="${newsItem.body}">NewsItem Body</td>
+						<td th:utext="${newsItem.body}" class="body">NewsItem Body</td>
 						<!-- <td th:text="${newsItem.createdAt}">NewsItem Date</td> -->
 						<td>
-							<a class="btn btn-primary" th:href="@{'/admin-view/newsItem/' + ${newsItem.newsItemID} + '/edit'}">Edit</a>
-							<a class="btn btn-danger" th:href="@{'/admin-view/newsItem/' + ${newsItem.newsItemID} + '/delete'}">Delete</a>
+							<!-- <button type="submit" class="comment my-3 p-2 border-0 rounded">Comment</button> -->
+
+							<a class="btnLink button d-block mb-1 p-1 text-decoration-none text-center rounded" th:href="@{'/admin-view/newsItem/' + ${newsItem.newsItemID} + '/edit'}">Edit</a>
+							<a class="btnLink button d-block btn-danger p-1 text-decoration-none text-center rounded" th:href="@{'/admin-view/newsItem/' + ${newsItem.newsItemID} + '/delete'}">Delete</a>
 						</td>
 					</tr>
 				</tbody>

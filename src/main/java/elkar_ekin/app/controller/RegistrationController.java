@@ -1,4 +1,9 @@
 package elkar_ekin.app.controller;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -6,13 +11,16 @@ import java.util.Date;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import elkar_ekin.app.service.LocationService;
 import elkar_ekin.app.service.UserService;
 import elkar_ekin.app.dto.UserDto;
 import elkar_ekin.app.dto.LocationDto;
 import elkar_ekin.app.model.Location;
+import elkar_ekin.app.repositories.UserRepository;
 
 @Controller
 @RequestMapping("/registration")
@@ -21,11 +29,13 @@ public class RegistrationController {
 
     private final UserService userService;
     private final LocationService locationService;
+    private UserRepository userRepository;
     private Location userLocation;
 
-    public RegistrationController(UserService userService, LocationService locationService) {
+    public RegistrationController(UserService userService, LocationService locationService, UserRepository userRepository) {
         this.userService = userService;
         this.locationService = locationService;
+        this.userRepository=userRepository;
     }
 
     @ModelAttribute("userDto")
@@ -106,8 +116,13 @@ public class RegistrationController {
         LocalDate currentDate = LocalDate.now();
         LocalDate date18YearsAgo = currentDate.minusYears(18);
         LocalDate birthLocalDate = userDto.getBirthDate().toLocalDate();
+        LocalDate date100YearsAgo = currentDate.minusYears(100);
         if(birthLocalDate.isAfter(date18YearsAgo)){
             model.addAttribute("error", "error.notOldEnough");
+            return true;
+        }
+        else if(birthLocalDate.isBefore(date100YearsAgo)){
+            model.addAttribute("error", "error.userTooOld");
             return true;
         }
         return false;
@@ -122,7 +137,21 @@ public class RegistrationController {
 
     @PostMapping("/step4")
     public String processStep4(@RequestParam("password") String password, @RequestParam("password_confirmation") String passwordConfirmation,
-                            @ModelAttribute("userDto") UserDto userDto, Model model, BindingResult result) {
+    @ModelAttribute("userDto") UserDto userDto, Model model, BindingResult result) {
+        MultipartFile image = userDto.getImageFile();
+        try {
+            String uploadDir = "public/images/";
+            Path uploadPath = Paths.get(uploadDir);
+            if(!Files.exists(uploadPath)){
+                Files.createDirectories(uploadPath);
+            }
+            try (InputStream inputStream = image.getInputStream()){
+                Files.copy(inputStream, Paths.get(uploadDir + image.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+        
         if (hasErrorsPage4(userDto,password,passwordConfirmation, model)) {
             return "signup/signup_step4";
         }
@@ -175,10 +204,7 @@ public class RegistrationController {
         
         userDto.setRole(roleCheckboxes(checkbox1, checkbox2, model));
         userDto.setLocation(userLocation);
-        //Erroreak dauden edo ez ziurtatu
-        // if (result.hasErrors()) {          
-        //     return "signup/signup_step5";
-        // }
+        
         userService.save(userDto);
         model.addAttribute("message", "Registered Successfully!");
         return "redirect:/index";

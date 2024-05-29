@@ -68,7 +68,7 @@
     }
 
     main {
-        margin-top: var(--h-footer-big);
+        margin-top: var(--h-menu_bar-big);
         box-sizing: border-box;
     }
 }

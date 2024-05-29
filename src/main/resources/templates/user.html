@@ -37,7 +37,7 @@
             <div class="position-relative p-3">
                 <div><div class="banner"></div></div>
 
-                <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0" th:action="@{/client-view/user/update}" method="post" role="form" th:object="${userDto}">             
+                <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0" th:action="@{/client-view/user/update}" method="post" role="form" th:object="${userDto}">         
                     <div><div class="pfp rounded-circle position-absolute"></div></div>
                     <h1 class="name title mt-3" th:text="${user.name} + ' ' + ${user.surname1} + ' ' + ${user.surname2}">Name Surname</h1>
                     <h2 class="handle" th:text="'@' + ${user.username}">@username</h2>
@@ -104,21 +104,6 @@
                 <a href="volunteering_list.html" class="link" th:text="#{details}">See more details here.</a>
             </div>
         </main>
-
-        <!-- <main class="d-flex mx-auto">
-            <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0 px-4 px-md-6" th:action="@{/client-view/user/update}"
-                method="post" role="form" th:object="${userDto}">
-                <h1 class="mt-3 mb-3" th:text="#{signup}">Sign up</h1>
-    
-                <div class="form-floating">
-                    <input name="name" th:field="*{name}" type="text" class="form-control rounded-top"
-                        placeholder="First name" id="name" autocomplete="off" required />
-                    <label for="name" th:text="#{name}">Name</label>
-                </div>
-    
-                <button type="submit" class="rounded-1 py-2 w-100 border-0 mb-5 mb-md-3" th:text="#{continue}">Continue</button>
-            </form>
-        </main> -->
 
         <script src="/js/header_logout.js"></script>
         <script src="/js/user.js"></script>

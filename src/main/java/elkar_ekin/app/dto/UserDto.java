@@ -2,6 +2,8 @@ package elkar_ekin.app.dto;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import elkar_ekin.app.model.Location;
 
 public class UserDto {
@@ -26,14 +28,35 @@ public class UserDto {
     private String telephone;
     private String email;
     private String description;
-    private String imagePath;
+    private MultipartFile imageFile;
 
 	public UserDto(){
 	}
 
+	// public UserDto(String firstName, String lastName, String username, String password, String role, String name,
+	// 		String surname1, String surname2, String gender, Date birthDate, Location location, String telephone,
+	// 		String email, String description, String imagePath) {
+	// 	this.firstName = firstName;
+	// 	this.lastName = lastName;
+	// 	this.username = username;
+	// 	this.password = password;
+	// 	this.role = role;
+	// 	this.name = name;
+	// 	this.surname1 = surname1;
+	// 	this.surname2 = surname2;
+	// 	this.gender = gender;
+	// 	this.birthDate = birthDate;
+	// 	this.location = location;
+	// 	this.telephone = telephone;
+	// 	this.email = email;
+	// 	this.description = description;
+	// 	this.imagePath = imagePath;
+	// }
+
+	
 	public UserDto(String firstName, String lastName, String username, String password, String role, String name,
 			String surname1, String surname2, String gender, Date birthDate, Location location, String telephone,
-			String email, String description, String imagePath) {
+			String email, String description, MultipartFile imageFile) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
@@ -48,8 +71,9 @@ public class UserDto {
 		this.telephone = telephone;
 		this.email = email;
 		this.description = description;
-		this.imagePath = imagePath;
+		this.imageFile = imageFile;
 	}
+	
 
 	public String getFirstName() {
 		return firstName;
@@ -163,13 +187,21 @@ public class UserDto {
 		this.description = description;
 	}
 
-	public String getImagePath() {
-		return imagePath;
+	public MultipartFile getImageFile() {
+		return imageFile;
 	}
 
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
+	public void setImageFile(MultipartFile imageFile) {
+		this.imageFile = imageFile;
 	}
+
+	// public String getImagePath() {
+	// 	return imagePath;
+	// }
+
+	// public void setImagePath(String imagePath) {
+	// 	this.imagePath = imagePath;
+	// }
 
 	
 
