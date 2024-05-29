@@ -7,10 +7,10 @@ import elkar_ekin.app.model.User;
 
 
 public interface UserService {
-	public User save (UserDto userDto);
-
 	public boolean usernameExists(String username);
 
 	User update (UserDto userDto, UserDetails userDetails);
+
+	public User save(UserDto userDto);
 
 }

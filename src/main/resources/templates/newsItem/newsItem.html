@@ -40,16 +40,12 @@
                 <div th:replace="fragments/nav_main.html :: nav"></div>
             </div>
         </div>
-        <main layout:fragment="content" class="mx-auto container">
-            <a style="margin-top: 20px;" href="/newsItem/list">Go back to news</a>
+        
+        <main layout:fragment="content">
             <div class="card">
-                <h2 th:text="${newsItem.title}">TITLE HEADING</h2>
+                <h2 th:text="${newsItem.title}" class="title">TITLE HEADING</h2>
                 <!-- <h5 th:text="${blog.createdOn}">Title description, Dec 7,2017</h5> -->
-                <p th:utext="${newsItem.body}">Sunt in culpa qui
-                    officia deserunt mollit anim id est laborum consectetur
-                    adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco.</p>
+                <p th:utext="${newsItem.body}">Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
             </div>
             <form th:action="@{'/newsItem/' + ${newsItem.newsItemID} + '/createComment'}" th:object="${commentDto}" method="POST">
                 <!-- <input type="text" class="form-control" th:id="blogId"
@@ -57,20 +53,20 @@
                     th:value="${blog_detail.blogId}" hidden="true"> -->
 
                 <div class="form-group">
-                    <label for="comment_content">Comment</label>
-                    <textarea class="form-control" id="textarea" rows="3" required="required" th:field="*{content}"></textarea>
+                    <label for="comment_content" class="textarea-label my-3">Comment</label>
+                    <textarea class="form-control" id="comment_content" required th:field="*{content}"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Comment</button>
+                <button type="submit" class="comment my-3 p-2 border-0 rounded">Comment</button>
             </form>
 
-            <div class="card" th:each="comment,iter : ${commentList}">
+            <div class="card comment-box" th:each="comment,iter : ${commentList}">
                 <h2 th:text="'@' + ${comment.user.username}">username</h2>
-                <p class="truncated-content" th:utext="${comment.content}">Sunt in culpa qui
-                    officia deserunt mollit anim id est laborum consectetur
-                    adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco.</p>
+                <p class="truncated-content" th:utext="${comment.content}">Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
             </div>
+
+            <a href="/newsItem/list" class="fixed-btn p-3 position-fixed d-flex align-items-center justify-content-center text-decoration-none">
+                <i class="fa-solid fa-reply"></i>
+            </a>
         </main>
     </body>
 </html>

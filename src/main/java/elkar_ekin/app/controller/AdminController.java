@@ -1,5 +1,8 @@
 package elkar_ekin.app.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
 
@@ -128,53 +131,4 @@ public class AdminController {
 		return "redirect:/admin-view/newsItem/list";
 	}
 
-	@GetMapping({"/clients/list", "/clients/"})
-	public String listClients (Model model, Principal principal) {
-		model.addAttribute("currentPage", "clientList");
-		List<User> userList = repository.getUsersByRole("C");
-		if (userList == null) {
-			model.addAttribute("message", "No hay clientes disponibles.");
-		} else {
-			model.addAttribute("userList", userList);
-		}
-		return "admin/userList";
-	}
-
-	@GetMapping(value = "/clients/{clientID}/delete")
-	public String deleteClient(@PathVariable("clientID") String clientID, Model model) {
-		repository.deleteById(Long.parseLong(clientID));
-		return "redirect:/admin-view/clients/list";
-	}
-	
-	@GetMapping(value = "/clients/{clientID}")
-	public String viewClient(@PathVariable("clientID") String clientID, Model model) {
-		User client = repository.findByUserID(Long.parseLong(clientID));
-		model.addAttribute("user", client);
-		return "user";
-	}
-
-	@GetMapping({"/volunteers/list", "/volunteers/"})
-	public String listVolunteers (Model model, Principal principal) {
-		model.addAttribute("currentPage", "volunteerList");
-		List<User> userList = repository.getUsersByRole("V");
-		if (userList == null) {
-			model.addAttribute("message", "No hay clientes disponibles.");
-		} else {
-			model.addAttribute("userList", userList);
-		}
-		return "admin/userList";
-	}
-
-	@GetMapping("/volunteers/{volunteerID}/delete")
-	public String deleteVolunteer(@PathVariable("volunteerID") String volunteerID, Model model) {
-		repository.deleteById(Long.parseLong(volunteerID));
-		return "redirect:/admin-view/volunteers/list";
-	}
-	
-	@GetMapping(value = "/volunteers/{volunteerID}")
-	public String viewVolunteer(@PathVariable("volunteerID") String volunteerID, Model model) {
-		User volunteer = repository.findByUserID(Long.parseLong(volunteerID));
-		model.addAttribute("user", volunteer);
-		return "user";
-	}
 }

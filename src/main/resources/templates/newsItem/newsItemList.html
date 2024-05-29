@@ -40,27 +40,28 @@
                 <div th:replace="fragments/nav_main.html :: nav"></div>
             </div>
         </div>
-        <main layout:fragment="content" class="mx-auto container">
+        <main layout:fragment="content">
             <div>
-                <form id="myform" action="/newsItem/search" method="GET">
-                    <label style="color: white;" for="gsearch">Search Blogs Here:</label>
-                    <input type="search" placeholder="Search Blog" id="gsearch" name="keyword">
-                    <button type="submit" class="btn btn-primary">Search</button>
+                <form action="/newsItem/search" method="get" class="d-flex w-100">
+                    <input type="search" placeholder="Search news item" id="gsearch" name="keyword" class="flex-grow-3 p-1 rounded-start">
+                    <button type="submit" class="border-0 p-1 rounded-end flex-grow-1">Search</button>
                 </form>
             </div>
-            <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="card-container">
                 <div class="card" th:each="newsItem,iter : ${newsItemList}">
-                    <h2 th:text="${newsItem.title}">TITLE HEADING</h2>
+                    <h2 th:text="${newsItem.title}" class="title">TITLE HEADING</h2>
                     <!-- <h2 th:text="${newsItem.createdAt}">Title description, Dec 7,2017</h2> -->
-                    <p class="truncated-content" th:utext="${newsItem.body}">Sunt in culpa qui
-                        officia deserunt mollit anim id est laborum consectetur
-                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco.</p>
-                    <a th:href="@{'/newsItem/' + ${newsItem.newsItemID}}">Load More...</a>
+                    <div class="body">
+                        <p th:utext="${newsItem.body}"></p>
+                    </div>
+                    <a th:href="@{'/newsItem/' + ${newsItem.newsItemID}}" class="load link text-decoration-none">Load more</a>
                 </div>
-            </div> 
-            <script src="/js/newsItemList.js"></script>              
+            </div>
+            
+                     
         </main>
+
+        <script src="/js/cut_content.js"></script>             
+        <script src="/js/newsItemList.js"></script>    
     </body>
 </html>

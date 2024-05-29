@@ -97,7 +97,7 @@ hr {
 
 @media screen and (min-width: 992px) {
     main {
-        margin-top: calc(var(--h-languages) + var(--h-menu_bar-big));
+        margin-top: calc(var(--h-languages) + var(--h-header) + var(--h-menu_bar-big));
     }
 
     .banner {

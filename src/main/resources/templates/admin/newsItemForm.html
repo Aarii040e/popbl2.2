@@ -7,28 +7,29 @@
         <link rel="stylesheet" href="/css/newsItem_admin.css">
 		<!-- <script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script> -->
 		<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
-
+        <script src="/js/newsItemForm.js" defer></script>
 	</head>
     <body class="d-flex flex-column">
-		<main layout:fragment="content" class="d-flex mx-auto">
-			<script>
-				window.onload = function() {
-					CKEDITOR.replace('textarea');
-				};
-			</script>
-            <div class="justify-content-center">
+		<main layout:fragment="content" class="d-flex align-items-center justify-content-center p-3">
+
+            <div>
+
 				<form th:action="${isEdit} ? '/admin-view/editNewsItem' : '/admin-view/createNewsItem'" th:object="${newsItemDto}" method="post">
-					<input hidden="true" type="text" class="form-control" th:field="*{newsItemID}" value="-1">  
-					<div class="form-group">
+
+					<input hidden="true" type="text" class="form-control" th:field="*{newsItemID}" value="-1">
+
+					<div class="form-floating mb-3">
+						<input th:field="*{title}" type="text" class="form-control rounded" placeholder="Title" id="title1" autocomplete="off" required>
 						<label for="title1">Title</label>
-						<input type="text" class="form-control" id="title1" placeholder="Title" required="required" th:field="*{title}"/> <!-- th:value="${newsItem.title}" -->
 					</div>
-					<div class="form-group">
+
+					<div class="form-group mb-3">
 						<label for="textarea">Content</label>
-						<textarea class="form-control" id="textarea" rows="3" required="required" th:field="*{body}"></textarea> <!--  -->
+						<textarea class="form-control" id="textarea" rows="3" required="required" th:field="*{body}"></textarea>
 					</div>
-					<!-- <button type="submit" class="form-control btn btn-primary submit px-3">POST</button> -->
-					<button type="submit" class="form-control btn btn-primary submit px-3" th:text="${isEdit} ? 'Update' : 'Post'">Post</button>
+
+					<button type="submit" class="btnLink d-block w-100 py-2 text-center border-0 rounded" th:text="${isEdit} ? 'Update' : 'Post'">Post</button>
+
 				</form>
 			</div>
         </main>

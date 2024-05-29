@@ -66,5 +66,4 @@ public class VolunteerController {
         model.addAttribute("message", "Updated Successfully!");
         return "user";
     }
-
 }
