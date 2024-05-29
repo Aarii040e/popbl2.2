@@ -16,12 +16,12 @@
         <span class="d-none d-md-block m-0" th:text="#{create_news}">Create news item</span>
     </a>
 
-    <a href="/admin-view/clients/list" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'clientList'} ? 'active' : ' '">
+    <a href="/admin-view/clients/list" class="d-flex flex-column text-decoration-none">
         <i class="fa-solid fa-users-line text-center p-1"></i>
         <span class="d-none d-md-block m-0" th:text="#{clients}">Clients</span>
     </a>
 
-    <a href="/admin-view/volunteers/list" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'volunteerList'} ? 'active' : ' '">
+    <a href="/admin-view/volunteers/list" class="d-flex flex-column text-decoration-none">
         <i class="fa-solid fa-handshake-angle text-center p-1"></i>
         <span class="d-none d-md-block m-0" th:text="#{volunteers}">Volunteers</span>
     </a>

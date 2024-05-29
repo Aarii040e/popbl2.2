@@ -64,6 +64,10 @@ img {
     left: 20px;
 }
 
+h2, .body {
+    margin-bottom: 10px;
+}
+
 @media screen and (min-width: 768px) {
     main {
         height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-big));
