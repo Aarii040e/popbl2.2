@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/layout_client}">
+
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/task_form.css}">
+</head>
+
+<section class="d-flex flex-column">
+    <main layout:fragment="content" class="d-flex mx-auto">
+
+        <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0 px-4 px-md-6"
+        th:action="@{/client-view/createTask/step1}" method="post" th:object="${defaultTask}">
+
+            <h1 class="mb-3" th:text="#{create_task}">Create task</h1>
+
+            <div class="radios">
+                <div class="form-check">
+                    <input th:field="*{name}" class="form-check-input me-2" type="radio" value ="cleaning" name="radio" id="cleaning" data-category="environmental" data-type="event" >
+                    <label class="form-check-label" for="cleaning" th:text="#{task.cleaning}">Environmental cleaning</label>
+                </div>
+
+                <div class="form-check">
+                    <input th:field="*{name}" class="form-check-input me-2" type="radio" value="reforestation" name="radio" id="reforestation" data-category="environmental" data-type="event">
+                    <label class="form-check-label" for="reforestation" th:text="#{task.reforestation}">Reforestation</label>
+                </div>
+
+                <div class="form-check">
+                    <input th:field="*{name}" class="form-check-input me-2" type="radio" value="tutoring" name="radio" id="tutoring" data-category="educative" data-type="task">
+                    <label class="form-check-label" for="tutoring" th:text="#{task.tutoring}">Private tutoring</label>
+                </div>
+
+                <div class="form-check">
+                    <input th:field="*{name}" class="form-check-input me-2" type="radio" value="sportsevent" name="radio" id="sportsevent" data-category="sports" data-type="task">
+                    <label class="form-check-label" for="sportsevent" th:text="#{task.sportsevent}">Helping out at a sports event</label>
+                </div>
+
+                <div class="form-check">
+                    <input th:field="*{name}" class="form-check-input me-2" type="radio" value="simple_purchase" name="radio" id="lt10" data-category="social" data-type="task">
+                    <label class="form-check-label" for="lt10" th:text="#{task.simple_purchase}">Simple purchase (&lt;=10€)</label>
+                </div>
+
+                <div class="form-check">
+                    <input th:field="*{name}" class="form-check-input me-2" type="radio" value="elaborate_purchase" name="radio" id="gt10" data-category="social" data-type="task">
+                    <label class="form-check-label" for="gt10" th:text="#{task.elaborate_purchase}">Elaborate purchase (&gt;10€)</label>
+                </div>
+
+                <div class="form-check">
+                    <input th:field="*{name}" class="form-check-input me-2" type="radio" value="walk" name="radio" id="walk" data-category="social" data-type="task">
+                    <label class="form-check-label" for="walk" th:text="#{task.walk}">Going for a walk</label>
+                </div>
+
+                <div class="form-check">
+                    <input th:field="*{name}" class="form-check-input me-2" type="radio" value="hangout" name="radio" id="hangout" data-category="social" data-type="task">
+                    <label class="form-check-label" for="hangout" th:text="#{task.hangout}">Hanging out</label>
+                </div>
+
+                <div class="form-check">
+                    <input th:field="*{name}" class="form-check-input me-2" type="radio" value="cooking" name="radio" id="cooking" data-category="social" data-type="task">
+                    <label class="form-check-label" for="cooking" th:text="#{task.cooking}">Cooking</label>
+                </div>
+
+                <div class="form-check">
+                    <input th:field="*{name}" class="form-check-input me-2" type="radio" value="walking_pet" name="radio" id="pet" data-category="social" data-type="task">
+                    <label class="form-check-label" for="pet" th:text="#{task.walking_pets}">Walking pets</label>
+                </div>
+
+                <div class="form-check">
+                    <input th:field="*{name}" class="form-check-input me-2" type="radio" value="accompany_elderly" name="radio" id="doctor" data-category="social" data-type="task">
+                    <label class="form-check-label" for="doctor" th:text="#{task.accompany_elderly}">Accompany elderly people to the doctor</label>
+                </div>
+            </div>
+            <div class="cont p-0 mt-1 mb-3 mx-0"></div>
+            <button type="submit" class="rounded-1 py-2 w-100 border-0" th:text="#{continue}">Continue</button>
+        </form>
+        
+        <script src="/js/task_form_step1.js"></script>
+    </main>
+</section>
+
+</html>

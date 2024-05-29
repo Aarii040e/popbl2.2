@@ -1,0 +1,116 @@
+body {
+    height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-small));
+}
+
+main {
+    height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-small));
+    margin-top: calc( var(--h-languages) + var(--h-header));
+}
+
+h1 {
+    font-size: 30px;
+}
+
+ul {
+    background: var(--bg-sec-lighter);
+}
+
+ul li {
+    list-style: inside;
+}
+
+.task {
+    box-sizing: border-box;
+}
+
+.task * {
+    color: var(--bg-primary);
+    font-weight: 700;
+}
+
+.x {
+    cursor: pointer;
+}
+
+.user {
+    flex-flow: column;
+}
+
+#user {
+    border: none;
+    border-bottom: 1.5px solid var(--bg-sec-darker);
+    transition: border-bottom .2s;
+}
+
+#user:focus {
+    outline: none;
+    border-bottom: 1.5px solid var(--bg-sec-darker-2);
+}
+
+.iconbtn {
+    background: var(--button);
+    margin: -0.5rem;
+    transition: background .2s;
+}
+
+.iconbtn:hover {
+    background: var(--button-darker);
+    cursor: pointer;
+}
+
+form .form-control, select, input[type="date"], textarea, input[type="time"] {
+    background: var(--bg-sec-lighter);
+    box-sizing: border-box;
+}
+
+select, input[type="date"], textarea, .pfp-container, input[type="time"] {
+    border: 1px solid #ced4da;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+select, input[type="date"], input[type="time"] {
+    width: 150px;
+    height: 30px;
+}
+
+textarea {
+    width: 70%;
+    max-height: 250px;
+    height: 100px;
+}
+
+@media screen and (min-width: 768px) {
+    body {
+        height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-big));
+    }
+
+    main {
+        height: calc(100vh - var(--h-languages) - var(--h-header) - var(  --h-menu_bar-big));
+        flex-flow: row;
+        width: 60vw;
+    }
+
+    .user {
+        flex-flow: row;
+    }
+
+    form {
+        height: calc(100vh - var(--h-languages) - var(--h-header) - var(  --h-menu_bar-big));
+        box-sizing: border-box;
+        overflow-y: auto;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    main {
+        margin-top: calc( var(--h-languages) + var(--h-header) + var(--h-menu_bar-big));
+        width: 40vw;
+    }
+
+    header {
+        z-index: 100;
+    }
+}
