@@ -19,7 +19,9 @@ thead {
     background: var(--button);
     transition: background .2s;
     width: 65px;
+    height: 30px;
 }
+
 
 .button:hover {
     background: var(--button-darker);

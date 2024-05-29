@@ -8,9 +8,9 @@
     </head>
 
     <body class="d-flex flex-column">
-        <main layout:fragment="content" class="d-flex mx-auto">
-            <table class="news_list_table table table-striped table-bordered table-hover" th:if="userList != null">
-				<thead>
+        <main layout:fragment="content" class="d-flex mx-auto p-3">
+            <table class="news_list_table table table-striped table-bordered" th:if="userList != null">
+				<thead class="text-center">
 					<tr>
 						<td th:text="#{userID}">News Item ID</td>
 						<td th:text="#{name}">News Item Title</td>
@@ -23,7 +23,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="user,iter : ${userList}">
-						<td th:text="${user.userID}">NewsItem ID</td>
+						<td th:text="${user.userID}" class="text-center">NewsItem ID</td>
 						<td th:text="${user.name}">NewsItem ID</td>
 						<td th:text="${user.surname1}">NewsItem ID</td>
 						<td th:text="${user.surname2}">NewsItem ID</td>
@@ -35,16 +35,14 @@
 							<a class="btn btn-primary" th:href="@{'/admin-view/clients/' + ${user.userID}}">...</a>
 						</td> -->
 						<td>
-							<a class="btn btn-danger" th:if="${currentPage == 'clientList'}" th:href="@{'/admin-view/clients/' + ${user.userID} + '/delete'}"
-							   href="#">Delete</a>
-							<a class="btn btn-danger" th:if="${currentPage == 'volunteerList'}" th:href="@{'/admin-view/volunteers/' + ${user.userID} + '/delete'}"
-							   href="#">Delete</a>
+							<a class="btnLink button d-block btn-danger p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'clientList'}" th:href="@{'/admin-view/clients/' + ${user.userID} + '/delete'}" href="#">Delete</a>
+
+							<a class="btnLink button d-block btn-danger p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'volunteerList'}" th:href="@{'/admin-view/volunteers/' + ${user.userID} + '/delete'}" href="#">Delete</a>
 						</td>
 						<td>
-							<a class="btn btn-primary" th:if="${currentPage == 'clientList'}" th:href="@{'/admin-view/clients/' + ${user.userID}}"
-							   href="#">...</a>
-							<a class="btn btn-primary" th:if="${currentPage == 'volunteerList'}" th:href="@{'/admin-view/volunteers/' + ${user.userID}}"
-							   href="#">...</a>
+							<a class="btnLink button d-block mb-1 p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'clientList'}" th:href="@{'/admin-view/clients/' + ${user.userID}}" href="#">...</a>
+
+							<a class="btnLink button d-block mb-1 p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'volunteerList'}" th:href="@{'/admin-view/volunteers/' + ${user.userID}}" href="#">...</a>
 						</td>
 					</tr>
 				</tbody>
