@@ -45,7 +45,7 @@ form .form-control {
     main {
         height: calc(100vh - var(--h-languages) - var(--h-menu_bar-big) - var(--h-header));
         margin-bottom: var(--h-header);
-        margin-top: calc(var(--h-languages) + var(--h-menu_bar-big));
+        margin-top: calc(var(--h-languages) + var(--h-header) + var(--h-menu_bar-big));
         width: 40vw;
     }
 }

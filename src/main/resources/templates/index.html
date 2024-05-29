@@ -10,6 +10,7 @@
         <link rel="stylesheet" type="text/css" href="/css/header_nav_lang.css">
         <link rel="stylesheet" type="text/css" href="/css/index.css">
         <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
         <script src="https://kit.fontawesome.com/7ec78ffc94.js" crossorigin="anonymous"></script>
     </head>
 
@@ -40,12 +41,102 @@
                 <div th:replace="fragments/nav_main.html :: nav"></div>
             </div>
         </div>
-        <a href="/newsItem/list" style="margin-top: 200px;">NewsItemList</a>
+        <!-- <a href="/newsItem/list" style="margin-top: 200px;">NewsItemList</a> -->
         <!-- <section class="content">
             <span>Ambietal</span>
             <span>Social</span>
             <span>Educativo</span>
             <span>Deportivo</span>
         </section> -->
+
+        <main>
+            <section id="myCarousel" class="carousel slide">
+                
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2"></button>
+                </div>
+
+                <div class="carousel-inner">
+
+                    <div class="carousel-item active">
+                        <div class="carousel-caption">
+                            <h1>ELKAR-EKIN LOGO + eslogan</h1>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="carousel-caption w-100">
+                            <div class="d-flex align-items-center justify-content-center p-1">
+                                <img src="../images/3.jpg" alt="SDG 3 logo" class="rounded">
+                                <p th:text="#{sdg_3}">We use SGD 3</p>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center p-1">
+                                <img src="../images/4.jpg" alt="SDG 4 logo" class="rounded">
+                                <p th:text="#{sdg_4}">We use SGD 4</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="carousel-caption w-100">
+                            <div class="d-flex align-items-center justify-content-center p-1">
+                                <img src="../images/10.jpg" alt="SDG 10 logo" class="rounded">
+                                <p th:text="#{sdg_10}">We use SGD 10</p>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center p-1">
+                                <img src="../images/11.jpg" alt="SDG 11 logo" class="rounded">
+                                <p th:text="#{sdg_11}">We use SGD 11</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+            </section>
+
+            <section id="statistics" class="d-flex justify-content-around align-items-center mt-3 px-3 py-4">
+                <div class="d-flex flex-column text-center">
+                    <h1>250+</h1>
+                    <h1 th:text="#{volunteer_amount}">volunteers</h1>
+                </div>
+                <div class="d-flex flex-column text-center">
+                    <h1>1000+</h1>
+                    <h1 th:text="#{people_helped}">people helped</h1>
+                </div>
+            </section>
+
+            <hr class="border-0 w-100">
+
+            <section id="latest" class="p-3 pt-4">
+                <h1 class="mb-3" th:text="#{latest}">Latest News</h1>
+                
+                <div class="card-container d-flex mb-3">
+                    <div class="card my-3 mx-2" th:each="newsItem,iter : ${newsItemList}">
+                        <h2 th:text="${newsItem.title}" class="title">TITLE HEADING</h2>
+                        <!-- <h2 th:text="${newsItem.createdAt}">Title description, Dec 7,2017</h2> -->
+                        <div class="body">
+                            <p th:utext="${newsItem.body}"></p>
+                        </div>
+                        <a th:href="@{'/newsItem/' + ${newsItem.newsItemID}}" class="load link text-decoration-none">Load more</a>
+                    </div>
+                </div>
+                
+                <a href="/newsItem/list" th:text="#{see_all}">View all the news here!</a>
+            </section>
+        </main>
+
+        <script src="/assets/bootstrap.js"></script>
+        <script src="/js/cut_content.js"></script>             
+        <script src="/js/newsItemList.js"></script> 
     </body>
 </html>

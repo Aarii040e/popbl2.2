@@ -1,0 +1,6 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <div class="error_div p-3 alert-danger" th:if="${error!=null}" th:fragment="error">
+        <span th:text="#{${error}}">An error happened in the form.</span>
+    </div>
+</html>

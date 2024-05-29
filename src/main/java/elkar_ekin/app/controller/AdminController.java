@@ -1,5 +1,8 @@
 package elkar_ekin.app.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
 
@@ -142,6 +145,13 @@ public class AdminController {
 
 	@GetMapping(value = "/clients/{clientID}/delete")
 	public String deleteClient(@PathVariable("clientID") String clientID, Model model) {
+		//Delete the image if exists
+		User client = repository.findByUserID(Long.parseLong(clientID));
+		Path imagePath = Paths.get("public/images", client.getImagePath());
+		try{
+			Files.delete(imagePath);
+		}catch(Exception e){
+		}
 		repository.deleteById(Long.parseLong(clientID));
 		return "redirect:/admin-view/clients/list";
 	}
@@ -167,6 +177,13 @@ public class AdminController {
 
 	@GetMapping("/volunteers/{volunteerID}/delete")
 	public String deleteVolunteer(@PathVariable("volunteerID") String volunteerID, Model model) {
+		//Delete the image if exists
+		User volunteer = repository.findByUserID(Long.parseLong(volunteerID));
+		Path imagePath = Paths.get("public/images", volunteer.getImagePath());
+		try{
+			Files.delete(imagePath);
+		}catch(Exception e){
+		}
 		repository.deleteById(Long.parseLong(volunteerID));
 		return "redirect:/admin-view/volunteers/list";
 	}

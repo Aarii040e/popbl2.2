@@ -16,6 +16,8 @@
 
     --button: #CCC;
     --button-darker: #BBB;
+
+    --input-border: #ced4da;
     
     --gold: #C78F15;
 
@@ -81,7 +83,7 @@ hr {
 
 .link {
     color: var(--link-darker);
-    transition: none;
+    transition: color .2s;
 }
 
 .link:hover {
@@ -90,28 +92,38 @@ hr {
     cursor: pointer;
 }
 
-.pad_05em{
-    padding: 0.5em;
+.card {
+    background: var(--bg-sec-lighter);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px var(--bg-sec-darker);
+    padding: 20px;
 }
 
-.pad_1em{
-    padding: 1em;
+h2, .body {
+    margin-bottom: 10px;
 }
 
-.pad_15em{
-    padding: 1.5em;
+.title {
+    font-size: 20px;
 }
 
-.pad_2em{
-    padding: 2em;
+.body {
+    padding-bottom: 20px;
 }
 
-.bold{
-    font-weight: bold;
+.load {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
 }
 
-.center{
-    text-align: center;
+
+.error_div {
+    position: absolute;
+    top: 25%;
+    right: 50%;
+    transform: translate(50%,-50%);
+    border-radius: 10px;
 }
 
 /* Educative */
@@ -156,4 +168,10 @@ hr {
 .socialBg {
     background: var(--social);
     transition: background .3s;
+}
+
+@media screen and (min-width: 992px) {
+    .error_div {
+        top: 30%;
+    }
 }

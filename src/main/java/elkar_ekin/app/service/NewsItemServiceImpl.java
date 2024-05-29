@@ -45,6 +45,23 @@ public class NewsItemServiceImpl implements NewsItemService {
         }).collect(Collectors.toList());
     }
 
+	@Override
+	public List<NewsItem> getLastFiveNewsItems() {
+        // List<NewsItem> newsItems = newsItemRepository.findAll();
+        List<NewsItem> newsItems = newsItemRepository.findAllByOrderByCreatedAtDesc();
+
+        // Si necesitas transformar los datos de alguna manera, puedes hacerlo aquí
+		return newsItems.stream()
+        .limit(5) // Limitar a los primeros cinco elementos
+        .map(item -> {
+            NewsItem newsItem = new NewsItem();
+            newsItem.setNewsItemID(item.getNewsItemID());
+            newsItem.setTitle(item.getTitle());
+            newsItem.setBody(item.getBody());
+            return newsItem;
+        }).collect(Collectors.toList());
+    }
+
     @Override
     public String deleteNewsItem(Long newsItemID) {
         Optional<NewsItem> newsItemOptional = newsItemRepository.findById(newsItemID);

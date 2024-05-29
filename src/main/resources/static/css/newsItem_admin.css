@@ -1,30 +1,50 @@
+body * {
+    box-sizing: border-box;
+}
+
 main {
     background: var(--bg-primary);
     flex-flow: column;
     height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-small));
     margin-top: calc(var(--h-languages) + var(--h-header));
+    overflow-y: auto;
     width: 100%;
 }
 
-thead{
+thead {
     font-weight: bold;
-    text-align: center;
 }
 
+.button {
+    background: var(--button);
+    transition: background .2s;
+    width: 65px;
+}
+
+.button:hover {
+    background: var(--button-darker);
+    color: var(--font);
+}
 
 @media screen and (min-width: 768px) {
     main {
         height: calc(100vh - var(--h-languages) - var(--h-header) - var(  --h-menu_bar-big));
         flex-flow: row;
-        width: 60vw;
+        justify-content: center;
+    }
+
+    table {
+        width: 75vw;
     }
 }
 
 @media screen and (min-width: 992px) {
     main {
         height: calc(100vh - var(--h-languages) - var(--h-menu_bar-big) - var(--h-header));
-        margin-bottom: var(--h-header);
-        margin-top: calc(var(--h-languages) + var(--h-menu_bar-big));
-        width: 40vw;
+        margin-top: calc(var(--h-languages) + var(--h-header) + var(--h-menu_bar-big));
+    }
+
+    table {
+        width: 50vw;
     }
 }
