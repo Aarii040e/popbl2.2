@@ -215,6 +215,63 @@ public class ClientController {
 		model.addAttribute("isEdit", taskID != null);
 		return "client/createTask_2";
 	}
+	@SuppressWarnings("unused")
+	@PostMapping({"/task/{taskID}/edit"})
+	public String createOrUpdateTask(@ModelAttribute("taskDto") TaskDto taskDto, BindingResult result,
+			@RequestParam(name = "postal_code", required = true) String postal_code,
+			@RequestParam(name = "town", required = true) String town,
+			@RequestParam(name = "direction", required = true) String direction,
+			@RequestParam(name = "province", required = true) String province,
+			@RequestParam(name = "date", required = true) String strDate,
+			@RequestParam(name = "state", required = false) String state,
+			@RequestParam(name = "defaulTask", required = false) String defaulTask,
+			@RequestParam(name = "startTime", required = false) String strStime,
+			@RequestParam(name = "endTime", required = false) String strEtime,
+			@RequestParam(name = "volunteer", required = false) String volunteerName) {
+		if (result.hasErrors()) {
+			return "client/createTask_2";
+		}
+		defaultTask = defaultTaskRepository.findByName(defaulTask);
+		LocalDate date = LocalDate.parse(strDate);
+		taskDto.setDate(date);
+
+		// Save times in taskDto
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+		LocalTime startTime = null;
+		LocalTime endTime = null;
+		try {
+			startTime = LocalTime.parse(strStime, formatter);
+			endTime = LocalTime.parse(strEtime, formatter);
+		} catch (DateTimeParseException e) {
+		}
+		taskDto.setStartTime(startTime);
+		taskDto.setEndTime(endTime);
+
+		// Save location in task
+		LocationDto locationDto = new LocationDto(Long.parseLong(postal_code), direction, town, province);
+		Location location = locationService.saveLocation(locationDto);
+		taskDto.setLocation(location);
+
+		// Save volunteer
+		User volunteer = repository.findByUsername(volunteerName);
+		if (volunteer != null) {
+			taskDto.setVolunteer(volunteer);
+		}
+		// Save client
+		taskDto.setClient(client);
+		// Save defaultTask
+		taskDto.setTaskDefaultID(defaultTask);
+
+		// Set task state to ACTIVE
+		taskDto.setState(state);
+
+		if (taskDto != null) {
+			// Es una actualización
+			taskService.editTask(taskDto.getTaskID(), taskDto);
+			return "redirect:/client-view/index";
+		}
+		return "redirect:/client-view/createTask/step2";
+	}
 
 
 

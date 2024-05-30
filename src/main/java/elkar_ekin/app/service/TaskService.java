@@ -13,7 +13,7 @@ public interface TaskService {
 
 	// 	public List<Task> getAllTasks();
 
-    // public void editTask(Long taskID, TaskDto taskDto, User user);
+    public void editTask(Long taskID, TaskDto taskDto);
 
 	public String deleteTask(Long taskID);
 

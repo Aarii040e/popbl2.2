@@ -18,6 +18,8 @@
                 " method="post" th:object="${taskDto}">
                 <h1 class="mb-3" th:text="${isEdit} ? #{edit_task} : #{create_task}">Create task</h1>
                 <input hidden="true" type="text" class="form-control" th:field="*{taskID}" value="-1">
+                <input hidden="true" type="text" name="state" class="form-control" th:if="${isEdit}" th:field="*{state}">
+                <input hidden="true" type="text" name="defaulTask" class="form-control" th:if="${isEdit}" th:field="*{taskDefaultID.name}">
                 <div class="d-flex mb-3">
                     <div class="form-floating flex-grow-1 rounded-end">
                         <input type="number" class="form-control rounded-start" placeholder="Postal code"

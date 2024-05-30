@@ -68,15 +68,15 @@ public class TaskServiceImpl implements TaskService {
 		return task;
 	}
 
-    // @Override
-    // public void editTask(Long taskID, TaskDto taskDto, User user) {
-    //     Task existingTask = taskRepository.findById(taskID).orElseThrow(() -> new IllegalArgumentException("Invalid task ID"));
-    //     existingTask.setLocation(taskDto.getLocation());
-    //     existingTask.setDate(taskDto.getDate());
-	// 	existingTask.setDescription(taskDto.getDescription());
-	// 	existingTask.setStartTime(taskDto.getStartTime());
-	// 	existingTask.setEndTime(taskDto.getEndTime());
-    //     taskRepository.save(existingTask);
-    // }
+    @Override
+    public void editTask(Long taskID, TaskDto taskDto) {
+        Task existingTask = taskRepository.findById(taskID).orElseThrow(() -> new IllegalArgumentException("Invalid task ID"));
+        existingTask.setLocation(taskDto.getLocation());
+        existingTask.setDate(taskDto.getDate());
+		existingTask.setDescription(taskDto.getDescription());
+		existingTask.setStartTime(taskDto.getStartTime());
+		existingTask.setEndTime(taskDto.getEndTime());
+        taskRepository.save(existingTask);
+    }
 	
 }
