@@ -38,13 +38,13 @@ public class AdminController {
 	@Autowired
 	UserDetailsService userDetailsService;
 
+	@Autowired
+	NewsItemService newsItemService;
+
 	@ModelAttribute("newsItemDto")
     public NewsItemDto newsItemDto() {
         return new NewsItemDto();
     }
-
-	@Autowired
-	NewsItemService newsItemService;
 
 	@ModelAttribute
 	public void commonUser (Model model, Principal principal) {
@@ -55,6 +55,13 @@ public class AdminController {
 
 	@GetMapping("/index")
 	public String adminIndex (Model model, Principal principal) {
+		List<NewsItem> allNewsItems = newsItemService.getLastFiveNewsItems();
+		if (allNewsItems == null) {
+			model.addAttribute("message", "No hay noticias disponibles.");
+		} else {
+			model.addAttribute("newsItemList", allNewsItems);
+		}
+
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		model.addAttribute("user", userDetails);
 		model.addAttribute("currentPage", "index");

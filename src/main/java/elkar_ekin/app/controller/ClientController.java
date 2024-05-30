@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,10 +25,12 @@ import elkar_ekin.app.dto.TaskDto;
 import elkar_ekin.app.dto.UserDto;
 import elkar_ekin.app.model.DefaultTask;
 import elkar_ekin.app.model.Location;
+import elkar_ekin.app.model.NewsItem;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.DefaultTaskRepository;
 import elkar_ekin.app.repositories.UserRepository;
 import elkar_ekin.app.service.LocationService;
+import elkar_ekin.app.service.NewsItemService;
 import elkar_ekin.app.service.TaskService;
 import elkar_ekin.app.service.UserService;
 
@@ -41,6 +44,9 @@ public class ClientController {
 
 	@Autowired
 	UserDetailsService userDetailsService;
+
+	@Autowired
+	NewsItemService newsItemService;
 
 	@Autowired
 	private UserRepository repository;
@@ -87,6 +93,13 @@ public class ClientController {
 
 	@GetMapping("/index")
 	public String clientIndex(Model model, Principal principal) {
+		List<NewsItem> allNewsItems = newsItemService.getLastFiveNewsItems();
+		if (allNewsItems == null) {
+			model.addAttribute("message", "No hay noticias disponibles.");
+		} else {
+			model.addAttribute("newsItemList", allNewsItems);
+		}
+
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		model.addAttribute("user", userDetails);
 		model.addAttribute("currentPage", "index");
@@ -192,7 +205,7 @@ public class ClientController {
 			model.addAttribute("error", "error.wrongPostCode");
 			return true;
 		}
-		if (endTime.isAfter(startTime)) {
+		if (startTime.isAfter(endTime)) {
 			model.addAttribute("error", "error.wrongStartEndTimes");
 			return true;
 		}
