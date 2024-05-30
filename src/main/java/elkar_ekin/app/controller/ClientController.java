@@ -1,5 +1,10 @@
 package elkar_ekin.app.controller;
 
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import elkar_ekin.app.dto.LocationDto;
 import elkar_ekin.app.dto.NewsItemDto;
@@ -116,11 +122,7 @@ public class ClientController {
 	}
 
 	@PostMapping("/user/update")
-	public String clientUpdateUser(@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model,
-			Principal principal) {
-		if (result.hasErrors()) {
-			return "user";
-		}
+	public String clientUpdateUser(@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model, Principal principal) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		userService.update(userDto, userDetails);
 		model.addAttribute("message", "Updated Successfully!");

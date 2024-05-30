@@ -6,17 +6,10 @@ let apply = document.querySelector(".apply");
 let pfp = document.querySelector(".pfp");
 let description = document.querySelector("input[type='text']");
 
-let input = document.createElement("input");
-input.type = "file";
-input.id = "file";
-input.accept = "image/*";
-
 const enableChanges = () => {
     description.disabled = false;
     pfp.classList.add("editable");
-
-    pfp.appendChild(input);
-    pfp.addEventListener("click", () => input.click());
+    pfp.addEventListener("click", () => document.querySelector(".file").click());
 }
 
 edit.addEventListener("click", e => {   

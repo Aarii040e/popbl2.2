@@ -37,18 +37,19 @@
             <div class="position-relative p-3">
                 <div><div class="banner"></div></div>
 
-                <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0" th:action="@{/client-view/user/update}" method="post" role="form" th:object="${userDto}">         
+                <form enctype="multipart/form-data" class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0" th:action="@{/client-view/user/update}" method="post" role="form" th:object="${userDto}">         
                     <div>
                         <div class="pfp rounded-circle position-absolute"
-                        th:style="'background-image: url(' + (${user.imagePath} != null ? '/images/' + ${user.imagePath} : '/images/blank-pfp.svg') + ');'"></div>                    
+                        th:style="'background-image: url(' + (${user.imagePath} != null ? '/images/' + ${user.imagePath} : '/images/blank-pfp.svg') + ');'">
+                            <!-- <input th:field="*{imageFile}" type="file" class="file" id="file" accept="image/*"> -->
+                            <input name="imageFile" type="file" class="file" id="file" accept="image/*">
+                        </div>
                     </div>
                     <h1 class="name title mt-3" th:text="${user.name} + ' ' + ${user.surname1} + ' ' + ${user.surname2}">Name Surname</h1>
                     <h2 class="handle" th:text="'@' + ${user.username}">@username</h2>
 
-                    <!-- <input type="text" class="biography py-2 my-2" name="description" id="description" th:field="*{description}" disabled> -->
-
                     <input name="description" class="biography py-2 my-2 border-0" type="text" autocomplete="off" th:value="${user.description}" disabled/>
-                                
+                               
                     <div class="identity d-flex py-1">
                         <i class="fa-solid fa-circle-user me-1"></i>
                         <div th:switch="${user.role}" class="role">

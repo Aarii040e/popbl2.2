@@ -14,7 +14,7 @@ main {
     transition: filter .3s;
 }
 
-#file {
+.file {
     display: none;
 }
 
