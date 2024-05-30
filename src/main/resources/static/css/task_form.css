@@ -1,5 +1,10 @@
+body {
+    height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-small));
+}
+
 main {
-    height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-footer-small));
+    height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-small));
+    margin-top: calc( var(--h-languages) + var(--h-header));
 }
 
 h1 {
@@ -78,6 +83,10 @@ textarea {
 }
 
 @media screen and (min-width: 768px) {
+    body {
+        height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-big));
+    }
+
     main {
         height: calc(100vh - var(--h-languages) - var(--h-header) - var(  --h-menu_bar-big));
         flex-flow: row;
@@ -91,21 +100,16 @@ textarea {
         height: calc(100vh - var(--h-languages) - var(--h-header) - var(  --h-menu_bar-big));
         box-sizing: border-box;
         overflow-y: auto;
-        margin-bottom: var(--h-menu_bar-big);
     }
 }
 
 @media screen and (min-width: 992px) {
     main {
-        height: calc(100vh - var(--h-languages) - var(--h-menu_bar-big) - var(--h-header));
-        margin-bottom: var(--h-header);
-        margin-top: calc(var(--h-languages) + var(--h-menu_bar-big));
+        margin-top: calc( var(--h-languages) + var(--h-header) + var(--h-menu_bar-big));
         width: 40vw;
     }
+
     header {
         z-index: 100;
     }
-    .time {
-        width: 20%;
-    }    
 }
