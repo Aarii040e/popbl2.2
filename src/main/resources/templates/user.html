@@ -38,7 +38,10 @@
                 <div><div class="banner"></div></div>
 
                 <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0" th:action="@{/client-view/user/update}" method="post" role="form" th:object="${userDto}">         
-                    <div><div class="pfp rounded-circle position-absolute"></div></div>
+                    <div>
+                        <div class="pfp rounded-circle position-absolute"
+                        th:style="'background-image: url(' + (${user.imagePath} != null ? '/images/' + ${user.imagePath} : '/images/blank-pfp.svg') + ');'"></div>                    
+                    </div>
                     <h1 class="name title mt-3" th:text="${user.name} + ' ' + ${user.surname1} + ' ' + ${user.surname2}">Name Surname</h1>
                     <h2 class="handle" th:text="'@' + ${user.username}">@username</h2>
 

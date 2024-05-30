@@ -1,6 +1,7 @@
 package elkar_ekin.app.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import elkar_ekin.app.dto.UserDto;
+import elkar_ekin.app.model.NewsItem;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.UserRepository;
+import elkar_ekin.app.service.NewsItemService;
 import elkar_ekin.app.service.UserService;
 
 @Controller
@@ -27,6 +30,9 @@ public class VolunteerController {
 
 	@Autowired
 	UserDetailsService userDetailsService;
+
+	@Autowired
+	NewsItemService newsItemService;
 
 	private final UserService userService;
 
@@ -44,6 +50,13 @@ public class VolunteerController {
 
 	@GetMapping("/index")
 	public String volunteerIndex (Model model, Principal principal) {
+		List<NewsItem> allNewsItems = newsItemService.getLastFiveNewsItems();
+		if (allNewsItems == null) {
+			model.addAttribute("message", "No hay noticias disponibles.");
+		} else {
+			model.addAttribute("newsItemList", allNewsItems);
+		}
+		
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		model.addAttribute("user", userDetails);
 		model.addAttribute("currentPage", "index");
