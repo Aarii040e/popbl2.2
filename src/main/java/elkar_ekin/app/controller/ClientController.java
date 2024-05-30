@@ -289,15 +289,21 @@ public class ClientController {
 
 	// Error detection
 	public boolean 	hasErrorsTask(TaskDto taskDto, Model model) {
+		LocalDate taskDate = taskDto.getDate();
 		LocalTime startTime = taskDto.getStartTime();
 		LocalTime endTime = taskDto.getEndTime();
 		Location location = taskDto.getLocation();
+		LocalDate currentDate = LocalDate.now();
 		if (location.getPostCode().toString().length() != 5) {
 			model.addAttribute("error", "error.wrongPostCode");
 			return true;
 		}
 		if (startTime.isAfter(endTime)) {
 			model.addAttribute("error", "error.wrongStartEndTimes");
+			return true;
+		}
+		if (currentDate.isAfter(taskDate)){
+			model.addAttribute("error", "error.wrongDate");
 			return true;
 		}
 		return false;
