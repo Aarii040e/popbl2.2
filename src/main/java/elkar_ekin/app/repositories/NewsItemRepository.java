@@ -12,7 +12,6 @@ import elkar_ekin.app.model.NewsItem;
 public interface NewsItemRepository extends JpaRepository<NewsItem, Long> {
     
     List<NewsItem> findAllByOrderByCreatedAtDesc();
-	
     List<NewsItem> findByTitleContainingIgnoreCaseOrBodyContainingIgnoreCase(String titleKeyword, String bodyKeyword);
 
 }

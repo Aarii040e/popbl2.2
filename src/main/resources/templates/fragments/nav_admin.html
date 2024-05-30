@@ -6,12 +6,12 @@
         <span class="d-none d-md-block m-0" th:text="#{home}">Home</span>
     </a>
 
-    <a href="/admin-view/newsItem/" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'newsList'} ? 'active' : ' '">
+    <a href="/admin-view/newsItem/" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'newsItemList'} ? 'active' : ' '">
         <i class="fa-solid fa-list-check text-center p-1"></i>
         <span class="d-none d-md-block m-0" th:text="#{list_news}">List news items</span>
     </a>
 
-    <a href="/admin-view/newsItem/create" class="d-flex flex-column text-decoration-none">
+    <a href="/admin-view/newsItem/create" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'newsItemCreate'} ? 'active' : ' '">
         <i class="fa-solid fa-list-check text-center p-1"></i>
         <span class="d-none d-md-block m-0" th:text="#{create_news}">Create news item</span>
     </a>

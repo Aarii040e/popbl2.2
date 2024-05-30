@@ -17,9 +17,6 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
-	@Autowired
-	private UserRepository repository;
 
 	@Override
 	public User save(UserDto userDto) {

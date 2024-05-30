@@ -63,7 +63,7 @@ public class NewsItemController {
 	public String deleteNewsItem(@PathVariable("newsItemID") String newsItemID, Model model) {
 		NewsItem newsItem = newsItemService.getNewsItemByID(Long.parseLong(newsItemID));
 		model.addAttribute("newsItem", newsItem);
-		//To create comments
+		//To 																																																						 comments
 		CommentDto commentDto = new CommentDto();
 		model.addAttribute("commentDto", commentDto);
 		//To list all the comments

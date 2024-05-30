@@ -9,6 +9,7 @@ import elkar_ekin.app.model.User;
 
 public class TaskDto {
     
+    private Long taskID;
     private DefaultTask taskDefaultID;
     private String description;
     private LocalDate date;
@@ -35,6 +36,8 @@ public class TaskDto {
         this.volunteer = volunteer;
         this.client = client;
     }
+
+    
 
     public DefaultTask getTaskDefaultID() {
         return taskDefaultID;
@@ -107,5 +110,14 @@ public class TaskDto {
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
-   
+
+
+    public Long getTaskID() {
+        return taskID;
+    }
+
+
+    public void setTaskID(Long taskID) {
+        this.taskID = taskID;
+    }
 }
