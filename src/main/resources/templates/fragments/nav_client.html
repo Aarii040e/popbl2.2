@@ -11,8 +11,8 @@
         <span class="d-none d-md-block m-0" th:text="#{my_tasks}">My tasks</span>
     </a>
 
-    <a href="/client-view/createTask/step1" class="d-flex flex-column text-decoration-none">
-        <i class="fa-solid fa-bookmark text-center p-1"></i>
+    <a href="/client-view/createTask/step1" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'createTask'} ? 'active' : ' '">
+        <i class="fa-solid fa-plus text-center p-1"></i>
         <span class="d-none d-md-block m-0" th:text="#{create_tasks}">Create task</span>
     </a>
 
@@ -26,7 +26,7 @@
         <span class="d-none d-md-block m-0" th:text="#{ratings}">Ratings</span>
     </a>
 
-    <a href="/client-view/user" class="d-flex flex-column text-decoration-none">
+    <a href="/client-view/user" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'user'} ? 'active' : ' '">
         <i class="fa-solid fa-user text-center p-1"></i>
         <span class="d-none d-md-block m-0" th:text="#{profile}">Profile</span>
     </a>

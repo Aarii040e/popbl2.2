@@ -23,6 +23,46 @@ public class LocationDto {
 		this.town = town;
 		this.province = province;
 	}
+	// public LocationDto(Long postCode, String direction, String town, String province) {
+	// 	this.postCode = postCode;
+	// 	this.direction = direction;
+	// 	this.town = town;
+	// 	this.province = province;
+	// }
+
+	// public Long getPostCode() {
+	// 	return postCode;
+	// }
+
+	// public void setPostCode(Long postCode) {
+	// 	this.postCode = postCode;
+	// }
+
+	
+
+	public String getDirection() {
+		return direction;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
+	public String getTown() {
+		return town;
+	}
+
+	public void setTown(String town) {
+		this.town = town;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
 
 	public String getPostCode() {
 		return postCode;
@@ -30,40 +70,6 @@ public class LocationDto {
 
 	public void setPostCode(String postCode) {
 		this.postCode = postCode;
-	}
-
-	public String getDirection() {
-		return direction;
-	}
-
-
-
-	public void setDirection(String direction) {
-		this.direction = direction;
-	}
-
-
-
-	public String getTown() {
-		return town;
-	}
-
-
-
-	public void setTown(String town) {
-		this.town = town;
-	}
-
-
-
-	public String getProvince() {
-		return province;
-	}
-
-
-
-	public void setProvince(String province) {
-		this.province = province;
 	}
 
 

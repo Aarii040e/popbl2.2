@@ -26,6 +26,15 @@ public class Location {
 	}
 
 	
+	// public Location(Long postCode, String direction, String town, String province) {
+	// 	this.postCode = postCode;
+	// 	this.direction = direction;
+	// 	this.town = town;
+	// 	this.province = province;
+	// }
+
+	
+	
 	public Location(String postCode, String direction, String town, String province) {
 		this.postCode = postCode;
 		this.direction = direction;
@@ -39,19 +48,20 @@ public class Location {
 	}
 
 
+
 	public void setLocationID(Long locationID) {
 		this.locationID = locationID;
 	}
 
 
-	public String getPostCode() {
-		return postCode;
-	}
+	// public Long getPostCode() {
+	// 	return postCode;
+	// }
 
 
-	public void setPostCode(String postCode) {
-		this.postCode = postCode;
-	}
+	// public void setPostCode(Long postCode) {
+	// 	this.postCode = postCode;
+	// }
 
 
 	public String getDirection() {
@@ -82,5 +92,17 @@ public class Location {
 	public void setProvince(String province) {
 		this.province = province;
 	}
+
+
+	public void setPostCode(String postCode) {
+		this.postCode = postCode;
+	}
+
+
+	public String getPostCode() {
+		return postCode;
+	}
+
+	
 
 }
