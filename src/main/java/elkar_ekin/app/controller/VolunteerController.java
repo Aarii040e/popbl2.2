@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -85,11 +86,9 @@ public class VolunteerController {
 		return "volunteer/taskList";
 	}
 	@PostMapping("/task/singUp")
-    public String singUpVolunteerToTask (@ModelAttribute("task") Task task, BindingResult result, Model model, Principal principal) {
-		if (result.hasErrors()) {
-            return "user";
-        }
-		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+    public String singUpVolunteerToTask (@PathVariable("taskID") String taskID, Model model, Principal principal) {
+		Task task = taskService.getTaskByID(Long.parseLong(taskID));
+		
        /*  userService.update(userDto, userDetails); */
         model.addAttribute("message", "Updated Successfully!");
         return "user";

@@ -10,5 +10,5 @@ public interface TaskService {
 
 	public Task save (TaskDto taskDto);
 	public List<Task> getAllTasks();
-
+	public Task getTaskByID(Long id);
 }

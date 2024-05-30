@@ -1,12 +1,14 @@
 package elkar_ekin.app.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import elkar_ekin.app.dto.TaskDto;
+import elkar_ekin.app.model.NewsItem;
 import elkar_ekin.app.model.Task;
 import elkar_ekin.app.repositories.TaskRepository;
 
@@ -48,10 +50,15 @@ public class TaskServiceImpl implements TaskService {
         }).collect(Collectors.toList());
 	}
 
-	// }
-
-	
-
+	@Override
+	public Task getTaskByID(Long id) {
+		Optional<Task> taskOptional = taskRepository.findById(id);
+		Task task = new Task();
+		if (taskOptional.isPresent()) {
+            task = taskOptional.get();
+		}
+		return task;
+	}
 
 	
 }

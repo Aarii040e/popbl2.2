@@ -29,10 +29,13 @@
 					<i class="d-block py-2" th:text="${task.location.direction}">Task Location</i>
 					<div class="d-flex flex-column align-items-center">
 						<i class="fa-regular fa-bookmark bookmark text-center position-absolute py-1 px-2"></i>
-						<button class="position-absolute border-0 rounded-1 py-1 px-2" action="/singUp">Sign up</button>
+						<button class="position-absolute border-0 rounded-1 py-1 px-2" action="'/task/singUp/' + ${task.taskID}">Sign up</button>
 					</div> 
 				</div>
 			</div>
+			<script src="/js/cut_content.js"></script>
+			<script src="/js/volunteering_list.js"></script>
 		</main>
+		
     </body>
 </html>

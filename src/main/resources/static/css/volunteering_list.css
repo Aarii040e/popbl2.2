@@ -58,6 +58,14 @@ main {
 .socialBorder {
     border: 1.5px solid var(--social);
 }
+.fa-bookmark {
+    right: 80px;
+    bottom: 18.5px;
+}
+
+.fa-bookmark:hover {
+    cursor: pointer;
+}
 
 @media screen and (min-width: 768px) {
     main > div {
