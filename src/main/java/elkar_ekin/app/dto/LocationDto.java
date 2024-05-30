@@ -4,7 +4,7 @@ public class LocationDto {
 	
 	//Same fields as User except the ID
 
-    private Long postCode;
+    private String postCode;
 
     private String direction;
 
@@ -17,18 +17,18 @@ public class LocationDto {
 	public LocationDto(){
 	}
 
-	public LocationDto(Long postCode, String direction, String town, String province) {
+	public LocationDto(String postCode, String direction, String town, String province) {
 		this.postCode = postCode;
 		this.direction = direction;
 		this.town = town;
 		this.province = province;
 	}
 
-	public Long getPostCode() {
+	public String getPostCode() {
 		return postCode;
 	}
 
-	public void setPostCode(Long postCode) {
+	public void setPostCode(String postCode) {
 		this.postCode = postCode;
 	}
 

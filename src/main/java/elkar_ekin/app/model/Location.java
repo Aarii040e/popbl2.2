@@ -16,7 +16,7 @@ public class Location {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //Horrek primary keya automatikoki sortzen du
 	private Long locationID;
 
-    private Long postCode;
+    private String postCode;
     private String direction;
     private String town;
     private String province;
@@ -26,7 +26,7 @@ public class Location {
 	}
 
 	
-	public Location(Long postCode, String direction, String town, String province) {
+	public Location(String postCode, String direction, String town, String province) {
 		this.postCode = postCode;
 		this.direction = direction;
 		this.town = town;
@@ -44,12 +44,12 @@ public class Location {
 	}
 
 
-	public Long getPostCode() {
+	public String getPostCode() {
 		return postCode;
 	}
 
 
-	public void setPostCode(Long postCode) {
+	public void setPostCode(String postCode) {
 		this.postCode = postCode;
 	}
 
