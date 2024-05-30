@@ -1,7 +1,8 @@
 insert into categories (categoryid, name) values (1, "Voluntariado ambiental");
 insert into categories (categoryid, name) values (2, "Voluntariado deportivo");
 insert into categories (categoryid, name) values (3, "Voluntariado educativo");
-insert into categories (categoryid, name) values (4, "Voluntariado social");	
+insert into categories (categoryid, name) values (4, "Voluntariado social");
+	
 
 
 insert into default_tasks (default_taskid, estimated_time, name, categoryid) values (1, 240, "cleaning", 1);
