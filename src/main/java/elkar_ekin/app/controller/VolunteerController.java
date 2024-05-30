@@ -1,6 +1,7 @@
 package elkar_ekin.app.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,8 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import elkar_ekin.app.dto.UserDto;
+import elkar_ekin.app.model.NewsItem;
+import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.UserRepository;
+import elkar_ekin.app.service.TaskService;
 import elkar_ekin.app.service.UserService;
 
 @Controller
@@ -27,6 +31,9 @@ public class VolunteerController {
 
 	@Autowired
 	UserDetailsService userDetailsService;
+
+	@Autowired
+	TaskService taskService;
 
 	private final UserService userService;
 
@@ -63,6 +70,27 @@ public class VolunteerController {
         }
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         userService.update(userDto, userDetails);
+        model.addAttribute("message", "Updated Successfully!");
+        return "user";
+    }
+	@GetMapping("/taskList")
+	public String showTaskList (Model model, Principal principal) {
+		List<Task> allTasks = taskService.getAllTasks();
+		model.addAttribute("currentPage", "taskList");
+		if (allTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", allTasks);
+		}
+		return "volunteer/taskList";
+	}
+	@PostMapping("/task/singUp")
+    public String singUpVolunteerToTask (@ModelAttribute("task") Task task, BindingResult result, Model model, Principal principal) {
+		if (result.hasErrors()) {
+            return "user";
+        }
+		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+       /*  userService.update(userDto, userDetails); */
         model.addAttribute("message", "Updated Successfully!");
         return "user";
     }

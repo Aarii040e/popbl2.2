@@ -178,9 +178,9 @@ public class ClientController {
 		// Error detection
 		if (!hasErrorsTask(taskDto, model)) {
 			taskService.save(taskDto);
-			return "redirect:/client-view//createTask/step2";
+			return "redirect:/client-view/index";
 		}
-		return "redirect:/client-view/taskList";
+		return "redirect:/client-view/createTask/step2";
 	}
 
 	// Error detection
@@ -192,7 +192,7 @@ public class ClientController {
 			model.addAttribute("error", "error.wrongPostCode");
 			return true;
 		}
-		if (endTime.isAfter(startTime)) {
+		if (startTime.isAfter(endTime)) {
 			model.addAttribute("error", "error.wrongStartEndTimes");
 			return true;
 		}
