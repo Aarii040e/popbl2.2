@@ -19,4 +19,10 @@ public class LocationServiceImpl implements LocationService {
 		return locationRepository.save(location);
 	}
 
+	// @Override
+	// public Location saveLocation(LocationDto locationDto) {
+	// 	Location location = new Location(locationDto.getPostCode(), locationDto.getDirection(), locationDto.getTown(), locationDto.getProvince());
+	// 	return locationRepository.save(location);
+	// }
+
 }

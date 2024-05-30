@@ -174,7 +174,7 @@ public class ClientController {
 		taskDto.setEndTime(endTime);
 
 		// Save location in task
-		LocationDto locationDto = new LocationDto(Long.parseLong(postal_code), direction, town, province);
+		LocationDto locationDto = new LocationDto(postal_code, direction, town, province);
 		Location location = locationService.saveLocation(locationDto);
 		taskDto.setLocation(location);
 
