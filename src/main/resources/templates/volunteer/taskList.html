@@ -18,7 +18,7 @@
     <body class="d-flex flex-column">
         <main layout:fragment="content" class="p-3">
 			<div class="d-md-grid ">
-				<div class="card position-relative overflow-hidden mb-2 m-md-0 p-2" th:each="task,iter : ${taskList}">
+				<div class="card position-relative overflow-hidden mb-2 m-md-0 p-2" th:each="task,iter : ${taskList}" th:classappend="${task.taskDefaultID.category.name} + 'Border'">
 					<div class="title w-100 mb-1" th:text="#{${task.taskDefaultID.name}}" th:classappend="${task.taskDefaultID.category.name} + 'Bg'">Task Name</div>
 					<div class="pfp rounded-circle position-absolute" th:classappend="${task.taskDefaultID.category.name} + 'Border'"></div>
 					<i class="date" th:text="${task.date.year} + '/' + ${task.date.monthValue} + '/' + ${task.date.dayOfMonth} + ' ' + ${task.startTime} + ' - ' + ${task.endTime}">Task Date</i>
