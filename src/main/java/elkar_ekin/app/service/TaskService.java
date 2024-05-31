@@ -10,8 +10,8 @@ import elkar_ekin.app.model.User;
 public interface TaskService {
 
 	public Task save (TaskDto taskDto);
-
-	// 	public List<Task> getAllTasks();
+	
+	public List<Task> getAllTasks();
 
     public void editTask(Long taskID, TaskDto taskDto);
 
@@ -19,5 +19,8 @@ public interface TaskService {
 
 	public Task getTaskByID(Long taskID);
 
+	public List<Task> getAllActiveTasks();
+
+	public List<Task> getVolunteerTasks(User volunteer);
 
 }

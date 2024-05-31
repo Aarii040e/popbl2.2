@@ -1,3 +1,4 @@
+/* package elkar_ekin.app.init;
 // package elkar_ekin.app.init;
 
 // import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,12 @@
 //     @Autowired
 //     private DataSource dataSource;
 
+    @Override
+    public void run(String... args) throws Exception {
+        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(false, false, "UTF-8", new ClassPathResource("db/data.sql"));
+        resourceDatabasePopulator.execute(dataSource);
+    }
+} */
 //     @Override
 //     public void run(String... args) throws Exception {
 //         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(false, false, "UTF-8", new ClassPathResource("db/data.sql"));
