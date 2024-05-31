@@ -42,6 +42,8 @@ public class VolunteerController {
 
 	@Autowired
 	TaskService taskService;
+
+	@Autowired
 	NewsItemService newsItemService;
 
 	private final UserService userService;
@@ -90,7 +92,7 @@ public class VolunteerController {
     }
 	@GetMapping({"/task/list", "/task/"})
 	public String showTaskList (Model model, Principal principal) {
-		List<Task> allTasks = taskService.getAllTasks();
+		List<Task> allTasks = taskService.getAllActiveTasks();
 		model.addAttribute("currentPage", "taskList");
 		if (allTasks == null) {
 			model.addAttribute("message", "No hay tareas disponibles.");
@@ -104,8 +106,21 @@ public class VolunteerController {
 		Task task = taskService.getTaskByID(Long.parseLong(taskID));
 		User user = (User) model.getAttribute("user");
         task.setVolunteer(user);
+		task.setState("closed"); // nombre provisional
 		taskRepository.save(task);
-		redirectAttributes.addFlashAttribute("error", "You have signed up to the task!"); // no se visualiza
-        return "redirect:/volunteer-view/task/list";
+		// redirectAttributes.addFlashAttribute("error", "You have signed up to the task!"); // no se visualiza
+        return "redirect:/volunteer-view/signedUp";
     }
+	@GetMapping("/signedUp")
+	public String showSignedUpTaskList (Model model, Principal principal) {
+		User user = (User) model.getAttribute("user");
+		List<Task> allTasks = taskService.getVolunteerTasks(user);
+		model.addAttribute("currentPage", "taskList");
+		if (allTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("signedUp", allTasks);
+		}
+		return "volunteer/taskList";
+	}
 }

@@ -6,7 +6,7 @@
         <span class="d-none d-md-block m-0" th:text="#{home}">Home</span>
     </a>
 
-    <a href="/volunteer-view/task/list" class="d-flex flex-column text-decoration-none">
+    <a href="/volunteer-view/task/list" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'taskList'} ? 'active' : ' '">
         <i class="fa-solid fa-handshake-angle text-center p-1"></i>
         <span class="d-none d-md-block m-0" th:text="#{tasks}">Tasks</span>
     </a>
@@ -16,7 +16,7 @@
         <span class="d-none d-md-block m-0" th:text="#{saved_tasks}">Saved tasks</span>
     </a>
 
-    <a href="/volunteer-view/signed_up" class="d-flex flex-column text-decoration-none">
+    <a href="/volunteer-view/signedUp" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'signedUp'} ? 'active' : ' '">
         <i class="fa-solid fa-file-signature text-center p-1"></i>
         <span class="d-none d-md-block m-0" th:text="#{my_tasks}">My tasks</span>
     </a>

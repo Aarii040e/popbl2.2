@@ -79,8 +79,7 @@ public class TaskServiceImpl implements TaskService {
     }
 	@Override
 	public List<Task> getAllActiveTasks() {
-		// List<NewsItem> newsItems = newsItemRepository.findAll();
-        List<Task> tasks = taskRepository.findAll();
+        List<Task> tasks = taskRepository.findTasksByState("active");
 
         // Si necesitas transformar los datos de alguna manera, puedes hacerlo aquí
         return tasks.stream().map(item -> {
@@ -93,15 +92,13 @@ public class TaskServiceImpl implements TaskService {
 			task.setState(item.getState());
 			task.setLocation(item.getLocation());
 			task.setTaskDefaultID(item.getTaskDefaultID());
-			
-            return task;
+			return task;
         }).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Task> getVolunteerTasks(User volunteer) {
-		// List<NewsItem> newsItems = newsItemRepository.findAll();
-        List<Task> tasks = taskRepository.findAll();
+        List<Task> tasks = taskRepository.findTasksByVolunteer(volunteer);
 
         // Si necesitas transformar los datos de alguna manera, puedes hacerlo aquí
         return tasks.stream().map(item -> {
@@ -114,7 +111,8 @@ public class TaskServiceImpl implements TaskService {
 			task.setState(item.getState());
 			task.setLocation(item.getLocation());
 			task.setTaskDefaultID(item.getTaskDefaultID());
-            return task;
+			task.setVolunteer(item.getVolunteer());
+			return task;
         }).collect(Collectors.toList());
 	}
 

@@ -1,4 +1,4 @@
-package elkar_ekin.app.init;
+/* package elkar_ekin.app.init;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,4 +19,4 @@ public class DataInitializer implements CommandLineRunner {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(false, false, "UTF-8", new ClassPathResource("db/data.sql"));
         resourceDatabasePopulator.execute(dataSource);
     }
-}
+} */
