@@ -12,71 +12,86 @@
         <div class="error_div" th:if="${error!=null}">
             <span th:text="#{${error}}">An error happened in the form.</span>
         </div>
-        
-        <section class="d-flex flex-column">
-            <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0 px-4 px-md-6"
-                th:action="@{/client-view/createTask/step2}" method="post" th:object="${taskDto}">
-                <h1 class="mb-3" th:text="#{create_task}">Create task</h1>
 
+        <section class="d-flex flex-column">
+            <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0 px-4 px-md-6" th:action="${isEdit} ? @{/client-view/editTask/step2} : @{/client-view/createTask/step2}
+                " method="post" th:object="${taskDto}">
+                <h1 class="mb-3" th:text="${isEdit} ? #{edit_task} : #{create_task}">Create task</h1>
+                <input hidden="true" type="text" class="form-control" th:field="*{taskID}" value="-1">
+                <input hidden="true" type="text" name="state" class="form-control" th:if="${isEdit}" th:field="*{state}">
+                <input hidden="true" type="text" name="defaulTask" class="form-control" th:if="${isEdit}" th:field="*{taskDefaultID.name}">
                 <div class="d-flex mb-3">
                     <div class="form-floating flex-grow-1 rounded-end">
-                        <input type="number" class="form-control rounded-start"
-                            placeholder="Postal code" id="postalcode" name="postal_code" required>
+                        <input type="number" class="form-control rounded-start" placeholder="Postal code"
+                            id="postalcode" name="postal_code" th:if="${isEdit}" th:field="*{location.postCode}"
+                            required>
+                        <input type="number" class="form-control rounded-start" placeholder="Postal code"
+                            id="postalcode" name="postal_code" th:unless="${isEdit}" required>
                         <label for="postalcode" th:text="#{postal_code}">Postal code</label>
                     </div>
                     <div class="form-floating flex-grow-1">
-                        <input class="form-control rounded-end" id="town" name="town"
-                            autocomplete="off" placeholder="Town" required>
+                        <input type="text" class="form-control rounded-end" id="town" name="town" autocomplete="off"
+                            placeholder="Town" th:if="${isEdit}" th:field="*{location.town}" required>
+                        <input type="text" class="form-control rounded-end" id="town" name="town" autocomplete="off"
+                            placeholder="Town" th:unless="${isEdit}" required>
                         <label for="town" th:text="#{town}">Town</label>
                     </div>
                 </div>
-        
                 <div class="d-flex mb-3">
                     <div class="form-floating flex-grow-1">
-                        <input class="form-control rounded-start" id="direction"
-                            name="direction" placeholder="Direction" required>
+                        <input class="form-control rounded-start" id="direction" name="direction"
+                            placeholder="Direction" th:if="${isEdit}" th:field="*{location.direction}" required>
+                        <input class="form-control rounded-start" id="direction" name="direction"
+                            placeholder="Direction" th:unless="${isEdit}" required>
                         <label for="direction" th:text="#{direction}">Direction</label>
                     </div>
                     <div class="form-floating flex-grow-1">
-                        <input name="province" type="text" class="form-control rounded-end"
-                            placeholder="Province" id="province" required>
+                        <input name="province" type="text" class="form-control rounded-end" placeholder="Province"
+                            id="province" th:if="${isEdit}" th:field="*{location.province}" required>
+                        <input name="province" type="text" class="form-control rounded-end" placeholder="Province"
+                            id="province" th:unless="${isEdit}" required>
                         <label for="province" th:text="#{province}">Province</label>
-                    </div> 
+                    </div>
                 </div>
 
                 <div class="desc d-flex justify-content-between align-items-center py-1 mb-3">
                     <label for="description" th:text="#{description}">Description</label>
-                    <textarea id="description" name="description" th:field="*{description}" placeholder="Enter your description" class="px-1 rounded-1 p-1 vh-50"></textarea>
+                    <textarea id="description" name="description" th:field="*{description}"
+                        placeholder="Enter your description" class="px-1 rounded-1 p-1 vh-50"></textarea>
                 </div>
 
                 <div class="time">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <label for="date" th:text="#{date}">Date</label>
-                        <input type="date" id="date" name="date" class="px-1 rounded-1" required>
-                    </div>                
-    
+                        <input type="date" id="date" name="date" class="px-1 rounded-1" required th:field="*{date}">
+                    </div>
+
                     <div class="d-flex justify-content-between mb-3">
                         <label for="stime" th:text="#{start_time}">Start time</label>
-                        <input type="time" id="startTime" name="startTime" class="px-1 rounded-1" required>
+                        <input type="time" id="startTime" name="startTime" class="px-1 rounded-1" required
+                            th:field="*{startTime}">
                     </div>
-    
+
                     <div class="d-flex justify-content-between mb-3">
-                        <label for="etime"th:text="#{end_time}">End time</label>
-                        <input type="time" id="endTime" name="endTime" class="px-1 rounded-1" required>
+                        <label for="etime" th:text="#{end_time}">End time</label>
+                        <input type="time" id="endTime" name="endTime" class="px-1 rounded-1" required
+                            th:field="*{endTime}">
                     </div>
                 </div>
 
                 <div class="user d-flex py-1 mb-3">
-                    <label for="user" th:text="#{preferred_volunteer}">I would like this user to do this task:</label>
+                    <label for="user" th:text="#{preferred_volunteer}"  th:if="${isEdit}" th:field="*{volunteer.name}">I would like this user to
+                        do this task:</label>
                     <div>
                         <i class="ms-1">@</i>
-                        <input type="text" name="volunteer" id="user" class="px-1">
+                        <input type="text" name="volunteer" id="user" class="px-1" th:if="${isEdit}" th:field="*{volunteer.username}">
+                        <input type="text" name="volunteer" id="user" class="px-1"th:unless="${isEdit}" >
                     </div>
                 </div>
 
                 <div class="buttons d-flex">
                     <a href="/client-view/createTask/step1" class="btnLink text-decoration-none text-center rounded-1 py-2 w-100 border-0 mx-3">Previous</a>
-    
+
                     <button type="submit" class="rounded-1 py-2 w-100 border-0 mx-3">Continue</button>
                 </div>
             </form>

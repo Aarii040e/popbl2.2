@@ -1,10 +1,16 @@
 package elkar_ekin.app.controller;
 
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,20 +20,26 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import elkar_ekin.app.dto.LocationDto;
+import elkar_ekin.app.dto.NewsItemDto;
 import elkar_ekin.app.dto.TaskDto;
 import elkar_ekin.app.dto.UserDto;
 import elkar_ekin.app.model.DefaultTask;
 import elkar_ekin.app.model.Location;
+import elkar_ekin.app.model.NewsItem;
+import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.DefaultTaskRepository;
 import elkar_ekin.app.repositories.UserRepository;
 import elkar_ekin.app.service.LocationService;
+import elkar_ekin.app.service.NewsItemService;
 import elkar_ekin.app.service.TaskService;
 import elkar_ekin.app.service.UserService;
 
@@ -41,6 +53,9 @@ public class ClientController {
 
 	@Autowired
 	UserDetailsService userDetailsService;
+
+	@Autowired
+	NewsItemService newsItemService;
 
 	@Autowired
 	private UserRepository repository;
@@ -87,6 +102,13 @@ public class ClientController {
 
 	@GetMapping("/index")
 	public String clientIndex(Model model, Principal principal) {
+		List<NewsItem> allNewsItems = newsItemService.getLastFiveNewsItems();
+		if (allNewsItems == null) {
+			model.addAttribute("message", "No hay noticias disponibles.");
+		} else {
+			model.addAttribute("newsItemList", allNewsItems);
+		}
+
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		model.addAttribute("user", userDetails);
 		model.addAttribute("currentPage", "index");
@@ -100,11 +122,7 @@ public class ClientController {
 	}
 
 	@PostMapping("/user/update")
-	public String clientUpdateUser(@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model,
-			Principal principal) {
-		if (result.hasErrors()) {
-			return "user";
-		}
+	public String clientUpdateUser(@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model, Principal principal) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		userService.update(userDto, userDetails);
 		model.addAttribute("message", "Updated Successfully!");
@@ -158,7 +176,7 @@ public class ClientController {
 		taskDto.setEndTime(endTime);
 
 		// Save location in task
-		LocationDto locationDto = new LocationDto(Long.parseLong(postal_code), direction, town, province);
+		LocationDto locationDto = new LocationDto(postal_code, direction, town, province);
 		Location location = locationService.saveLocation(locationDto);
 		taskDto.setLocation(location);
 
@@ -183,17 +201,111 @@ public class ClientController {
 		return "redirect:/client-view/createTask/step2";
 	}
 
+	@GetMapping(value = "/task/{taskID}/delete")
+	public String deleteTask(@PathVariable("taskID") String taskID, Model model) {
+		taskService.deleteTask(Long.parseLong(taskID));
+		return "redirect:/client-view/index";
+	}
+
+	@GetMapping({"/task/{taskID}/edit"})
+	public String showTaskForm(@PathVariable("taskID") Long taskID, Model model) {
+		TaskDto taskDto = new TaskDto();
+		if (taskID != null) {
+			Task task = taskService.getTaskByID(taskID);
+			if (task != null) {
+				taskDto.setTaskDefaultID(task.getTaskDefaultID());
+				taskDto.setTaskID(taskID);
+				taskDto.setDescription(task.getDescription());
+				taskDto.setDate(task.getDate());
+				taskDto.setState(task.getState());
+				taskDto.setStartTime(task.getStartTime());
+				taskDto.setEndTime(task.getEndTime());
+				taskDto.setLocation(task.getLocation());
+				taskDto.setClient(task.getClient());
+				taskDto.setVolunteer(task.getVolunteer());
+			}
+		}
+		model.addAttribute("taskDto", taskDto);
+		model.addAttribute("isEdit", taskID != null);
+		return "client/createTask_2";
+	}
+	@SuppressWarnings("unused")
+	@PostMapping({"/task/{taskID}/edit"})
+	public String createOrUpdateTask(@ModelAttribute("taskDto") TaskDto taskDto, BindingResult result,
+			@RequestParam(name = "postal_code", required = true) String postal_code,
+			@RequestParam(name = "town", required = true) String town,
+			@RequestParam(name = "direction", required = true) String direction,
+			@RequestParam(name = "province", required = true) String province,
+			@RequestParam(name = "date", required = true) String strDate,
+			@RequestParam(name = "state", required = false) String state,
+			@RequestParam(name = "defaulTask", required = false) String defaulTask,
+			@RequestParam(name = "startTime", required = false) String strStime,
+			@RequestParam(name = "endTime", required = false) String strEtime,
+			@RequestParam(name = "volunteer", required = false) String volunteerName) {
+		if (result.hasErrors()) {
+			return "client/createTask_2";
+		}
+		defaultTask = defaultTaskRepository.findByName(defaulTask);
+		LocalDate date = LocalDate.parse(strDate);
+		taskDto.setDate(date);
+
+		// Save times in taskDto
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+		LocalTime startTime = null;
+		LocalTime endTime = null;
+		try {
+			startTime = LocalTime.parse(strStime, formatter);
+			endTime = LocalTime.parse(strEtime, formatter);
+		} catch (DateTimeParseException e) {
+		}
+		taskDto.setStartTime(startTime);
+		taskDto.setEndTime(endTime);
+
+		// Save location in task
+		LocationDto locationDto = new LocationDto(postal_code, direction, town, province);
+		Location location = locationService.saveLocation(locationDto);
+		taskDto.setLocation(location);
+
+		// Save volunteer
+		User volunteer = repository.findByUsername(volunteerName);
+		if (volunteer != null) {
+			taskDto.setVolunteer(volunteer);
+		}
+		// Save client
+		taskDto.setClient(client);
+		// Save defaultTask
+		taskDto.setTaskDefaultID(defaultTask);
+
+		// Set task state to ACTIVE
+		taskDto.setState(state);
+
+		if (taskDto != null) {
+			// Es una actualización
+			taskService.editTask(taskDto.getTaskID(), taskDto);
+			return "redirect:/client-view/index";
+		}
+		return "redirect:/client-view/createTask/step2";
+	}
+
+
+
 	// Error detection
-	public boolean hasErrorsTask(TaskDto taskDto, Model model) {
+	public boolean 	hasErrorsTask(TaskDto taskDto, Model model) {
+		LocalDate taskDate = taskDto.getDate();
 		LocalTime startTime = taskDto.getStartTime();
 		LocalTime endTime = taskDto.getEndTime();
 		Location location = taskDto.getLocation();
+		LocalDate currentDate = LocalDate.now();
 		if (location.getPostCode().toString().length() != 5) {
 			model.addAttribute("error", "error.wrongPostCode");
 			return true;
 		}
 		if (startTime.isAfter(endTime)) {
 			model.addAttribute("error", "error.wrongStartEndTimes");
+			return true;
+		}
+		if (currentDate.isAfter(taskDate)){
+			model.addAttribute("error", "error.wrongDate");
 			return true;
 		}
 		return false;

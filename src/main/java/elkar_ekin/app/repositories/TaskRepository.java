@@ -12,4 +12,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @SuppressWarnings("null")
     List<Task> findAll();
     
+
+        // List<Task> findAllByOrderByCreatedAtDesc();
+
 }

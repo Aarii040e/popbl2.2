@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
             .authorizeRequests()
                 .antMatchers("/registration/**", "/login/*", "/index", "/tos", "/locale/*", "/newsItem/*").permitAll()
-                .antMatchers("/css/**", "/js/**", "/images/**", "/assets/**").permitAll()
+                .antMatchers("/css/**", "/js/**", "/images/**", "/assets/**", "/public/**").permitAll()
                 .antMatchers("/admin-view/**").hasAuthority("A")
                 .antMatchers("/volunteer-view/**").hasAuthority("V")
                 .antMatchers("/client-view/**").hasAuthority("C")

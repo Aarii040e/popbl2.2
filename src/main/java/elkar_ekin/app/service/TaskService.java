@@ -4,11 +4,21 @@ import java.util.List;
 
 import elkar_ekin.app.dto.TaskDto;
 import elkar_ekin.app.model.Task;
+import elkar_ekin.app.model.User;
 
 
 public interface TaskService {
 
 	public Task save (TaskDto taskDto);
 	public List<Task> getAllTasks();
-	public Task getTaskByID(Long id);
+
+	// 	public List<Task> getAllTasks();
+
+    public void editTask(Long taskID, TaskDto taskDto);
+
+	public String deleteTask(Long taskID);
+
+	public Task getTaskByID(Long taskID);
+
+
 }

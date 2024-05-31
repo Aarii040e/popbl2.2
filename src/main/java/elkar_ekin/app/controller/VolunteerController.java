@@ -21,6 +21,7 @@ import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.UserRepository;
 import elkar_ekin.app.service.TaskService;
+import elkar_ekin.app.service.NewsItemService;
 import elkar_ekin.app.service.UserService;
 
 @Controller
@@ -35,6 +36,7 @@ public class VolunteerController {
 
 	@Autowired
 	TaskService taskService;
+	NewsItemService newsItemService;
 
 	private final UserService userService;
 
@@ -52,6 +54,13 @@ public class VolunteerController {
 
 	@GetMapping("/index")
 	public String volunteerIndex (Model model, Principal principal) {
+		List<NewsItem> allNewsItems = newsItemService.getLastFiveNewsItems();
+		if (allNewsItems == null) {
+			model.addAttribute("message", "No hay noticias disponibles.");
+		} else {
+			model.addAttribute("newsItemList", allNewsItems);
+		}
+		
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		model.addAttribute("user", userDetails);
 		model.addAttribute("currentPage", "index");

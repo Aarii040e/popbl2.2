@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import elkar_ekin.app.dto.TaskDto;
-import elkar_ekin.app.model.NewsItem;
 import elkar_ekin.app.model.Task;
 import elkar_ekin.app.repositories.TaskRepository;
 
@@ -25,11 +24,6 @@ public class TaskServiceImpl implements TaskService {
 		 return taskRepository.save(task);
 
 	}
-	// @Override
-	// public Task save(TaskDto taskDto) {
-	// 	Task task = new Task(taskDto.getTaskDefaultID(), taskDto.getDescription(), taskDto.getDate(), taskDto.getState(),
-	// 	 taskDto.getStartTime(), taskDto.getEndTime(), taskDto.getLocation(), taskDto.getClient());
-	// 	 return taskRepository.save(task);
 
 	@Override
 	public List<Task> getAllTasks() {
@@ -49,10 +43,21 @@ public class TaskServiceImpl implements TaskService {
             return task;
         }).collect(Collectors.toList());
 	}
-
+	
 	@Override
-	public Task getTaskByID(Long id) {
-		Optional<Task> taskOptional = taskRepository.findById(id);
+    public String deleteTask(Long taskID) {
+        Optional<Task> taskOptional = taskRepository.findById(taskID);
+		Task task = null;
+		if(taskOptional.isPresent()) {
+			task = taskOptional.get();
+		}
+		taskRepository.delete(task);
+		return "DELETED";
+    }
+
+    @Override
+	public Task getTaskByID(Long taskID) {
+		Optional<Task> taskOptional = taskRepository.findById(taskID);
 		Task task = new Task();
 		if (taskOptional.isPresent()) {
             task = taskOptional.get();
@@ -60,5 +65,15 @@ public class TaskServiceImpl implements TaskService {
 		return task;
 	}
 
+    @Override
+    public void editTask(Long taskID, TaskDto taskDto) {
+        Task existingTask = taskRepository.findById(taskID).orElseThrow(() -> new IllegalArgumentException("Invalid task ID"));
+        existingTask.setLocation(taskDto.getLocation());
+        existingTask.setDate(taskDto.getDate());
+		existingTask.setDescription(taskDto.getDescription());
+		existingTask.setStartTime(taskDto.getStartTime());
+		existingTask.setEndTime(taskDto.getEndTime());
+        taskRepository.save(existingTask);
+    }
 	
 }
