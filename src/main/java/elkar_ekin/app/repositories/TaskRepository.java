@@ -17,6 +17,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     
     List<Task> findTasksByVolunteer(User volunteer);
 
+    List<Task> findTasksByClient(User volunteer);
+
         // List<Task> findAllByOrderByCreatedAtDesc();
 
 }

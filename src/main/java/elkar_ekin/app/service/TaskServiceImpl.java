@@ -51,7 +51,7 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public List<Task> getTasksByUser(User user) {
 		// List<NewsItem> newsItems = newsItemRepository.findAll();
-		List<Task> tasks = taskRepository.findAll();
+		List<Task> tasks = taskRepository.findTasksByClient(user);
 
 		// Si necesitas transformar los datos de alguna manera, puedes hacerlo aquí
 		return tasks.stream().map(item -> {
