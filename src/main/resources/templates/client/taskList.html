@@ -29,9 +29,9 @@
 				</div>
 				<i class="d-block py-2" th:text="${task.location.direction}">Task Location</i>
 				<div class="d-flex flex-row align-items-end">
-					<a class=" border-0 rounded-1 py-1 px-2"
+					<a class=" signup space btnLink border-0 rounded-1 py-1 px-2"
 						th:href="@{'/client-view/task/' + ${task.taskID} + '/edit'}">Edit</a>
-					<a class=" border-0 rounded-1 py-1 px-2"
+					<a class=" signup btnLink border-0 rounded-1 py-1 px-2"
 						th:href="@{'/client-view/task/' + ${task.taskID} + '/delete'}">Delete</a>
 				</div>
 			</div>
