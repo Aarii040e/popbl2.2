@@ -221,12 +221,12 @@ public class ClientController {
 
 	@GetMapping("/tasks")
 	public String showTaskList(Model model, Principal principal) {
-		List<Task> allTasks = taskRepository.findAll();
+		List<Task> clientTasks = taskService.getTasksByUser(client);
 		model.addAttribute("currentPage", "taskList");
-		if (allTasks == null) {
+		if (clientTasks == null) {
 			model.addAttribute("message", "No hay tareas disponibles.");
 		} else {
-			model.addAttribute("taskList", allTasks);
+			model.addAttribute("taskList", clientTasks);
 		}
 		return "client/taskList";
 	}
