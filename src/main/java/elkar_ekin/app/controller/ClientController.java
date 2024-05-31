@@ -247,8 +247,9 @@ public class ClientController {
 				taskDto.setEndTime(task.getEndTime());
 				taskDto.setLocation(task.getLocation());
 				taskDto.setClient(task.getClient());
-				taskDto.setVolunteer(task.getVolunteer());
-				System.out.println(taskDto.getVolunteer().getUsername());
+				if (task.getVolunteer() != null){
+					taskDto.setVolunteer(task.getVolunteer());
+				}
 			}
 		}
 		model.addAttribute("taskDto", taskDto);
