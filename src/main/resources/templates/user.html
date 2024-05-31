@@ -40,7 +40,7 @@
                 <form enctype="multipart/form-data" class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0" th:action="@{/client-view/user/update}" method="post" role="form" th:object="${userDto}">         
                     <div>
                         <div class="pfp rounded-circle position-absolute"
-                        th:style="'background-image: url(' + (${user.imagePath} != null ? '/images/' + ${user.imagePath} : '/images/blank-pfp.svg') + ');'">
+                        th:style="'background-image: url(' + (${user.imagePath} != null ? '/img/' + ${user.imagePath} : '/images/blank-pfp.svg') + ');'">
                             <!-- <input th:field="*{imageFile}" type="file" class="file" id="file" accept="image/*"> -->
                             <input name="imageFile" type="file" class="file" id="file" accept="image/*">
                         </div>

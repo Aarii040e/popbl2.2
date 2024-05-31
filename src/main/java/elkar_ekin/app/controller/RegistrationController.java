@@ -140,7 +140,7 @@ public class RegistrationController {
     @ModelAttribute("userDto") UserDto userDto, Model model, BindingResult result) {
         MultipartFile image = userDto.getImageFile();
         try {
-            String uploadDir = "public/images/";
+            String uploadDir = "public/img/";
             Path uploadPath = Paths.get(uploadDir);
             if(!Files.exists(uploadPath)){
                 Files.createDirectories(uploadPath);
