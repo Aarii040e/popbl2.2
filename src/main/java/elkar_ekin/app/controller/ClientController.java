@@ -209,7 +209,7 @@ public class ClientController {
 			taskService.save(taskDto);
 			return "redirect:/client-view/index";
 		}
-		return "redirect:/client-view/createTask/step2";
+		return "client/createTask_2";
 	}
 
 	@GetMapping(value = "/task/{taskID}/delete")
