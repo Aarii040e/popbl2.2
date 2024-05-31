@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 		MultipartFile image = userDto.getImageFile();
         try {
 			if (image != null) {
-				String uploadDir = "public/images/";
+				String uploadDir = "public/img/";
 				Path uploadPath = Paths.get(uploadDir);
 				if(!Files.exists(uploadPath)){
 					Files.createDirectories(uploadPath);

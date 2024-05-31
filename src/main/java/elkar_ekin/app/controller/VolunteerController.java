@@ -46,6 +46,8 @@ public class VolunteerController {
 	@Autowired
 	NewsItemService newsItemService;
 
+	private User guest;
+
 	private final UserService userService;
 
 	public VolunteerController (UserService userService) {
@@ -75,7 +77,12 @@ public class VolunteerController {
 	}
 
 	@GetMapping("/user")
-	public String clientUser (Model model) {
+	public String clientUser (Model model, Principal principal) {
+
+		String admin = principal.getName();
+		guest = repository.findByUsername(admin);
+		model.addAttribute("guest", guest);
+
 		model.addAttribute("currentPage", "user");
 		return "user";
 	}
@@ -87,6 +94,7 @@ public class VolunteerController {
         }
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         userService.update(userDto, userDetails);
+		model.addAttribute("guest", guest);
         model.addAttribute("message", "Updated Successfully!");
         return "user";
     }

@@ -49,6 +49,8 @@ import elkar_ekin.app.service.UserService;
 public class ClientController {
 
 	private User client;
+	private User guest;
+
 	private DefaultTask defaultTask;
 
 	@Autowired
@@ -116,7 +118,11 @@ public class ClientController {
 	}
 
 	@GetMapping("/user")
-	public String clientUser(Model model) {
+	public String clientUser(Model model, Principal principal) {
+		String admin = principal.getName();
+		guest = repository.findByUsername(admin);
+		model.addAttribute("guest", guest);
+
 		model.addAttribute("currentPage", "user");
 		return "user";
 	}
@@ -125,6 +131,7 @@ public class ClientController {
 	public String clientUpdateUser(@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model, Principal principal) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		userService.update(userDto, userDetails);
+		model.addAttribute("guest", guest);
 		model.addAttribute("message", "Updated Successfully!");
 		return "user";
 	}
