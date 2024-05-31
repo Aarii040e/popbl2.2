@@ -11,7 +11,7 @@ public interface TaskService {
 
 	public Task save (TaskDto taskDto);
 
-	// 	public List<Task> getAllTasks();
+	public List<Task> getTasksByUser(User user);
 
     public void editTask(Long taskID, TaskDto taskDto);
 
