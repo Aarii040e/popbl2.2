@@ -37,11 +37,10 @@
             <div class="position-relative p-3">
                 <div><div class="banner"></div></div>
 
-                <form enctype="multipart/form-data" class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0" th:action="@{/client-view/user/update}" method="post" role="form" th:object="${userDto}">         
+                <form enctype="multipart/form-data" class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0" th:action="${user.role} == 'C' ? @{/client-view/user/update} : @{/volunteer-view/user/update}" method="post" role="form" th:object="${userDto}">         
                     <div>
                         <div class="pfp rounded-circle position-absolute"
                         th:style="'background-image: url(' + (${user.imagePath} != null ? '/img/' + ${user.imagePath} : '/images/blank-pfp.svg') + ');'">
-                            <!-- <input th:field="*{imageFile}" type="file" class="file" id="file" accept="image/*"> -->
                             <input name="imageFile" type="file" class="file" id="file" accept="image/*">
                         </div>
                     </div>
@@ -63,10 +62,14 @@
                         <i class="fa-solid fa-award me-1"></i>
                         <p>This user has volunteered <b>15</b> times!</p>
                     </div>
-                    <div class="d-flex">
-                        <button class="edit border-0 rounded-1 py-1 px-2 me-1" th:text="#{edit}">Edit profile</button>
-                        <button type="submit" class="apply d-none border-0 rounded-1 py-1 px-2 me-1" th:text="#{apply}">Apply changes</button>
-                        <button class="settings border-0 rounded-1 py-1 px-2" th:text="#{settings}">Settings</button>
+
+                    <!-- <div th:unless="${condition}">
+                    </div> -->
+
+                    <div class="d-flex" th:if="${guest != null}">
+                        <button class="edit border-0 rounded-1 py-1 px-2 me-1" th:if="${guest.name} == ${user.name}" th:text="#{edit}">Edit profile</button>
+                        <button type="submit" class="apply d-none border-0 rounded-1 py-1 px-2 me-1" th:if="${guest.name} == ${user.name}" th:text="#{apply}">Apply changes</button>
+                        <!-- <button class="settings border-0 rounded-1 py-1 px-2" th:text="#{settings}">Settings</button> -->
                     </div>
                 </form>
             </div>

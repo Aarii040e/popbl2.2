@@ -31,6 +31,7 @@ import elkar_ekin.app.service.NewsItemService;
 public class AdminController {
 
 	private User user;
+	private User guest;
 
 	@Autowired
 	private UserRepository repository;
@@ -50,6 +51,7 @@ public class AdminController {
 	public void commonUser (Model model, Principal principal) {
 		String username=principal.getName();
 		user = repository.findByUsername(username);
+		System.out.println(user);
 		model.addAttribute("user", user);
 	}
 
@@ -164,7 +166,12 @@ public class AdminController {
 	}
 	
 	@GetMapping(value = "/clients/{clientID}")
-	public String viewClient(@PathVariable("clientID") String clientID, Model model) {
+	public String viewClient(@PathVariable("clientID") String clientID, Model model, Principal principal) {
+
+		String admin = principal.getName();
+		guest = repository.findByUsername(admin);
+		model.addAttribute("guest", guest);
+
 		User client = repository.findByUserID(Long.parseLong(clientID));
 		model.addAttribute("user", client);
 		return "user";
@@ -196,7 +203,12 @@ public class AdminController {
 	}
 	
 	@GetMapping(value = "/volunteers/{volunteerID}")
-	public String viewVolunteer(@PathVariable("volunteerID") String volunteerID, Model model) {
+	public String viewVolunteer(@PathVariable("volunteerID") String volunteerID, Model model, Principal principal) {
+		
+		String admin = principal.getName();
+		guest = repository.findByUsername(admin);
+		model.addAttribute("guest", guest);
+
 		User volunteer = repository.findByUserID(Long.parseLong(volunteerID));
 		model.addAttribute("user", volunteer);
 		return "user";
