@@ -25,7 +25,7 @@
 				<p class="description py-2" th:text="${task.description}">Task Description</p>
 				<div class="d-flex align-items-center">
 					<i class="fa-regular fa-circle-check me-1" th:classappend="${task.taskDefaultID.category.name}"></i>
-					<p th:text="${task.taskDefaultID.category.name}">Category</p>
+					<p th:text="#{${task.taskDefaultID.category.name}}">Category</p>
 				</div>
 				<i class="d-block py-2" th:text="${task.location.direction}">Task Location</i>
 				<div class="d-flex flex-row align-items-end">
