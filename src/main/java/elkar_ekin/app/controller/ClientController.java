@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import elkar_ekin.app.dto.LocationDto;
-import elkar_ekin.app.dto.NewsItemDto;
 import elkar_ekin.app.dto.TaskDto;
 import elkar_ekin.app.dto.UserDto;
 import elkar_ekin.app.model.DefaultTask;
@@ -37,6 +36,7 @@ import elkar_ekin.app.model.NewsItem;
 import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.DefaultTaskRepository;
+import elkar_ekin.app.repositories.TaskRepository;
 import elkar_ekin.app.repositories.UserRepository;
 import elkar_ekin.app.service.LocationService;
 import elkar_ekin.app.service.NewsItemService;
@@ -52,6 +52,7 @@ public class ClientController {
 	private User guest;
 
 	private DefaultTask defaultTask;
+	private TaskDto editTask;
 
 	@Autowired
 	UserDetailsService userDetailsService;
@@ -61,6 +62,9 @@ public class ClientController {
 
 	@Autowired
 	private UserRepository repository;
+
+	@Autowired
+	private TaskRepository taskRepository;
 
 	@Autowired
 	private DefaultTaskRepository defaultTaskRepository;
@@ -210,12 +214,26 @@ public class ClientController {
 
 	@GetMapping(value = "/task/{taskID}/delete")
 	public String deleteTask(@PathVariable("taskID") String taskID, Model model) {
+		model.addAttribute("currentPage", "deleteTask");
 		taskService.deleteTask(Long.parseLong(taskID));
-		return "redirect:/client-view/index";
+		return "redirect:/client-view/tasks";
 	}
 
-	@GetMapping({"/task/{taskID}/edit"})
+	@GetMapping("/tasks")
+	public String showTaskList(Model model, Principal principal) {
+		List<Task> allTasks = taskRepository.findAll();
+		model.addAttribute("currentPage", "taskList");
+		if (allTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", allTasks);
+		}
+		return "client/taskList";
+	}
+
+	@GetMapping({ "/task/{taskID}/edit" })
 	public String showTaskForm(@PathVariable("taskID") Long taskID, Model model) {
+		model.addAttribute("currentPage", "editTask");
 		TaskDto taskDto = new TaskDto();
 		if (taskID != null) {
 			Task task = taskService.getTaskByID(taskID);
@@ -230,29 +248,31 @@ public class ClientController {
 				taskDto.setLocation(task.getLocation());
 				taskDto.setClient(task.getClient());
 				taskDto.setVolunteer(task.getVolunteer());
+				System.out.println(taskDto.getVolunteer().getUsername());
 			}
 		}
 		model.addAttribute("taskDto", taskDto);
 		model.addAttribute("isEdit", taskID != null);
-		return "client/createTask_2";
+		return "client/editTask";
 	}
-	@SuppressWarnings("unused")
-	@PostMapping({"/task/{taskID}/edit"})
-	public String createOrUpdateTask(@ModelAttribute("taskDto") TaskDto taskDto, BindingResult result,
-			@RequestParam(name = "postal_code", required = true) String postal_code,
+
+	@PostMapping({ "/editTask" })
+	public String UpdateTask(@ModelAttribute("taskDto") TaskDto taskDto, BindingResult result,
+			@RequestParam(name = "task_ID", required = false) String strTaskId,
+			@RequestParam(name = "postal_code", required = true) String postalCode,
 			@RequestParam(name = "town", required = true) String town,
 			@RequestParam(name = "direction", required = true) String direction,
 			@RequestParam(name = "province", required = true) String province,
 			@RequestParam(name = "date", required = true) String strDate,
-			@RequestParam(name = "state", required = false) String state,
-			@RequestParam(name = "defaulTask", required = false) String defaulTask,
-			@RequestParam(name = "startTime", required = false) String strStime,
-			@RequestParam(name = "endTime", required = false) String strEtime,
+			@RequestParam(name = "state", required = true) String state,
+			@RequestParam(name = "defaulTask", required = true) String defaulTask,
+			@RequestParam(name = "startTime", required = true) String strStime,
+			@RequestParam(name = "endTime", required = true) String strEtime,
 			@RequestParam(name = "volunteer", required = false) String volunteerName) {
-		if (result.hasErrors()) {
-			return "client/createTask_2";
-		}
+		
+
 		defaultTask = defaultTaskRepository.findByName(defaulTask);
+
 		LocalDate date = LocalDate.parse(strDate);
 		taskDto.setDate(date);
 
@@ -269,7 +289,7 @@ public class ClientController {
 		taskDto.setEndTime(endTime);
 
 		// Save location in task
-		LocationDto locationDto = new LocationDto(postal_code, direction, town, province);
+		LocationDto locationDto = new LocationDto(postalCode, direction, town, province);
 		Location location = locationService.saveLocation(locationDto);
 		taskDto.setLocation(location);
 
@@ -289,15 +309,13 @@ public class ClientController {
 		if (taskDto != null) {
 			// Es una actualización
 			taskService.editTask(taskDto.getTaskID(), taskDto);
-			return "redirect:/client-view/index";
+			return "redirect:/client-view/tasks";
 		}
-		return "redirect:/client-view/createTask/step2";
+		return "redirect:/client-view/task/{taskID}/edit";
 	}
 
-
-
 	// Error detection
-	public boolean 	hasErrorsTask(TaskDto taskDto, Model model) {
+	public boolean hasErrorsTask(TaskDto taskDto, Model model) {
 		LocalDate taskDate = taskDto.getDate();
 		LocalTime startTime = taskDto.getStartTime();
 		LocalTime endTime = taskDto.getEndTime();
@@ -311,7 +329,7 @@ public class ClientController {
 			model.addAttribute("error", "error.wrongStartEndTimes");
 			return true;
 		}
-		if (currentDate.isAfter(taskDate)){
+		if (currentDate.isAfter(taskDate)) {
 			model.addAttribute("error", "error.wrongDate");
 			return true;
 		}

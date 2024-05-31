@@ -10,6 +10,8 @@ import elkar_ekin.app.model.User;
 public interface TaskService {
 
 	public Task save (TaskDto taskDto);
+
+	public List<Task> getTasksByUser(User user);
 	
 	public List<Task> getAllTasks();
 
