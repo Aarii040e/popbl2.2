@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import elkar_ekin.app.dto.TaskDto;
 import elkar_ekin.app.dto.UserDto;
 import elkar_ekin.app.model.NewsItem;
 import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
+import elkar_ekin.app.repositories.TaskRepository;
 import elkar_ekin.app.repositories.UserRepository;
 import elkar_ekin.app.service.TaskService;
 import elkar_ekin.app.service.NewsItemService;
@@ -32,6 +35,9 @@ public class VolunteerController {
 	private UserRepository repository;
 
 	@Autowired
+	private TaskRepository taskRepository;
+
+	@Autowired
 	UserDetailsService userDetailsService;
 
 	@Autowired
@@ -43,7 +49,6 @@ public class VolunteerController {
 	public VolunteerController (UserService userService) {
         this.userService = userService;
     }
-
 
 	@ModelAttribute
 	public void commonUser (Model model, Principal principal) {
@@ -83,7 +88,7 @@ public class VolunteerController {
         model.addAttribute("message", "Updated Successfully!");
         return "user";
     }
-	@GetMapping("/taskList")
+	@GetMapping({"/task/list", "/task/"})
 	public String showTaskList (Model model, Principal principal) {
 		List<Task> allTasks = taskService.getAllTasks();
 		model.addAttribute("currentPage", "taskList");
@@ -94,12 +99,13 @@ public class VolunteerController {
 		}
 		return "volunteer/taskList";
 	}
-	@PostMapping("/task/singUp")
-    public String singUpVolunteerToTask (@PathVariable("taskID") String taskID, Model model, Principal principal) {
+	@GetMapping("/task/{taskID}/signUp")
+    public String singUpVolunteerToTask (@PathVariable("taskID") String taskID, Model model, Principal principal, RedirectAttributes redirectAttributes) {
 		Task task = taskService.getTaskByID(Long.parseLong(taskID));
-		
-       /*  userService.update(userDto, userDetails); */
-        model.addAttribute("message", "Updated Successfully!");
-        return "user";
+		User user = (User) model.getAttribute("user");
+        task.setVolunteer(user);
+		taskRepository.save(task);
+		redirectAttributes.addFlashAttribute("error", "You have signed up to the task!"); // no se visualiza
+        return "redirect:/volunteer-view/task/list";
     }
 }

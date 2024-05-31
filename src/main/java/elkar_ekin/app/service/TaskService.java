@@ -20,5 +20,7 @@ public interface TaskService {
 
 	public Task getTaskByID(Long taskID);
 
+	public List<Task> getAllActiveTasks();
+	public List<Task> getVolunteerTasks(User volunteer);
 
 }

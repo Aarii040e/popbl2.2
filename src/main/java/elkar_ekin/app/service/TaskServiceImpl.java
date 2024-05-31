@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import elkar_ekin.app.dto.TaskDto;
 import elkar_ekin.app.model.Task;
+import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.TaskRepository;
 
 @Service
@@ -33,6 +34,7 @@ public class TaskServiceImpl implements TaskService {
         // Si necesitas transformar los datos de alguna manera, puedes hacerlo aquí
         return tasks.stream().map(item -> {
             Task task = new Task();
+			task.setTaskID(item.getTaskID());
             task.setDescription(item.getDescription());
             task.setDate(item.getDate());
             task.setStartTime(item.getStartTime());
@@ -75,5 +77,47 @@ public class TaskServiceImpl implements TaskService {
 		existingTask.setEndTime(taskDto.getEndTime());
         taskRepository.save(existingTask);
     }
+	@Override
+	public List<Task> getAllActiveTasks() {
+		// List<NewsItem> newsItems = newsItemRepository.findAll();
+        List<Task> tasks = taskRepository.findAll();
+
+        // Si necesitas transformar los datos de alguna manera, puedes hacerlo aquí
+        return tasks.stream().map(item -> {
+            Task task = new Task();
+			task.setTaskID(item.getTaskID());
+            task.setDescription(item.getDescription());
+            task.setDate(item.getDate());
+            task.setStartTime(item.getStartTime());
+			task.setEndTime(item.getEndTime());
+			task.setState(item.getState());
+			task.setLocation(item.getLocation());
+			task.setTaskDefaultID(item.getTaskDefaultID());
+			
+            return task;
+        }).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Task> getVolunteerTasks(User volunteer) {
+		// List<NewsItem> newsItems = newsItemRepository.findAll();
+        List<Task> tasks = taskRepository.findAll();
+
+        // Si necesitas transformar los datos de alguna manera, puedes hacerlo aquí
+        return tasks.stream().map(item -> {
+            Task task = new Task();
+			task.setTaskID(item.getTaskID());
+            task.setDescription(item.getDescription());
+            task.setDate(item.getDate());
+            task.setStartTime(item.getStartTime());
+			task.setEndTime(item.getEndTime());
+			task.setState(item.getState());
+			task.setLocation(item.getLocation());
+			task.setTaskDefaultID(item.getTaskDefaultID());
+            return task;
+        }).collect(Collectors.toList());
+	}
+
+
 	
 }
