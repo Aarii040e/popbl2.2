@@ -23,9 +23,9 @@ edit.addEventListener("click", e => {
 apply.addEventListener("click", e => {
     e.preventDefault();
 
-    if (document.querySelector(".role p").textContent.includes("Volunteer")) {
-        document.querySelector("form").action = "/volunteer-view/user/update";
-    }
+    // if (document.querySelector(".role p").textContent.includes("Volunteer")) {
+    //     document.querySelector("form").action = "/volunteer-view/user/update";
+    // }
 
     document.querySelector("form").submit();
 });
