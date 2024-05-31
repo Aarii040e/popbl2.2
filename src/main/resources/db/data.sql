@@ -1,3 +1,6 @@
+DELETE FROM default_tasks;
+DELETE FROM categories;
+
 insert into categories (categoryid, name) values (1, "Voluntariado ambiental");
 insert into categories (categoryid, name) values (2, "Voluntariado deportivo");
 insert into categories (categoryid, name) values (3, "Voluntariado educativo");
