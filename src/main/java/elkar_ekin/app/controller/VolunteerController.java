@@ -123,11 +123,11 @@ public class VolunteerController {
 	public String showSignedUpTaskList (Model model, Principal principal) {
 		User user = (User) model.getAttribute("user");
 		List<Task> allTasks = taskService.getVolunteerTasks(user);
-		model.addAttribute("currentPage", "taskList");
+		model.addAttribute("currentPage", "signedUp");
 		if (allTasks == null) {
 			model.addAttribute("message", "No hay tareas disponibles.");
 		} else {
-			model.addAttribute("signedUp", allTasks);
+			model.addAttribute("taskList", allTasks);
 		}
 		return "volunteer/taskList";
 	}
