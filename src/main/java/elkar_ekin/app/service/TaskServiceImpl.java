@@ -29,6 +29,26 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
+	public List<Task> getAllTasks() {
+		// List<NewsItem> newsItems = newsItemRepository.findAll();
+        List<Task> tasks = taskRepository.findAll();
+
+        // Si necesitas transformar los datos de alguna manera, puedes hacerlo aquí
+        return tasks.stream().map(item -> {
+            Task task = new Task();
+			task.setTaskID(item.getTaskID());
+            task.setDescription(item.getDescription());
+            task.setDate(item.getDate());
+            task.setStartTime(item.getStartTime());
+			task.setEndTime(item.getEndTime());
+			task.setState(item.getState());
+			task.setLocation(item.getLocation());
+			task.setTaskDefaultID(item.getTaskDefaultID());
+            return task;
+        }).collect(Collectors.toList());
+	}
+	
+	@Override
 	public List<Task> getTasksByUser(User user) {
 		// List<NewsItem> newsItems = newsItemRepository.findAll();
 		List<Task> tasks = taskRepository.findAll();
@@ -79,6 +99,46 @@ public class TaskServiceImpl implements TaskService {
 		existingTask.setStartTime(taskDto.getStartTime());
 		existingTask.setEndTime(taskDto.getEndTime());
 		taskRepository.save(existingTask);
+    }
+	@Override
+	public List<Task> getAllActiveTasks() {
+        List<Task> tasks = taskRepository.findTasksByState("active");
+
+        // Si necesitas transformar los datos de alguna manera, puedes hacerlo aquí
+        return tasks.stream().map(item -> {
+            Task task = new Task();
+			task.setTaskID(item.getTaskID());
+            task.setDescription(item.getDescription());
+            task.setDate(item.getDate());
+            task.setStartTime(item.getStartTime());
+			task.setEndTime(item.getEndTime());
+			task.setState(item.getState());
+			task.setLocation(item.getLocation());
+			task.setTaskDefaultID(item.getTaskDefaultID());
+			return task;
+        }).collect(Collectors.toList());
 	}
 
+	@Override
+	public List<Task> getVolunteerTasks(User volunteer) {
+        List<Task> tasks = taskRepository.findTasksByVolunteer(volunteer);
+
+        // Si necesitas transformar los datos de alguna manera, puedes hacerlo aquí
+        return tasks.stream().map(item -> {
+            Task task = new Task();
+			task.setTaskID(item.getTaskID());
+            task.setDescription(item.getDescription());
+            task.setDate(item.getDate());
+            task.setStartTime(item.getStartTime());
+			task.setEndTime(item.getEndTime());
+			task.setState(item.getState());
+			task.setLocation(item.getLocation());
+			task.setTaskDefaultID(item.getTaskDefaultID());
+			task.setVolunteer(item.getVolunteer());
+			return task;
+        }).collect(Collectors.toList());
+	}
+
+
+	
 }

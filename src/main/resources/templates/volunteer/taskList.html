@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout_volunteer}">
+
+	<head>
+        <link rel="icon" type="image/x-icon" th:href="@{/img/mondragon.ico}">
+        <link rel="stylesheet" type="text/css" th:href="@{/assets/bootstrap.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/filters.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/header_nav_lang.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/volunteering_list.css}">
+        <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/7ec78ffc94.js" crossorigin="anonymous"></script>
+    </head>
+
+    <body class="d-flex flex-column">
+        <main layout:fragment="content" class="p-3">
+			<div class="d-md-grid ">
+				<div class="card position-relative overflow-hidden mb-2 m-md-0 p-2" th:each="task,iter : ${taskList}" th:classappend="${task.taskDefaultID.category.name} + 'Bg'"> <!-- environmentalBorder --> 
+					<div class="title w-100 mb-1" th:text="#{${task.taskDefaultID.name}}" th:classappend="${task.taskDefaultID.category.name} + 'Bg'">Task Name</div>
+					<div class="pfp rounded-circle position-absolute" th:classappend="${task.taskDefaultID.category.name} + 'Border'"></div>
+					<i class="date" th:text="${task.date.year} + '/' + ${task.date.monthValue} + '/' + ${task.date.dayOfMonth} + ' ' + ${task.startTime} + ' - ' + ${task.endTime}">Task Date</i>
+					<p class="description py-2" th:text="${task.description}">Task Description</p>
+					<div class="d-flex align-items-center">
+						<i class="fa-regular fa-circle-check me-1" th:classappend="${task.taskDefaultID.category.name}"></i>
+						<p th:text="${task.taskDefaultID.category.name}">Category</p>
+					</div>
+					<i class="d-block py-2" th:text="${task.location.direction}">Task Location</i>
+					<div class="d-flex flex-column align-items-center">
+						<i class="fa-regular fa-bookmark bookmark text-center position-absolute py-1 px-2"></i>
+						<a class="position-absolute border-0 rounded-1 py-1 px-2" th:href="@{'/volunteer-view/task/' + ${task.taskID} + '/signUp'}">Sign up</a>
+					</div> 
+				</div>
+			</div>
+			<script src="/js/cut_content.js"></script>
+			<script src="/js/volunteering_list.js"></script>
+		</main>
+		
+    </body>
+</html>
