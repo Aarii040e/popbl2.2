@@ -154,7 +154,7 @@ public class AdminController {
 	public String deleteClient(@PathVariable("clientID") String clientID, Model model) {
 		//Delete the image if exists
 		User client = repository.findByUserID(Long.parseLong(clientID));
-		Path imagePath = Paths.get("public/images", client.getImagePath());
+		Path imagePath = Paths.get("public/img", client.getImagePath());
 		try{
 			Files.delete(imagePath);
 		}catch(Exception e){
@@ -186,7 +186,7 @@ public class AdminController {
 	public String deleteVolunteer(@PathVariable("volunteerID") String volunteerID, Model model) {
 		//Delete the image if exists
 		User volunteer = repository.findByUserID(Long.parseLong(volunteerID));
-		Path imagePath = Paths.get("public/images", volunteer.getImagePath());
+		Path imagePath = Paths.get("public/img", volunteer.getImagePath());
 		try{
 			Files.delete(imagePath);
 		}catch(Exception e){
