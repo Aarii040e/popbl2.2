@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout-V}">
+
+<head>
+	<link rel="stylesheet" type="text/css" href="/css/user.css">
+</head>
+
+<body class="d-flex flex-column">
+	<main layout:fragment="content" th:replace="fragments/user_view :: user_view"></main>
+</body>
+</html>

@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import elkar_ekin.app.dto.NewsItemDto;
-import elkar_ekin.app.dto.UserDto;
 import elkar_ekin.app.model.NewsItem;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.UserRepository;
@@ -67,7 +65,7 @@ public class AdminController {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		model.addAttribute("user", userDetails);
 		model.addAttribute("currentPage", "index");
-		return "index";
+		return "admin/index";
 	}
 
 	@GetMapping({"/newsItem/", "/newsItem/list"})
@@ -174,7 +172,7 @@ public class AdminController {
 
 		User client = repository.findByUserID(Long.parseLong(clientID));
 		model.addAttribute("user", client);
-		return "user";
+		return "admin/userSpecific";
 	}
 
 	@GetMapping({"/volunteers/list", "/volunteers/"})
@@ -211,6 +209,6 @@ public class AdminController {
 
 		User volunteer = repository.findByUserID(Long.parseLong(volunteerID));
 		model.addAttribute("user", volunteer);
-		return "user";
+		return "admin/userSpecific";
 	}
 }
