@@ -119,6 +119,7 @@ hr {
     right: 50%;
     transform: translate(50%,-50%);
     border-radius: 10px;
+    z-index: 500;
 }
 
 /* Educative */

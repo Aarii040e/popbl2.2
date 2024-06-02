@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{/layout_client}">
+    layout:decorate="~{/layout-C}">
 
 <head>
     <link rel="stylesheet" type="text/css" th:href="@{/css/task_form.css}">
@@ -8,16 +8,11 @@
 
 <section class="d-flex flex-column">
     <main layout:fragment="content" class="d-flex justify-content-center align-items-center w-100">
-        <!-- Errors  -->
-        <div class="error_div" th:if="${error!=null}">
-            <span th:text="#{${error}}">An error happened in the form.</span>
-        </div>
-
         <section class="d-flex flex-column">
             <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0 px-4 px-md-6"
                 th:action="@{/client-view/editTask}" method="post" th:object="${taskDto}">
                 <h1 class="mb-3" th:text="#{edit_task}">Edit task</h1>
-                <input hidden="true" type="number" class="form-control" name = "task_ID" th:field="*{taskID}">
+                <input hidden="true" type="number" class="form-control" name="task_ID" th:field="*{taskID}">
                 <input hidden="true" type="text" name="state" class="form-control" th:field="*{state}">
                 <input hidden="true" type="text" name="defaulTask" class="form-control"
                     th:value="*{taskDefaultID.name}">
@@ -67,12 +62,13 @@
                     </div>
                 </div>
                 <div class="user d-flex py-1 mb-3">
-                    <label for="user" th:text="#{preferred_volunteer}" >I
+                    <label for="user" th:text="#{preferred_volunteer}">I
                         would like this user to
                         do this task:</label>
                     <div>
                         <i class="ms-1">@</i>
-                        <input type="text" name="volunteer" id="user" class="px-1" th:value="*{volunteer.username}">
+                        <input type="text" name="volunteer" id="user" class="px-1"
+                            th:value="${volunteer?.username ?: ''}">
                     </div>
                 </div>
 

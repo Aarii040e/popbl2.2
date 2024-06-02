@@ -73,7 +73,7 @@ public class VolunteerController {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		model.addAttribute("user", userDetails);
 		model.addAttribute("currentPage", "index");
-		return "index";
+		return "volunteer/index";
 	}
 
 	@GetMapping("/user")
@@ -84,13 +84,13 @@ public class VolunteerController {
 		model.addAttribute("guest", guest);
 
 		model.addAttribute("currentPage", "user");
-		return "user";
+		return "volunteer/user";
 	}
 
 	@PostMapping("/user/update")
     public String clientUpdateUser (@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model, Principal principal) {
 		if (result.hasErrors()) {
-            return "user";
+            return "volunteer/user";
         }
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         userService.update(userDto, userDetails);

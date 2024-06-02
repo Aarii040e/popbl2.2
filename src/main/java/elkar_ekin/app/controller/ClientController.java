@@ -118,7 +118,7 @@ public class ClientController {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		model.addAttribute("user", userDetails);
 		model.addAttribute("currentPage", "index");
-		return "index";
+		return "client/index";
 	}
 
 	@GetMapping("/user")
@@ -128,7 +128,7 @@ public class ClientController {
 		model.addAttribute("guest", guest);
 
 		model.addAttribute("currentPage", "user");
-		return "user";
+		return "client/user";
 	}
 
 	@PostMapping("/user/update")
@@ -137,7 +137,7 @@ public class ClientController {
 		userService.update(userDto, userDetails);
 		model.addAttribute("guest", guest);
 		model.addAttribute("message", "Updated Successfully!");
-		return "user";
+		return "client/user";
 	}
 
 	@GetMapping("/createTask/step1")
@@ -247,8 +247,9 @@ public class ClientController {
 				taskDto.setEndTime(task.getEndTime());
 				taskDto.setLocation(task.getLocation());
 				taskDto.setClient(task.getClient());
-				taskDto.setVolunteer(task.getVolunteer());
-				System.out.println(taskDto.getVolunteer().getUsername());
+				if (task.getVolunteer() != null){
+					taskDto.setVolunteer(task.getVolunteer());
+				}
 			}
 		}
 		model.addAttribute("taskDto", taskDto);
