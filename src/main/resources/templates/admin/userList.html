@@ -7,13 +7,13 @@
 
 <body class="d-flex flex-column">
 	<main layout:fragment="content" class="d-flex mx-auto p-3">
-		<table class="news_list_table table table-striped table-bordered" th:if="userList != null">
+		<table class="table table-striped table-bordered" th:if="userList != null">
 			<thead class="text-center">
 				<tr>
-					<td th:text="#{userID}">News Item ID</td>
-					<td th:text="#{name}">News Item Title</td>
-					<td th:text="#{surname1}">News Item Title</td>
-					<td th:text="#{surname2}">News Item Title</td>
+					<td th:text="#{userID}">userID</td>
+					<td th:text="#{name}">name</td>
+					<td th:text="#{surname1}">surname1</td>
+					<td th:text="#{surname2}">surname2</td>
 					<!-- <td>News Item Date</td> -->
 					<td th:text="#{actions}">Actions</td>
 					<td th:text="#{more_details}">More details</td>
@@ -21,10 +21,10 @@
 			</thead>
 			<tbody>
 				<tr th:each="user,iter : ${userList}">
-					<td th:text="${user.userID}" class="text-center">NewsItem ID</td>
-					<td th:text="${user.name}">NewsItem ID</td>
-					<td th:text="${user.surname1}">NewsItem ID</td>
-					<td th:text="${user.surname2}">NewsItem ID</td>
+					<td th:text="${user.userID}" class="text-center">userID</td>
+					<td th:text="${user.name}">name</td>
+					<td th:text="${user.surname1}">surname1</td>
+					<td th:text="${user.surname2}">surname2</td>
 					<!-- <td th:text="${newsItem.createdAt}">NewsItem Date</td> -->
 					<!-- <td>
 						<a class="btn btn-danger" th:href="@{'/admin-view/clients/' + ${user.userID} + '/delete'}">Delete</a>

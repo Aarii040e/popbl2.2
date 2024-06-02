@@ -11,6 +11,10 @@ main {
     width: 100%;
 }
 
+table {
+    height: fit-content;
+}
+
 thead {
     font-weight: bold;
 }
@@ -21,7 +25,6 @@ thead {
     width: 65px;
     height: 30px;
 }
-
 
 .button:hover {
     background: var(--button-darker);
