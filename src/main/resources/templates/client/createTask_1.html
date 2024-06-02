@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{/layout_client}">
-
+    layout:decorate="~{/layout-C}">
 <head>
     <link rel="stylesheet" type="text/css" th:href="@{/css/task_form.css}">
 </head>
@@ -18,7 +17,6 @@
                 <div class="form-check">
                     <input th:field="*{name}" class="form-check-input me-2" type="radio" value ="cleaning" name="radio" id="cleaning" data-category="environmental" data-type="event" >
                     <label class="form-check-label" for="cleaning" th:text="#{cleaning}">Environmental cleaning</label>
-                    <!-- HIRU HIZKUNTZETARAKO MOLDATU LOS LABELS (está creada la traducción) -->
                 </div>
 
                 <div class="form-check">

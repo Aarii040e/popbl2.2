@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{/layout_client}">
+    layout:decorate="~{/layout-C}">
 
 <head>
     <link rel="stylesheet" type="text/css" th:href="@{/css/task_form.css}">
@@ -8,11 +8,6 @@
 
 <section class="d-flex flex-column">
     <main layout:fragment="content" class="d-flex justify-content-center align-items-center w-100">
-        <!-- Errors  -->
-        <div class="error_div" th:if="${error!=null}">
-            <span th:text="#{${error}}">An error happened in the form.</span>
-        </div>
-
         <section class="d-flex flex-column">
             <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0 px-4 px-md-6"
                 th:action="@{/client-view/editTask}" method="post" th:object="${taskDto}">
