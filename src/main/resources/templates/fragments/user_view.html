@@ -6,12 +6,14 @@
 
         <form enctype="multipart/form-data" class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0" th:action="${user.role} == 'C' ? @{/client-view/user/update} : @{/volunteer-view/user/update}" method="post" role="form" th:object="${userDto}">         
             <div>
-                <div class="pfp rounded-circle position-absolute"
+                <div class="pic rounded-circle position-absolute"
                 th:style="'background-image: url(' + (${user.imagePath} != null ? '/img/' + ${user.imagePath} : '/images/blank-pfp.svg') + ');'">
                     <input name="imageFile" type="file" class="file" id="file" accept="image/*">
                 </div>
             </div>
-            <h1 class="name title mt-3" th:text="${user.name} + ' ' + ${user.surname1} + ' ' + ${user.surname2}">Name Surname</h1>
+
+            <h1 class="name big mt-3" th:text="${user.name} + ' ' + ${user.surname1} + ' ' + ${user.surname2}">Name Surname</h1>
+
             <h2 class="handle" th:text="'@' + ${user.username}">@username</h2>
 
             <input name="description" class="biography py-2 my-2 border-0" type="text" autocomplete="off" th:value="${user.description}" disabled/>
@@ -25,18 +27,15 @@
                     <div th:case="*"><p th:text="#{c&a}">Client & Volunteer</p></div>
                 </div>
             </div>
+
             <div class="stats d-flex pt-1 pb-3">
                 <i class="fa-solid fa-award me-1"></i>
-                <p>This user has volunteered <b>15</b> times!</p>
+                <p>This user has volunteered <b th:text="${amount}">15</b> times!</p>
             </div>
-
-            <!-- <div th:unless="${condition}">
-            </div> -->
 
             <div class="d-flex" th:if="${guest != null}">
                 <button class="edit border-0 rounded-1 py-1 px-2 me-1" th:if="${guest.name} == ${user.name}" th:text="#{edit}">Edit profile</button>
                 <button type="submit" class="apply d-none border-0 rounded-1 py-1 px-2 me-1" th:if="${guest.name} == ${user.name}" th:text="#{apply}">Apply changes</button>
-                <!-- <button class="settings border-0 rounded-1 py-1 px-2" th:text="#{settings}">Settings</button> -->
             </div>
         </form>
     </div>
@@ -45,47 +44,27 @@
 
     <div id="history" class="py-2 px-3">
 
-        <h1 class="title" th:text="#{history}">History</h1>
+        <h1 class="big mb-3" th:text="#{history}">History</h1>
 
-        <div class="specific-stats py-2 mb-3">
+        <div class="history d-flex py-2 mb-3">
 
-            <div class="d-flex align-items-center py-1">
-                <i class="fa-regular fa-circle-check environmental me-1"></i>
-                <div class="d-flex">
-                    <p class="me-1" th:text="#{statement_environmental}">I have volunteered in environmental tasks this many times:</p>
-                    <b>4</b>
-                </div>
-            </div>
-
-            <div class="d-flex align-items-center py-1">
-                <i class="fa-regular fa-circle-check educative me-1"></i>
-                <div class="d-flex">
-                    <p class="me-1" th:text="#{statement_educative}">I have volunteered in educative tasks this many times:</p>
-                    <b>0</b>
-                </div>
-            </div>
-
-            <div class="d-flex align-items-center py-1">
-                <i class="fa-regular fa-circle-check sports me-1"></i>
-                <div class="d-flex">
-                    <p class="me-1" th:text="#{statement_sports}">I have volunteered in sports tasks this many times:</p>
-                    <b>3</b>
-                </div>
-            </div>
-
-            <div class="d-flex align-items-center py-1">
-                <i class="fa-regular fa-circle-check social me-1"></i>
-                <div class="d-flex">
-                    <p class="me-1" th:text="#{statement_social}">I have volunteered in social tasks this many times:</p>
-                    <b>8</b>
-                </div>
-            </div>
+            <div class="card overflow-hidden p-2 mx-2 mb-1" th:each="task,iter : ${taskList}"  th:classappend="${task.taskDefaultID.category.name} + 'Border'">
+				<div class="title w-100 mb-1" th:text="#{${task.taskDefaultID.name}}" th:classappend="${task.taskDefaultID.category.name} + 'Bg'">Task Name</div>
+				<i class="date" th:text="${task.date.year} + '/' + ${task.date.monthValue} + '/' + ${task.date.dayOfMonth} + ' ' + ${task.startTime} + ' - ' + ${task.endTime}">Task Date</i>
+				<p class="description py-2" th:text="${task.description}">Task Description</p>
+				<div class="d-flex align-items-center">
+					<i class="fa-regular fa-circle-check me-1" th:classappend="${task.taskDefaultID.category.name}"></i>
+					<p th:text="#{${task.taskDefaultID.category.name}}">Category</p>
+				</div>
+				<i class="d-block py-2" th:text="${task.location.direction}">Task Location</i>
+			</div>
 
         </div>
 
         <a th:href="${user.role} == 'C' ? @{/client-view/history} : @{/volunteer-view/history}" class="btnLink button p-2 text-decoration-none rounded" th:text="#{details}">See more details</a>
     </div>
     <script src="/js/header_logout.js"></script>
+	<script src="/js/cut_content.js"></script>
     <script src="/js/user.js"></script>
 </main>
 </html>
