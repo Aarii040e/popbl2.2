@@ -3,13 +3,13 @@
 let edit = document.querySelector(".edit");
 let apply = document.querySelector(".apply");
 
-let pfp = document.querySelector(".pfp");
+let pic = document.querySelector(".pic");
 let description = document.querySelector("input[type='text']");
 
 const enableChanges = () => {
     description.disabled = false;
-    pfp.classList.add("editable");
-    pfp.addEventListener("click", () => document.querySelector(".file").click());
+    pic.classList.add("editable");
+    pic.addEventListener("click", () => document.querySelector(".file").click());
 }
 
 edit.addEventListener("click", e => {   
@@ -29,3 +29,7 @@ apply.addEventListener("click", e => {
 
     document.querySelector("form").submit();
 });
+
+//
+
+cut(".description", 120);

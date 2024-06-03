@@ -147,6 +147,32 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
+	public List<Task> getFirstFivePastTasks(User volunteer) {
+        List<Task> tasks = taskRepository.findTasksByClient(volunteer);
+		LocalDateTime currentDate = LocalDateTime.now();
+
+        // Si necesitas transformar los datos de alguna manera, puedes hacerlo aquí
+		return tasks.stream().filter(item -> {
+			LocalDate date = item.getDate();
+			LocalTime endTime = item.getEndTime();
+			LocalDateTime taskDateTime = LocalDateTime.of(date, endTime);
+			return taskDateTime.isBefore(currentDate);
+		})
+        .limit(5).map(item -> {
+            Task task = new Task();
+			task.setTaskID(item.getTaskID());
+            task.setDescription(item.getDescription());
+            task.setDate(item.getDate());
+            task.setStartTime(item.getStartTime());
+			task.setEndTime(item.getEndTime());
+			task.setState(item.getState());
+			task.setLocation(item.getLocation());
+			task.setTaskDefaultID(item.getTaskDefaultID());
+			return task;
+        }).collect(Collectors.toList());
+    }
+
+	@Override
 	public List<Task> getVolunteerTasks(User volunteer) {
         List<Task> tasks = taskRepository.findTasksByVolunteer(volunteer);
 
@@ -191,5 +217,31 @@ public class TaskServiceImpl implements TaskService {
 			return task;
 		}).collect(Collectors.toList());
 	}
+
+	@Override
+	public List<Task> getFirstFiveVolunteerTasks(User volunteer) {
+        List<Task> tasks = taskRepository.findTasksByVolunteer(volunteer);
+		LocalDateTime currentDate = LocalDateTime.now();
+
+        // Si necesitas transformar los datos de alguna manera, puedes hacerlo aquí
+		return tasks.stream().filter(item -> {
+			LocalDate date = item.getDate();
+			LocalTime endTime = item.getEndTime();
+			LocalDateTime taskDateTime = LocalDateTime.of(date, endTime);
+			return taskDateTime.isBefore(currentDate);
+		})
+        .limit(5).map(item -> {
+            Task task = new Task();
+			task.setTaskID(item.getTaskID());
+            task.setDescription(item.getDescription());
+            task.setDate(item.getDate());
+            task.setStartTime(item.getStartTime());
+			task.setEndTime(item.getEndTime());
+			task.setState(item.getState());
+			task.setLocation(item.getLocation());
+			task.setTaskDefaultID(item.getTaskDefaultID());
+			return task;
+        }).collect(Collectors.toList());
+    }
 	
 }

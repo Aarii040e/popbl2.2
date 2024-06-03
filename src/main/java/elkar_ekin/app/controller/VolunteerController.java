@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import elkar_ekin.app.dto.TaskDto;
 import elkar_ekin.app.dto.UserDto;
 import elkar_ekin.app.model.NewsItem;
 import elkar_ekin.app.model.Task;
@@ -78,12 +77,24 @@ public class VolunteerController {
 
 	@GetMapping("/user")
 	public String clientUser (Model model, Principal principal) {
+		model.addAttribute("currentPage", "user");
 
 		String admin = principal.getName();
 		guest = repository.findByUsername(admin);
 		model.addAttribute("guest", guest);
 
-		model.addAttribute("currentPage", "user");
+		User user = (User) model.getAttribute("user");
+
+		Long amount = taskRepository.countByVolunteer(user);
+		model.addAttribute("amount", amount);
+
+		List<Task> volunteerTasks = taskService.getFirstFiveVolunteerTasks(user);
+		if (volunteerTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", volunteerTasks);
+		}
+
 		return "volunteer/user";
 	}
 
@@ -96,8 +107,9 @@ public class VolunteerController {
         userService.update(userDto, userDetails);
 		model.addAttribute("guest", guest);
         model.addAttribute("message", "Updated Successfully!");
-        return "user";
+		return "redirect:/volunteer-view/user";
     }
+
 	@GetMapping({"/task/list", "/task/"})
 	public String showTaskList (Model model, Principal principal) {
 		List<Task> allTasks = taskService.getAllActiveTasks();
@@ -109,6 +121,7 @@ public class VolunteerController {
 		}
 		return "volunteer/taskList";
 	}
+
 	@GetMapping("/task/{taskID}/signUp")
     public String singUpVolunteerToTask (@PathVariable("taskID") String taskID, Model model, Principal principal, RedirectAttributes redirectAttributes) {
 		Task task = taskService.getTaskByID(Long.parseLong(taskID));
@@ -119,6 +132,7 @@ public class VolunteerController {
 		// redirectAttributes.addFlashAttribute("error", "You have signed up to the task!"); // no se visualiza
         return "redirect:/volunteer-view/signedUp";
     }
+
 	@GetMapping("/signedUp")
 	public String showSignedUpTaskList (Model model, Principal principal) {
 		User user = (User) model.getAttribute("user");

@@ -19,6 +19,13 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     List<Task> findTasksByClient(User volunteer);
 
-        // List<Task> findAllByOrderByCreatedAtDesc();
+    long countByVolunteer(User volunteer);
+
+    long countByClient(User volunteer);
+
+    // @Query("SELECT COUNT(t) FROM Task t WHERE t.volunteer = :volunteer AND t.defaultTask.category.name = :category")
+    // long countByVolunteerAndCategory(@Param("volunteer") User volunteer, @Param("category") String category);
+
+    // List<Task> findAllByOrderByCreatedAtDesc();
 
 }
