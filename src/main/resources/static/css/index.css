@@ -27,7 +27,7 @@ img {
 }
 
 #statistics div h1 {
-    font-family: Inter;
+    font-family: Inter, 'Roboto', Arial, Helvetica, sans-serif;
 }
 
 #statistics div h1:first-child {

@@ -65,12 +65,12 @@ main {
     color: var(--bg-sec-darker-2);
 }
 
-button {
+button, .button {
     background: var(--bg-menu_bar);
     transition: background .3s;
 }
 
-button:hover {
+button:hover, .button:hover {
     background: var(--link-lighter-2);
 }
 

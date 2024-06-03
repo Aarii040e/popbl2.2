@@ -33,14 +33,14 @@
 						<a class="btn btn-primary" th:href="@{'/admin-view/clients/' + ${user.userID}}">...</a>
 					</td> -->
 					<td>
-						<a class="btnLink button d-block btn-danger p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'clientList'}" th:href="@{'/admin-view/clients/' + ${user.userID} + '/delete'}" href="#" onclick="return confirm('Are you sure?')">Delete</a>
+						<a class="btnLink button d-block btn-danger p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'clientList'}" th:href="@{'/admin-view/clients/' + ${user.userID} + '/delete'}" onclick="return confirm('Are you sure?')">Delete</a>
 
-						<a class="btnLink button d-block btn-danger p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'volunteerList'}" th:href="@{'/admin-view/volunteers/' + ${user.userID} + '/delete'}" href="#" onclick="return confirm('Are you sure?')">Delete</a>
+						<a class="btnLink button d-block btn-danger p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'volunteerList'}" th:href="@{'/admin-view/volunteers/' + ${user.userID} + '/delete'}" onclick="return confirm('Are you sure?')">Delete</a>
 					</td>
 					<td>
-						<a class="btnLink button d-block mb-1 p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'clientList'}" th:href="@{'/admin-view/clients/' + ${user.userID}}" href="#">...</a>
+						<a class="btnLink button d-block mb-1 p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'clientList'}" th:href="@{'/admin-view/clients/' + ${user.userID}}">...</a>
 
-						<a class="btnLink button d-block mb-1 p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'volunteerList'}" th:href="@{'/admin-view/volunteers/' + ${user.userID}}" href="#">...</a>
+						<a class="btnLink button d-block mb-1 p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'volunteerList'}" th:href="@{'/admin-view/volunteers/' + ${user.userID}}">...</a>
 					</td>
 				</tr>
 			</tbody>

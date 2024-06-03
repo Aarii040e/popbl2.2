@@ -336,4 +336,16 @@ public class ClientController {
 		}
 		return false;
 	}
+
+	@GetMapping("/history")
+	public String showTaskHistory(Model model, Principal principal) {
+		List<Task> clientTasks = taskService.getAllClosedTasks();
+		model.addAttribute("currentPage", "taskHistory");
+		if (clientTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", clientTasks);
+		}
+		return "client/taskList";
+	}
 }
