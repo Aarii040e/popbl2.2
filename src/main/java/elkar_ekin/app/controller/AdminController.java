@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import elkar_ekin.app.dto.NewsItemDto;
 import elkar_ekin.app.model.NewsItem;
 import elkar_ekin.app.model.User;
+import elkar_ekin.app.repositories.TaskRepository;
 import elkar_ekin.app.repositories.UserRepository;
 import elkar_ekin.app.service.NewsItemService;
 
@@ -33,6 +34,9 @@ public class AdminController {
 
 	@Autowired
 	private UserRepository repository;
+
+	@Autowired
+	private TaskRepository taskRepository;
 	
 	@Autowired
 	UserDetailsService userDetailsService;
@@ -159,10 +163,19 @@ public class AdminController {
 			Files.delete(imagePath);
 		}catch(Exception e){
 		}
+
+		taskRepository.deleteByClient_UserID(Long.parseLong(clientID));
+		
 		repository.deleteById(Long.parseLong(clientID));
 		return "redirect:/admin-view/clients/list";
 	}
 	
+	// @GetMapping(value = "/clients/{clientID}/delete")
+    // public String deleteClient(@PathVariable("clientID") String clientID, Model model) {
+    //     // Eliminar tareas asociadas al cliente y luego el cliente
+    //     customerService.deleteCustomer(Long.parseLong(clientID));
+    //     return "redirect:/admin-view/clients/list";
+    // }
 	@GetMapping(value = "/clients/{clientID}")
 	public String viewClient(@PathVariable("clientID") String clientID, Model model, Principal principal) {
 
