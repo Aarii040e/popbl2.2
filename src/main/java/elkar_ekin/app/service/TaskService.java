@@ -23,6 +23,10 @@ public interface TaskService {
 
 	public List<Task> getAllActiveTasks();
 
+	public List<Task> getAllClosedTasks();
+
 	public List<Task> getVolunteerTasks(User volunteer);
+
+	public List<Task> getPastVolunteerTasks(User volunteer);
 
 }

@@ -131,4 +131,17 @@ public class VolunteerController {
 		}
 		return "volunteer/taskList";
 	}
+
+	@GetMapping("/history")
+	public String showTaskHistory(Model model, Principal principal) {
+		User user = (User) model.getAttribute("user");
+		List<Task> clientTasks = taskService.getPastVolunteerTasks(user);
+		model.addAttribute("currentPage", "taskHistory");
+		if (clientTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", clientTasks);
+		}
+		return "volunteer/taskList";
+	}
 }
