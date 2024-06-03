@@ -69,6 +69,8 @@ public class NewsItemServiceImpl implements NewsItemService {
 		if(newsItemOptional.isPresent()) {
 			newsItem = newsItemOptional.get();
 		}
+		// Borrar los comentarios asociados a la noticia
+        commentRepository.deleteByNewsItem_NewsItemID(newsItemID);
 		newsItemRepository.delete(newsItem);
 		return "DELETED";
     }
