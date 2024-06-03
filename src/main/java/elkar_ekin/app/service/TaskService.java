@@ -23,7 +23,7 @@ public interface TaskService {
 
 	public List<Task> getAllActiveTasks();
 
-	public List<Task> getAllClosedTasks();
+	public List<Task> getAllPastTasks(User volunteer);
 
 	public List<Task> getVolunteerTasks(User volunteer);
 

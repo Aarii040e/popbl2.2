@@ -339,7 +339,8 @@ public class ClientController {
 
 	@GetMapping("/history")
 	public String showTaskHistory(Model model, Principal principal) {
-		List<Task> clientTasks = taskService.getAllClosedTasks();
+		User user = (User) model.getAttribute("user");
+		List<Task> clientTasks = taskService.getAllPastTasks(user);
 		model.addAttribute("currentPage", "taskHistory");
 		if (clientTasks == null) {
 			model.addAttribute("message", "No hay tareas disponibles.");
