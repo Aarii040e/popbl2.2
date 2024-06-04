@@ -46,9 +46,11 @@ public class AdminController {
 	@Autowired
 	NewsItemService newsItemService;
 
-	@Autowired
-	TaskService taskService;
+	private final TaskService taskService;
 
+	public AdminController(TaskService taskService) {
+		this.taskService = taskService;
+	}
 
 	@ModelAttribute("newsItemDto")
     public NewsItemDto newsItemDto() {
@@ -252,4 +254,27 @@ public class AdminController {
 
 		return "admin/userSpecific";
 	}
+	@GetMapping("/tasks")
+	public String showTaskList(Model model, Principal principal) {
+		List<Task> allTasks = taskService.getAllActiveTasks();
+		model.addAttribute("currentPage", "taskList");
+		if (allTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", allTasks);
+		}
+		return "admin/taskList";
+	}
+	@GetMapping(value = "/task/{taskID}/delete")
+	public String deleteTask(@PathVariable("taskID") String taskID, Model model) {
+		model.addAttribute("currentPage", "deleteTask");
+		taskService.deleteTask(Long.parseLong(taskID));
+		return "redirect:/admin-view/tasks";
+	}
+  
+	@GetMapping("/chat")
+	public String showChat(Model model) {
+		model.addAttribute("user", user);
+		return "admin/chat";
+	} 
 }

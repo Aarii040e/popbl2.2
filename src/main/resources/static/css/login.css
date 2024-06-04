@@ -22,6 +22,9 @@ form .form-control {
     background: var(--bg-sec-lighter);
     box-sizing: border-box;
 }
+.imagen{
+    height:inherit;
+}
 
 @media screen and (min-width: 768px) {
     main {

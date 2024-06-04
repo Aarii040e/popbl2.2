@@ -1,7 +1,10 @@
 package elkar_ekin.app.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -46,6 +49,7 @@ public class VolunteerController {
 	NewsItemService newsItemService;
 
 	private User guest;
+	private User user;
 
 	private final UserService userService;
 
@@ -56,7 +60,7 @@ public class VolunteerController {
 	@ModelAttribute
 	public void commonUser (Model model, Principal principal) {
 		String username=principal.getName();
-		User user = repository.findByUsername(username);
+		user = repository.findByUsername(username);
 		model.addAttribute("user", user);
 	}
 
@@ -117,7 +121,13 @@ public class VolunteerController {
 		if (allTasks == null) {
 			model.addAttribute("message", "No hay tareas disponibles.");
 		} else {
+			// List<User> allUsers = new ArrayList<>();
+			// for (Task task : allTasks) {
+			// 	User user = task.getClient();
+			// 	if (user != null) allUsers.add(user);
+        	// }
 			model.addAttribute("taskList", allTasks);
+			// model.addAttribute("userList", allUsers);
 		}
 		return "volunteer/taskList";
 	}
@@ -158,4 +168,10 @@ public class VolunteerController {
 		}
 		return "volunteer/taskList";
 	}
+
+	@GetMapping("/chat")
+    public String showChat(Model model) {
+		model.addAttribute("user", user);
+        return "volunteer/chat";
+    }
 }
