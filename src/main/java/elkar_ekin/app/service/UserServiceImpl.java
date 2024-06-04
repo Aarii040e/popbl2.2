@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -61,5 +63,19 @@ public class UserServiceImpl implements UserService {
 		System.out.println(userDto.getImageFile().getOriginalFilename());
 		if (userDto.getImageFile().getOriginalFilename() != "") user.setImagePath(userDto.getImageFile().getOriginalFilename());
 		return userRepository.save(user);
+	}
+
+	@Override
+	public List<UserDto> getAllUsersExcluding(Long userId) {
+		List<User> userList = userRepository.findAllExcludingUser(userId);
+		List<UserDto> userDtos= new ArrayList<>();
+		UserDto aux;
+
+		for (User user : userList) {
+			aux = new UserDto(user.getUserID(),user.getName(),user.getSurname1(),user.getSurname2(),user.getUsername(),user.getPassword(),user.getRole(),
+			user.getGender(), user.getBirthDate(), user.getLocation(), user.getTelephone(), user.getEmail(), user.getDescription());
+			userDtos.add(aux);
+		}		
+		return userDtos;
 	}
 }
