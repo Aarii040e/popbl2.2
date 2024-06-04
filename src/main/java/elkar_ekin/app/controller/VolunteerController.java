@@ -181,6 +181,7 @@ public class VolunteerController {
 
 	@GetMapping("/chat")
     public String showChat(Model model) {
+		model.addAttribute("currentPage", "chat");
 		model.addAttribute("user", user);
         return "volunteer/chat";
     }
