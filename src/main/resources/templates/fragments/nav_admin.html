@@ -31,7 +31,7 @@
         <span class="d-none d-md-block m-0" th:text="#{current_tasks}">Current tasks</span>
     </a>
 
-    <a href="/admin-view/chat" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'volunteerList'} ? 'chat' : ' '">
+    <a href="/admin-view/chat" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'chat'} ? 'active' : ' '">
         <i class="fa-solid fa-comments text-center p-1"></i>
         <span class="d-none d-md-block m-0" th:text="#{chat}">Chat</span>
     </a>
