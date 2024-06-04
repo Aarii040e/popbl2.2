@@ -10,16 +10,25 @@
 	<main layout:fragment="content" class="p-3">
 		<div class="d-md-grid ">
 			<div class="card position-relative overflow-hidden mb-2 m-md-0 p-2" th:each="task,iter : ${taskList}"  th:classappend="${task.taskDefaultID.category.name} + 'Border'">
+
 				<div class="title w-100 mb-1" th:text="#{${task.taskDefaultID.name}}" th:classappend="${task.taskDefaultID.category.name} + 'Bg'">Task Name</div>
-				<div class="pfp rounded-circle position-absolute" th:classappend="${task.taskDefaultID.category.name} + 'Border'"></div>
+
+				<div class="pfp rounded-circle position-absolute" 
+				th:classappend="${task.taskDefaultID.category.name} + 'Border'" 
+				th:if="${currentPage != 'taskHistory'}"></div>
+
 				<i class="date" th:text="${task.date.year} + '/' + ${task.date.monthValue} + '/' + ${task.date.dayOfMonth} + ' ' + ${task.startTime} + ' - ' + ${task.endTime}">Task Date</i>
+
 				<p class="description py-2" th:text="${task.description}">Task Description</p>
+
 				<div class="d-flex align-items-center">
 					<i class="fa-regular fa-circle-check me-1" th:classappend="${task.taskDefaultID.category.name}"></i>
 					<p th:text="#{${task.taskDefaultID.category.name}}">Category</p>
 				</div>
+
 				<i class="d-block py-2" th:text="${task.location.direction}">Task Location</i>
-				<div class="d-flex flex-row justify-content-end position-absolute button-group">
+				
+				<div class="d-flex flex-row justify-content-end position-absolute button-group" th:if="${currentPage != 'taskHistory'}">
 					<a class="signup btnLink border-0 rounded-1 py-1 px-2 me-2 text-decoration-none"
 						th:href="@{'/client-view/task/' + ${task.taskID} + '/edit'}">Edit</a>
 					<a class="signup btnLink border-0 rounded-1 py-1 px-2 text-decoration-none"

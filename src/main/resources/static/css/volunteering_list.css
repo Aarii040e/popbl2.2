@@ -58,6 +58,7 @@ main {
 .socialBorder {
     border: 1.5px solid var(--social);
 }
+
 .fa-bookmark {
     right: 80px;
     bottom: 18.5px;
@@ -65,6 +66,10 @@ main {
 
 .fa-bookmark:hover {
     cursor: pointer;
+}
+
+.right {
+    right: 18.5px;
 }
 
 .signup {

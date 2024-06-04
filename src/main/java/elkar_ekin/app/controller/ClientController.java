@@ -1,10 +1,5 @@
 package elkar_ekin.app.controller;
 
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -25,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.multipart.MultipartFile;
 
 import elkar_ekin.app.dto.LocationDto;
 import elkar_ekin.app.dto.TaskDto;
@@ -123,11 +117,24 @@ public class ClientController {
 
 	@GetMapping("/user")
 	public String clientUser(Model model, Principal principal) {
+		model.addAttribute("currentPage", "user");
+
 		String admin = principal.getName();
 		guest = repository.findByUsername(admin);
 		model.addAttribute("guest", guest);
 
-		model.addAttribute("currentPage", "user");
+		User user = (User) model.getAttribute("user");
+
+		Long amount = taskRepository.countByClient(user);
+		model.addAttribute("amount", amount);
+
+		List<Task> clientTasks = taskService.getFirstFivePastTasks(user);
+		if (clientTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", clientTasks);
+		}
+
 		return "client/user";
 	}
 
@@ -137,7 +144,8 @@ public class ClientController {
 		userService.update(userDto, userDetails);
 		model.addAttribute("guest", guest);
 		model.addAttribute("message", "Updated Successfully!");
-		return "client/user";
+		return "redirect:/client-view/user";
+		// return "client/user";
 	}
 
 	@GetMapping("/createTask/step1")
@@ -339,5 +347,18 @@ public class ClientController {
 			return true;
 		}
 		return false;
+	}
+
+	@GetMapping("/history")
+	public String showTaskHistory(Model model, Principal principal) {
+		User user = (User) model.getAttribute("user");
+		List<Task> clientTasks = taskService.getAllPastTasks(user);
+		model.addAttribute("currentPage", "taskHistory");
+		if (clientTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", clientTasks);
+		}
+		return "client/taskList";
 	}
 }
