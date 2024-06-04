@@ -4,10 +4,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +17,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import elkar_ekin.app.dto.LocationDto;
 import elkar_ekin.app.dto.NewsItemDto;
-import elkar_ekin.app.dto.TaskDto;
-import elkar_ekin.app.model.DefaultTask;
-import elkar_ekin.app.model.Location;
 import elkar_ekin.app.model.NewsItem;
 import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.TaskRepository;
 import elkar_ekin.app.repositories.UserRepository;
-import elkar_ekin.app.service.LocationService;
 import elkar_ekin.app.service.NewsItemService;
 import elkar_ekin.app.service.TaskService;
-import elkar_ekin.app.service.UserService;
 
 @Controller
 @RequestMapping("/admin-view")
@@ -44,7 +33,6 @@ public class AdminController {
 
 	private User user;
 	private User guest;
-	private DefaultTask defaultTask;
 
 	@Autowired
 	private UserRepository repository;
@@ -283,4 +271,10 @@ public class AdminController {
 		taskService.deleteTask(Long.parseLong(taskID));
 		return "redirect:/admin-view/tasks";
 	}
+  
+	@GetMapping("/chat")
+	public String showChat(Model model) {
+		model.addAttribute("user", user);
+		return "admin/chat";
+	} 
 }

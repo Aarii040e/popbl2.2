@@ -8,23 +8,16 @@ import elkar_ekin.app.model.Location;
 
 public class UserDto {
 	
-	//Same fields as User except the ID
-
-    private String firstName;
-    private String lastName;
-    private String username;
-    private String password;
-    private String role;
+	Long userID;
     private String name;
     private String surname1;
     private String surname2;
+    private String username;
+    private String password;
+    private String role;
     private String gender;
     private Date birthDate;
     private Location location;
-    // private Long postCode;
-    // private String direction;
-    // private String town;
-    // private String province;
     private String telephone;
     private String email;
     private String description;
@@ -33,63 +26,24 @@ public class UserDto {
 	public UserDto(){
 	}
 
-	// public UserDto(String firstName, String lastName, String username, String password, String role, String name,
-	// 		String surname1, String surname2, String gender, Date birthDate, Location location, String telephone,
-	// 		String email, String description, String imagePath) {
-	// 	this.firstName = firstName;
-	// 	this.lastName = lastName;
-	// 	this.username = username;
-	// 	this.password = password;
-	// 	this.role = role;
-	// 	this.name = name;
-	// 	this.surname1 = surname1;
-	// 	this.surname2 = surname2;
-	// 	this.gender = gender;
-	// 	this.birthDate = birthDate;
-	// 	this.location = location;
-	// 	this.telephone = telephone;
-	// 	this.email = email;
-	// 	this.description = description;
-	// 	this.imagePath = imagePath;
-	// }
-
-	
-	public UserDto(String firstName, String lastName, String username, String password, String role, String name,
-			String surname1, String surname2, String gender, Date birthDate, Location location, String telephone,
-			String email, String description, MultipartFile imageFile) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.username = username;
-		this.password = password;
-		this.role = role;
+	public UserDto(Long userID, String name, String surname1, String surname2, String username, String password,
+			String role, String gender, Date birthDate, Location location, String telephone, String email,
+			String description) {
+		this.userID = userID;
 		this.name = name;
 		this.surname1 = surname1;
 		this.surname2 = surname2;
+		this.username = username;
+		this.password = password;
+		this.role = role;
 		this.gender = gender;
 		this.birthDate = birthDate;
 		this.location = location;
 		this.telephone = telephone;
 		this.email = email;
 		this.description = description;
-		this.imageFile = imageFile;
-	}
-	
-
-	public String getFirstName() {
-		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
 
 	public String getUsername() {
 		return username;
@@ -193,6 +147,14 @@ public class UserDto {
 
 	public void setImageFile(MultipartFile imageFile) {
 		this.imageFile = imageFile;
+	}
+
+	public Long getUserID() {
+		return userID;
+	}
+
+	public void setUserID(Long userID) {
+		this.userID = userID;
 	}
 
 	// public String getImagePath() {
