@@ -30,7 +30,10 @@
 
             <div class="stats d-flex pt-1 pb-3">
                 <i class="fa-solid fa-award me-1"></i>
-                <p>This user has volunteered <b th:text="${amount}">15</b> times!</p>
+                <div class="d-flex">
+                    <p class="me-1" th:text="${user.role == 'V'} ? #{volunteer_times} : #{upload_times}">This user has volunteered this many times:</p>
+                    <b th:text="${amount}">15</b>
+                </div>
             </div>
 
             <div class="d-flex" th:if="${guest != null}">
@@ -49,7 +52,7 @@
         <div class="history d-flex py-2 mb-3">
 
             <div class="card overflow-hidden p-2 mx-2 mb-1" th:each="task,iter : ${taskList}"  th:classappend="${task.taskDefaultID.category.name} + 'Border'">
-				<div class="title w-100 mb-1" th:text="#{${task.taskDefaultID.name}}" th:classappend="${task.taskDefaultID.category.name} + 'Bg'">Task Name</div>
+				<div class="title mb-1" th:text="#{${task.taskDefaultID.name}}" th:classappend="${task.taskDefaultID.category.name} + 'Bg'">Task Name</div>
 				<i class="date" th:text="${task.date.year} + '/' + ${task.date.monthValue} + '/' + ${task.date.dayOfMonth} + ' ' + ${task.startTime} + ' - ' + ${task.endTime}">Task Date</i>
 				<p class="description py-2" th:text="${task.description}">Task Description</p>
 				<div class="d-flex align-items-center">
@@ -61,7 +64,7 @@
 
         </div>
 
-        <a th:href="${user.role} == 'C' ? @{/client-view/history} : @{/volunteer-view/history}" class="btnLink button p-2 text-decoration-none rounded" th:text="#{details}">See more details</a>
+        <a th:href="${user.role} == 'C' ? @{/client-view/history} : @{/volunteer-view/history}" class="btnLink button p-2 text-decoration-none rounded" th:text="#{details}" th:if="${guest.name != 'admin'}">See more details</a>
     </div>
     <script src="/js/header_logout.js"></script>
 	<script src="/js/cut_content.js"></script>
