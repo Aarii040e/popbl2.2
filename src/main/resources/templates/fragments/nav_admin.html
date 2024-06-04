@@ -26,9 +26,9 @@
         <span class="d-none d-md-block m-0" th:text="#{volunteers}">Volunteers</span>
     </a>
 
-    <a href="/admin-view/news" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'currentTasks'} ? 'active' : ' '">
+    <a href="/admin-view/tasks" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'currentTasks'} ? 'active' : ' '">
         <i class="fa-solid fa-list-check text-center p-1"></i>
-        <span class="d-none d-md-block m-0" th:text="#{current_tasks}">Create news item</span>
+        <span class="d-none d-md-block m-0" th:text="#{current_tasks}">Current tasks</span>
     </a>
 
     <a href="/admin-view/chat" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'volunteerList'} ? 'chat' : ' '">

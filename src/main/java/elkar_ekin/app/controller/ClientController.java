@@ -177,7 +177,6 @@ public class ClientController {
 			@RequestParam(name = "startTime", required = false) String strStime,
 			@RequestParam(name = "endTime", required = false) String strEtime,
 			@RequestParam(name = "volunteer", required = false) String volunteerName) {
-
 		// Save date in taskDto
 		LocalDate date = LocalDate.parse(strDate);
 		taskDto.setDate(date);
@@ -330,6 +329,7 @@ public class ClientController {
 		LocalTime endTime = taskDto.getEndTime();
 		Location location = taskDto.getLocation();
 		LocalDate currentDate = LocalDate.now();
+		LocalTime now = LocalTime.now();
 		if (location.getPostCode().toString().length() != 5) {
 			model.addAttribute("error", "error.wrongPostCode");
 			return true;
@@ -340,6 +340,10 @@ public class ClientController {
 		}
 		if (currentDate.isAfter(taskDate)) {
 			model.addAttribute("error", "error.wrongDate");
+			return true;
+		}
+		if ((now.isAfter(endTime) || now.isAfter(startTime)) && currentDate.isEqual(taskDate)) {
+			model.addAttribute("error", "error.timeAfterActual");
 			return true;
 		}
 		return false;
