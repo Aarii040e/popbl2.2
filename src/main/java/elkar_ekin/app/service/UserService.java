@@ -1,5 +1,7 @@
 package elkar_ekin.app.service;
 
+import java.util.List;
+
 import org.springframework.security.core.userdetails.UserDetails;
 
 import elkar_ekin.app.dto.UserDto;
@@ -13,4 +15,5 @@ public interface UserService {
 
 	public User save(UserDto userDto);
 
+	public List<UserDto> getAllUsersExcluding(Long userId);
 }

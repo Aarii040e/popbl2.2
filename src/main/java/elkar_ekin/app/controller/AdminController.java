@@ -252,4 +252,10 @@ public class AdminController {
 
 		return "admin/userSpecific";
 	}
+
+	@GetMapping("/chat")
+    public String showChat(Model model) {
+		model.addAttribute("user", user);
+        return "admin/chat";
+    } 
 }

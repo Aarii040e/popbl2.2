@@ -357,4 +357,10 @@ public class ClientController {
 		}
 		return "client/taskList";
 	}
+
+	@GetMapping("/chat")
+    public String showChat(Model model) {
+		model.addAttribute("user", client);
+        return "client/chat";
+    }
 }

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout-A}">
+
+<head>
+    <title>CHAT_ADMIN</title>
+    <link rel="stylesheet" type="text/css" href="/css/chat.css">
+</head>
+
+<body class="d-flex flex-column">
+	<main layout:fragment="content" th:replace="fragments/chat_content :: chat_content"></main>
+</body>
+</html>
