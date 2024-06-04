@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import elkar_ekin.app.dto.NewsItemDto;
 import elkar_ekin.app.model.NewsItem;
+import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.TaskRepository;
 import elkar_ekin.app.repositories.UserRepository;
 import elkar_ekin.app.service.NewsItemService;
+import elkar_ekin.app.service.TaskService;
 
 @Controller
 @RequestMapping("/admin-view")
@@ -43,6 +45,10 @@ public class AdminController {
 
 	@Autowired
 	NewsItemService newsItemService;
+
+	@Autowired
+	TaskService taskService;
+
 
 	@ModelAttribute("newsItemDto")
     public NewsItemDto newsItemDto() {
@@ -185,6 +191,17 @@ public class AdminController {
 
 		User client = repository.findByUserID(Long.parseLong(clientID));
 		model.addAttribute("user", client);
+
+		Long amount = taskRepository.countByClient(client);
+		model.addAttribute("amount", amount);
+
+		List<Task> clientTasks = taskService.getFirstFivePastTasks(client);
+		if (clientTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", clientTasks);
+		}
+
 		return "admin/userSpecific";
 	}
 
@@ -222,6 +239,17 @@ public class AdminController {
 
 		User volunteer = repository.findByUserID(Long.parseLong(volunteerID));
 		model.addAttribute("user", volunteer);
+
+		Long amount = taskRepository.countByVolunteer(volunteer);
+		model.addAttribute("amount", amount);
+
+		List<Task> volunteerTasks = taskService.getFirstFiveVolunteerTasks(volunteer);
+		if (volunteerTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", volunteerTasks);
+		}
+
 		return "admin/userSpecific";
 	}
 }
