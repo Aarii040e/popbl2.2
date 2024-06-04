@@ -1,5 +1,4 @@
 package elkar_ekin.app.controller;
-package elkar_ekin.app.controller;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -284,11 +283,10 @@ public class AdminController {
 		taskService.deleteTask(Long.parseLong(taskID));
 		return "redirect:/admin-view/tasks";
 	}
-}
   
-  @GetMapping("/chat")
-  public String showChat(Model model) {
-	model.addAttribute("user", user);
-    return "admin/chat";
-  } 
+	@GetMapping("/chat")
+	public String showChat(Model model) {
+		model.addAttribute("user", user);
+		return "admin/chat";
+	} 
 }
