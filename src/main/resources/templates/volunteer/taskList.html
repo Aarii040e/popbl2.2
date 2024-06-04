@@ -14,7 +14,7 @@
 				<div class="title w-100 mb-1" th:text="#{${task.taskDefaultID.name}}" th:classappend="${task.taskDefaultID.category.name} + 'Bg'">Task Name</div>
 
 				<div class="pfp rounded-circle position-absolute" 
-				th:classappend="${task.taskDefaultID.category.name} + 'Border'" 
+				th:classappend="'background-image: url(' + (${user.imagePath} != null ? '/img/' + ${user.imagePath} : '/images/blank-pfp.svg') + ');' + 'Border'"
 				th:if="${currentPage != 'taskHistory'}"></div>
 
 				<i class="date" th:text="${task.date.year} + '/' + ${task.date.monthValue} + '/' + ${task.date.dayOfMonth} + ' ' + ${task.startTime} + ' - ' + ${task.endTime}">Task Date</i>
@@ -30,7 +30,8 @@
 				
 				<div class="d-flex flex-column align-items-center">
 					<i class="fa-regular fa-bookmark bookmark text-center position-absolute py-1 px-2" th:classappend="${currentPage == 'taskList'} ? ' ' : 'right'"></i>
-					<a class="signup btnLink position-absolute border-0 rounded-1 py-1 px-2 text-decoration-none" th:href="@{'/volunteer-view/task/' + ${task.taskID} + '/signUp'}" th:if="${currentPage} == 'taskList'">Sign up</a>
+					<a class="signup btnLink position-absolute border-0 rounded-1 py-1 px-2 text-decoration-none" th:href="@{'/volunteer-view/task/' + ${task.taskID} + '/signUp'}" th:if="${currentPage} == 'taskList'" th:text="#{signup}">Sign up</a>
+					<a class="signup btnLink position-absolute border-0 rounded-1 py-1 px-2 text-decoration-none" th:href="@{'/volunteer-view/task/' + ${task.taskID} + '/unsign'}" th:if="${currentPage} == 'signedUp'" th:text="#{unsign}">Unsign</a>
 				</div> 
 			</div>
 		</div>

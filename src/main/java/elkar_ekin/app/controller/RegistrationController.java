@@ -207,7 +207,7 @@ public class RegistrationController {
         
         userService.save(userDto);
         model.addAttribute("message", "Registered Successfully!");
-        return "redirect:/index";
+        return "redirect:/logi2n";
     }
     
 }
