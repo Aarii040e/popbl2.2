@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import elkar_ekin.app.model.ChatMessage;
+import elkar_ekin.app.model.ChatNotification;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.dto.ChatMessageDto;
 import elkar_ekin.app.dto.ChatNotificationDto;
@@ -79,9 +81,4 @@ public class ChatController {
         return ResponseEntity.ok(userList);
     }
     
-    @GetMapping("/chat")
-    public String showChat(Model model) {
-		model.addAttribute("user", user);
-        return "admin/chat";
-    } 
 }

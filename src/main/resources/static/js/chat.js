@@ -40,6 +40,7 @@ function onError() {
 async function findAndDisplayUsers() {
     const connectedUsersResponse = await fetch('/users');
     let connectedUsers = await connectedUsersResponse.json();
+    console.log(connectedUsers);
     const connectedUsersList = document.getElementById('users');
     connectedUsersList.innerHTML = '';
 
