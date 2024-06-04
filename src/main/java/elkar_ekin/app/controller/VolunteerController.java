@@ -130,7 +130,7 @@ public class VolunteerController {
 		task.setState("closed"); // nombre provisional
 		taskRepository.save(task);
 		// redirectAttributes.addFlashAttribute("error", "You have signed up to the task!"); // no se visualiza
-        return "redirect:/volunteer-view/signedUp";
+        return "redirect:/volunteer-view/task/list";
     }
 
 	@GetMapping("/task/{taskID}/unsign")
