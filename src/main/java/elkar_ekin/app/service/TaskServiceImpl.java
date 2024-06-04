@@ -109,11 +109,18 @@ public class TaskServiceImpl implements TaskService {
 		existingTask.setEndTime(taskDto.getEndTime());
 		taskRepository.save(existingTask);
     }
+	
 	@Override
 	public List<Task> getAllActiveTasks() {
         List<Task> tasks = taskRepository.findTasksByState("active");
+		LocalDateTime currentDate = LocalDateTime.now();
         // Si necesitas transformar los datos de alguna manera, puedes hacerlo aquí
-        return tasks.stream().map(item -> {
+        return tasks.stream().filter(item -> {
+			LocalDate date = item.getDate();
+				LocalTime endTime = item.getEndTime();
+				LocalDateTime taskDateTime = LocalDateTime.of(date, endTime);
+				return taskDateTime.isAfter(currentDate);
+		}).map(item -> {
             Task task = new Task();
 			task.setTaskID(item.getTaskID());
             task.setDescription(item.getDescription());
@@ -126,7 +133,7 @@ public class TaskServiceImpl implements TaskService {
 			return task;
         }).collect(Collectors.toList());
 	}
-
+	
 	public List<Task> getAllPastTasks(User volunteer) {
         List<Task> tasks = taskRepository.findTasksByClient(volunteer);
 		LocalDateTime currentDate = LocalDateTime.now();
