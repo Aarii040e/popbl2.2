@@ -268,7 +268,7 @@ public class AdminController {
 	}
 	@GetMapping("/tasks")
 	public String showTaskList(Model model, Principal principal) {
-		List<Task> allTasks = taskService.getAllTasks();
+		List<Task> allTasks = taskService.getAllActiveTasks();
 		model.addAttribute("currentPage", "taskList");
 		if (allTasks == null) {
 			model.addAttribute("message", "No hay tareas disponibles.");
