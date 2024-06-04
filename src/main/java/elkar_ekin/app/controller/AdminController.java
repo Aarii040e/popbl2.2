@@ -4,6 +4,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +21,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import elkar_ekin.app.dto.LocationDto;
 import elkar_ekin.app.dto.NewsItemDto;
+import elkar_ekin.app.dto.TaskDto;
+import elkar_ekin.app.model.DefaultTask;
+import elkar_ekin.app.model.Location;
 import elkar_ekin.app.model.NewsItem;
+import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
+import elkar_ekin.app.repositories.DefaultTaskRepository;
 import elkar_ekin.app.repositories.TaskRepository;
 import elkar_ekin.app.repositories.UserRepository;
+import elkar_ekin.app.service.LocationService;
 import elkar_ekin.app.service.NewsItemService;
+import elkar_ekin.app.service.TaskService;
+import elkar_ekin.app.service.UserService;
 
 @Controller
 @RequestMapping("/admin-view")
@@ -31,6 +45,7 @@ public class AdminController {
 
 	private User user;
 	private User guest;
+	private DefaultTask defaultTask;
 
 	@Autowired
 	private UserRepository repository;
@@ -43,6 +58,18 @@ public class AdminController {
 
 	@Autowired
 	NewsItemService newsItemService;
+
+	@Autowired
+	private DefaultTaskRepository defaultTaskRepository;
+	
+
+	private final LocationService locationService;
+	private final TaskService taskService;
+
+	public AdminController(TaskService taskService, LocationService locationService) {
+		this.locationService = locationService;
+		this.taskService = taskService;
+	}
 
 	@ModelAttribute("newsItemDto")
     public NewsItemDto newsItemDto() {
@@ -223,5 +250,22 @@ public class AdminController {
 		User volunteer = repository.findByUserID(Long.parseLong(volunteerID));
 		model.addAttribute("user", volunteer);
 		return "admin/userSpecific";
+	}
+	@GetMapping("/tasks")
+	public String showTaskList(Model model, Principal principal) {
+		List<Task> allTasks = taskService.getAllTasks();
+		model.addAttribute("currentPage", "taskList");
+		if (allTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", allTasks);
+		}
+		return "admin/taskList";
+	}
+	@GetMapping(value = "/task/{taskID}/delete")
+	public String deleteTask(@PathVariable("taskID") String taskID, Model model) {
+		model.addAttribute("currentPage", "deleteTask");
+		taskService.deleteTask(Long.parseLong(taskID));
+		return "redirect:/admin-view/tasks";
 	}
 }
