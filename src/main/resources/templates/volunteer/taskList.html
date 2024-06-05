@@ -14,7 +14,7 @@
 				<div class="title w-100 mb-1" th:text="#{${task.taskDefaultID.name}}" th:classappend="${task.taskDefaultID.category.name} + 'Bg'">Task Name</div>
 
 				<div class="pfp rounded-circle position-absolute" 
-				th:classappend="'background-image: url(' + (${user.imagePath} != null ? '/img/' + ${user.imagePath} : '/images/blank-pfp.svg') + ');' + 'Border'"
+				th:classappend="${task.taskDefaultID.category.name} + 'Border'" 
 				th:if="${currentPage != 'taskHistory'}"></div>
 
 				<i class="date" th:text="${task.date.year} + '/' + ${task.date.monthValue} + '/' + ${task.date.dayOfMonth} + ' ' + ${task.startTime} + ' - ' + ${task.endTime}">Task Date</i>
