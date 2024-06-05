@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
 
 @Repository
@@ -23,5 +24,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	@Query("SELECT u FROM User u WHERE u.id <> :userId")
     List<User> findAllExcludingUser(@Param("userId") Long userId);
+
+	@Query("SELECT u.savedTasks FROM User u WHERE u.username = ?1")
+    List<Task> findSavedTasksByUsername(String username);
 
 }

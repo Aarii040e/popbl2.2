@@ -15,24 +15,24 @@
                 <div class="d-flex mb-3">
                     <div class="form-floating flex-grow-1 rounded-end">
                         <input type="number" class="form-control rounded-start" placeholder="Postal code"
-                            id="postalcode" name="postal_code" required>
+                            id="postalcode" name="postal_code" th:value="${user.location.postCode}" required>
                         <label for="postalcode" th:text="#{postal_code}">Postal code</label>
                     </div>
                     <div class="form-floating flex-grow-1">
                         <input type="text" class="form-control rounded-end" id="town" name="town" autocomplete="off"
-                            placeholder="Town" required>
+                            placeholder="Town" required th:value="${user.location.town}">
                         <label for="town" th:text="#{town}">Town</label>
                     </div>
                 </div>
                 <div class="d-flex mb-3">
                     <div class="form-floating flex-grow-1">
                         <input class="form-control rounded-start" id="direction" name="direction"
-                            placeholder="Direction" required>
+                            placeholder="Direction" th:value="${user.location.direction}" required>
                         <label for="direction" th:text="#{direction}">Direction</label>
                     </div>
                     <div class="form-floating flex-grow-1">
                         <input name="province" type="text" class="form-control rounded-end" placeholder="Province"
-                            id="province" required>
+                            id="province" th:value="${user.location.province}" required>
                         <label for="province" th:text="#{province}">Province</label>
                     </div>
                 </div>
