@@ -64,9 +64,9 @@ function appendUserElement(user, connectedUsersList) {
     const usernameSpan = document.createElement('span');
     usernameSpan.textContent = user.username;
 
-    const receivedMsgs = document.createElement('span');
+    const receivedMsgs = document.createElement('i');
     receivedMsgs.textContent = '0';
-    receivedMsgs.classList.add('nbr-msg', 'hidden');
+    receivedMsgs.classList.add('fa-solid', 'fa-bell', 'nbr-msg', 'hidden');
 
     listItem.appendChild(userImage);
     listItem.appendChild(usernameSpan);
