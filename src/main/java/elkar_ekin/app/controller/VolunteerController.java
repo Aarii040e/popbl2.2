@@ -81,12 +81,24 @@ public class VolunteerController {
 
 	@GetMapping("/user")
 	public String clientUser (Model model, Principal principal) {
+		model.addAttribute("currentPage", "user");
 
 		String admin = principal.getName();
 		guest = repository.findByUsername(admin);
 		model.addAttribute("guest", guest);
 
-		model.addAttribute("currentPage", "user");
+		User user = (User) model.getAttribute("user");
+
+		Long amount = taskRepository.countByVolunteer(user);
+		model.addAttribute("amount", amount);
+
+		List<Task> volunteerTasks = taskService.getFirstFiveVolunteerTasks(user);
+		if (volunteerTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", volunteerTasks);
+		}
+
 		return "volunteer/user";
 	}
 
@@ -134,6 +146,19 @@ public class VolunteerController {
 			model.addAttribute("message", "No hay tareas disponibles.");
 		} else {
 			model.addAttribute("taskList", allTasks);
+		}
+		return "volunteer/taskList";
+	}
+
+	@GetMapping("/history")
+	public String showTaskHistory(Model model, Principal principal) {
+		User user = (User) model.getAttribute("user");
+		List<Task> clientTasks = taskService.getPastVolunteerTasks(user);
+		model.addAttribute("currentPage", "taskHistory");
+		if (clientTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", clientTasks);
 		}
 		return "volunteer/taskList";
 	}
