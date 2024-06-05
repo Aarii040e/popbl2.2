@@ -6,7 +6,7 @@
             <span class="d-none d-md-block m-0" th:text="#{home}">Home</span>
         </a>
 
-        <a href="/client-view/tasks" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'taskList'} ? 'active' : ' '">
+        <a href="/client-view/tasks" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'clientTaskList'} ? 'active' : ' '">
             <i class="fa-solid fa-bookmark text-center p-1"></i>
             <span class="d-none d-md-block m-0" th:text="#{my_tasks}">My tasks</span>
         </a>

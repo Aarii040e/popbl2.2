@@ -174,17 +174,10 @@ public class AdminController {
 		}
 
 		taskRepository.deleteByClient_UserID(Long.parseLong(clientID));
-		
 		repository.deleteById(Long.parseLong(clientID));
 		return "redirect:/admin-view/clients/list";
 	}
 	
-	// @GetMapping(value = "/clients/{clientID}/delete")
-    // public String deleteClient(@PathVariable("clientID") String clientID, Model model) {
-    //     // Eliminar tareas asociadas al cliente y luego el cliente
-    //     customerService.deleteCustomer(Long.parseLong(clientID));
-    //     return "redirect:/admin-view/clients/list";
-    // }
 	@GetMapping(value = "/clients/{clientID}")
 	public String viewClient(@PathVariable("clientID") String clientID, Model model, Principal principal) {
 
@@ -205,7 +198,6 @@ public class AdminController {
 		} else {
 			model.addAttribute("taskList", clientTasks);
 		}
-
 		return "admin/userSpecific";
 	}
 

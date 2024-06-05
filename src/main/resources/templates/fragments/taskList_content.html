@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<main th:fragment="taskList_content" class="p-3">
+    <div class="d-md-grid ">
+        <div class="card position-relative overflow-hidden mb-2 m-md-0 p-2" th:each="task,iter : ${taskList}"  th:classappend="${task.taskDefaultID.category.name} + 'Border'">
+
+            <div class="title w-100 mb-1" th:text="#{${task.taskDefaultID.name}}" th:classappend="${task.taskDefaultID.category.name} + 'Bg'">Task Name</div>
+
+            <div class="pfp rounded-circle position-absolute"
+            th:style="'background-image: url(' + (${user.imagePath} != null ? '/img/' + ${user.imagePath} : '/images/blank-pfp.svg') + ');'"
+            th:if="${currentPage != 'taskHistory'}">
+            </div>
+
+            <i class="date" th:text="${task.date.year} + '/' + ${task.date.monthValue} + '/' + ${task.date.dayOfMonth} + ' ' + ${task.startTime} + ' - ' + ${task.endTime}">Task Date</i>
+
+            <p class="description py-2" th:text="${task.description}">Task Description</p>
+
+            <div class="d-flex align-items-center">
+                <i class="fa-regular fa-circle-check me-1" th:classappend="${task.taskDefaultID.category.name}"></i>
+                <p th:text="#{${task.taskDefaultID.category.name}}">Category</p>
+            </div>
+
+            <i class="d-block py-2" th:text="${task.location.direction}">Task Location</i>
+            
+            <div class="d-flex flex-row justify-content-end position-absolute button-group" th:if="${currentPage == 'clientTaskList'}">
+                <a class="signup btnLink border-0 rounded-1 py-1 px-2 me-2 text-decoration-none"
+                    th:href="@{'/client-view/task/' + ${task.taskID} + '/edit'}">Edit</a>
+                <a class="signup btnLink border-0 rounded-1 py-1 px-2 text-decoration-none"
+                    th:href="@{'/client-view/task/' + ${task.taskID} + '/delete'}">Delete</a>
+            </div>
+            <div class="d-flex flex-column align-items-center" th:if="${currentPage != 'clientTaskList'}">
+                <p class="taskIDList" th:text="${savedTaskIDs}" style="display: none;"></p>
+                <a th:id="${task.taskID}" class="fa-regular fa-bookmark bookmark text-center position-absolute py-1 px-2 text-decoration-none" th:if="${currentPage != 'taskHistory' && currentPage != 'signedUp'}"></a>
+                <a class="signup btnLink position-absolute border-0 rounded-1 py-1 px-2 text-decoration-none" th:href="@{'/volunteer-view/task/' + ${task.taskID} + '/signUp'}" th:if="${currentPage != 'taskHistory' && currentPage != 'signedUp'}">Sign up</a>
+            </div> 
+        </div>
+    </div>
+    <script src="/js/cut_content.js"></script>
+    <script src="/js/volunteering_list.js"></script>
+</main>
+</html>

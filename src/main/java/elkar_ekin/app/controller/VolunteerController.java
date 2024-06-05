@@ -91,24 +91,24 @@ public class VolunteerController {
 	@GetMapping("/user")
 	public String clientUser (Model model, Principal principal) {
 		model.addAttribute("currentPage", "user");
-
+		
 		String admin = principal.getName();
 		guest = repository.findByUsername(admin);
 		model.addAttribute("guest", guest);
-
+		
 		User user = (User) model.getAttribute("user");
 		checkProfilePicture(user);
 
 		Long amount = taskRepository.countByVolunteer(user);
 		model.addAttribute("amount", amount);
-
+		
 		List<Task> volunteerTasks = taskService.getFirstFiveVolunteerTasks(user);
 		if (volunteerTasks == null) {
 			model.addAttribute("message", "No hay tareas disponibles.");
 		} else {
 			model.addAttribute("taskList", volunteerTasks);
 		}
-
+		
 		return "volunteer/user";
 	}
 
@@ -125,7 +125,7 @@ public class VolunteerController {
 	@PostMapping("/user/update")
     public String clientUpdateUser (@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model, Principal principal) {
 		if (result.hasErrors()) {
-            return "volunteer/user";
+			return "volunteer/user";
         }
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         userService.update(userDto, userDetails);
@@ -133,10 +133,11 @@ public class VolunteerController {
         model.addAttribute("message", "Updated Successfully!");
         return "user";
     }
-
+	
 	@GetMapping({"/task/list", "/task/"})
 	public String showTaskList (Model model, Principal principal) {
 		setTaskListAsAttribute(model);
+		model.addAttribute("currentPage", "volunteerTaskList");
 		//Saved tasks for current user
 		List<Task> savedTasks = userService.getSavedTasksByUser(user);
 		List<String> idList = new ArrayList<>();
@@ -220,7 +221,7 @@ public class VolunteerController {
 
 	private List<Task> setTaskListAsAttribute(Model model){
 		List<Task> allTasks = taskService.getAllActiveTasks();
-		model.addAttribute("currentPage", "taskList");
+		model.addAttribute("currentPage", "volunteerTaskList");
 		if (allTasks == null) {
 			model.addAttribute("message", "No hay tareas disponibles.");
 		} else {
