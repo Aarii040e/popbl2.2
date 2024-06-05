@@ -1,5 +1,8 @@
 package elkar_ekin.app.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.UrlResource;
 
 import elkar_ekin.app.dto.TaskDto;
 import elkar_ekin.app.dto.UserDto;
@@ -47,6 +53,9 @@ public class VolunteerController {
 
 	@Autowired
 	NewsItemService newsItemService;
+
+    @Autowired
+    ResourceLoader resourceLoader;
 
 	private User guest;
 	private User user;
@@ -88,6 +97,7 @@ public class VolunteerController {
 		model.addAttribute("guest", guest);
 
 		User user = (User) model.getAttribute("user");
+		checkProfilePicture(user);
 
 		Long amount = taskRepository.countByVolunteer(user);
 		model.addAttribute("amount", amount);
@@ -100,6 +110,16 @@ public class VolunteerController {
 		}
 
 		return "volunteer/user";
+	}
+
+	public void checkProfilePicture(User user) {
+		final Path imageLocation = Paths.get("public/img");
+
+		Path filePath = imageLocation.resolve(user.getImagePath());
+
+		if (!Files.exists(filePath) || !Files.isReadable(filePath)) {
+			user.setImagePath(null);
+		}
 	}
 
 	@PostMapping("/user/update")
@@ -209,7 +229,7 @@ public class VolunteerController {
 		return allTasks;
 	}
 
-	@GetMapping({"/saved_jobs"})
+	@GetMapping({"/saved"})
 	public String showSavedTaskList (Model model, Principal principal) {
 		List<Task> savedTasks = userService.getSavedTasksByUser(user);
 		
