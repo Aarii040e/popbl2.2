@@ -11,7 +11,7 @@
         <span class="d-none d-md-block m-0" th:text="#{tasks}">Tasks</span>
     </a>
 
-    <a href="/volunteer-view/saved_jobs" class="d-flex flex-column text-decoration-none">
+    <a href="/volunteer-view/saved_jobs" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'savedTaskList'} ? 'active' : ' '">
         <i class="fa-solid fa-bookmark text-center p-1"></i>
         <span class="d-none d-md-block m-0" th:text="#{saved_tasks}">Saved tasks</span>
     </a>
