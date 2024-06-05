@@ -364,6 +364,7 @@ public class ClientController {
 
 	@GetMapping("/chat")
     public String showChat(Model model) {
+		model.addAttribute("currentPage", "chat");
 		model.addAttribute("user", client);
         return "client/chat";
     }

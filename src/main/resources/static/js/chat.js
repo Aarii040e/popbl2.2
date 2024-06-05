@@ -4,7 +4,6 @@ const usernameSpan = document.querySelector('.usernameSpan'); //Form
 const messageForm = document.querySelector('#messageForm'); //Form
 const messageInput = document.querySelector('#message'); //Textfield
 const chatArea = document.querySelector('#chat-messages');
-const logout = document.querySelector('#logout');
 
 let stompClient = null;
 let currentUserID = null;
@@ -40,7 +39,6 @@ function onError() {
 async function findAndDisplayUsers() {
     const connectedUsersResponse = await fetch('/users');
     let connectedUsers = await connectedUsersResponse.json();
-    console.log(connectedUsers);
     const connectedUsersList = document.getElementById('users');
     connectedUsersList.innerHTML = '';
 
@@ -66,9 +64,9 @@ function appendUserElement(user, connectedUsersList) {
     const usernameSpan = document.createElement('span');
     usernameSpan.textContent = user.username;
 
-    const receivedMsgs = document.createElement('span');
+    const receivedMsgs = document.createElement('i');
     receivedMsgs.textContent = '0';
-    receivedMsgs.classList.add('nbr-msg', 'hidden');
+    receivedMsgs.classList.add('fa-solid', 'fa-bell', 'nbr-msg', 'hidden');
 
     listItem.appendChild(userImage);
     listItem.appendChild(usernameSpan);
@@ -96,6 +94,18 @@ function userItemClick(event) {
     nbrMsg.classList.add('hidden');
     nbrMsg.textContent = '0';
 
+
+    select = true;
+
+    if (innerWidth < 768) {
+        document.querySelector(".users-list").classList.add("hidden");
+    }
+    
+    document.querySelector(".chat-area-parent").classList.remove("hidden");
+    document.querySelector("#chat-messages").classList.remove("hidden");
+
+    document.querySelector(".chat-area-parent").scrollTo(0, 1000);
+    console.log(document.querySelector(".chat-area-parent").scrollHeight);
 }
 
 function displayMessage(senderID, content) {
@@ -171,5 +181,48 @@ function onLogout() {
 }
 
 messageForm.addEventListener('submit', sendMessage, true);
-logout.addEventListener('click', onLogout, true);
 window.onbeforeunload = () => onLogout();
+
+
+
+
+
+
+
+// Código enseñar conversación
+
+let select = false;
+
+document.querySelectorAll(".chat").forEach(chat => {
+    chat.addEventListener("click", () => {
+        select = true;
+
+        if (innerWidth < 768) {
+            document.querySelector(".chat-container").classList.add("hidden");
+        }
+        else {
+            [...document.querySelectorAll(".selected")].map(chat => chat.classList.remove("selected"));
+            chat.classList.add("selected");    
+        }
+        
+        document.querySelector(".empty").classList.remove("d-md-flex");    
+        document.querySelector(".empty").classList.add("hidden");
+        document.querySelector("#chat-messages").classList.remove("hidden");
+
+        document.querySelector("#chat-messages").scrollTo(0, document.querySelector("#chat-messages").scrollHeight);
+
+    });
+});
+
+addEventListener("resize", () => {
+    if (innerWidth < 768 && select) {
+        document.querySelector("#chat-messages").classList.remove("hidden");
+        document.querySelector(".users-list").classList.add("hidden");
+    }
+    else {
+        document.querySelector(".chat-container").classList.remove("hidden");
+        document.querySelector(".users-list").classList.remove("hidden");      
+    }
+});
+
+// document.querySelector(".fa-paper-plane").addEventListener("click", () => document.querySelector("form").submit());
