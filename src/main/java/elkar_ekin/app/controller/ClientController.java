@@ -227,7 +227,7 @@ public class ClientController {
 	@GetMapping("/tasks")
 	public String showTaskList(Model model, Principal principal) {
 		List<Task> clientTasks = taskService.getTasksByUser(client);
-		model.addAttribute("currentPage", "taskList");
+		model.addAttribute("currentPage", "clientTaskList");
 		if (clientTasks == null) {
 			model.addAttribute("message", "No hay tareas disponibles.");
 		} else {
