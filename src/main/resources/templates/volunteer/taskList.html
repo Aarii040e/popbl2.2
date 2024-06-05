@@ -20,15 +20,14 @@
 				</div>
 				<i class="d-block py-2" th:text="${task.location.direction}">Task Location</i>
 				<div class="d-flex flex-column align-items-center">
-					<div id="taskIDList" th:text="${savedTaskIDs}" style="display: none;"></div>
+					<p class="taskIDList" th:text="${savedTaskIDs}" style="display: none;"></p>
 					<a th:id="${task.taskID}" class="fa-regular fa-bookmark bookmark text-center position-absolute py-1 px-2 text-decoration-none" th:if="${currentPage != 'taskHistory' && currentPage != 'signedUp'}"></a>
-					<a class="signup btnLink position-absolute border-0 rounded-1 py-1 px-2 text-decoration-none" th:href="@{'/volunteer-view/task/' + ${task.taskID} + '/signUp'}" th:if="${currentPage != 'taskHistory'}">Sign up</a>
+					<a class="signup btnLink position-absolute border-0 rounded-1 py-1 px-2 text-decoration-none" th:href="@{'/volunteer-view/task/' + ${task.taskID} + '/signUp'}" th:if="${currentPage != 'taskHistory' && currentPage != 'signedUp'}">Sign up</a>
 				</div> 
 			</div>
 		</div>
-	</div>
-	<script src="/js/cut_content.js"></script>
-	<script src="/js/volunteering_list.js"></script>
-</main>
+		<script src="/js/cut_content.js"></script>
+		<script src="/js/volunteering_list.js"></script>
+	</main>
 </body>>
 </html>
