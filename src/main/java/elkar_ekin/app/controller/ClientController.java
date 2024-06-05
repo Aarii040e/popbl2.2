@@ -1,5 +1,8 @@
 package elkar_ekin.app.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -124,6 +127,7 @@ public class ClientController {
 		model.addAttribute("guest", guest);
 
 		User user = (User) model.getAttribute("user");
+		checkProfilePicture(user);
 
 		Long amount = taskRepository.countByClient(user);
 		model.addAttribute("amount", amount);
@@ -135,6 +139,16 @@ public class ClientController {
 			model.addAttribute("taskList", clientTasks);
 		}
 		return "client/user";
+	}
+
+	public void checkProfilePicture(User user) {
+		final Path imageLocation = Paths.get("public/img");
+
+		Path filePath = imageLocation.resolve(user.getImagePath());
+
+		if (!Files.exists(filePath) || !Files.isReadable(filePath)) {
+			user.setImagePath(null);
+		}
 	}
 
 	@PostMapping("/user/update")
