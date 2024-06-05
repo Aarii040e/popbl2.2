@@ -134,7 +134,6 @@ public class ClientController {
 		} else {
 			model.addAttribute("taskList", clientTasks);
 		}
-
 		return "client/user";
 	}
 
@@ -145,7 +144,6 @@ public class ClientController {
 		model.addAttribute("guest", guest);
 		model.addAttribute("message", "Updated Successfully!");
 		return "redirect:/client-view/user";
-		// return "client/user";
 	}
 
 	@GetMapping("/createTask/step1")
