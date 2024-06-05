@@ -5,8 +5,9 @@
     <div class="chat-container d-flex h-100">
         <div class="users-list position-fixed h-100">
             <!-- SPAN HORI EZ BORRAU -->
-            <div class="greeting ps-3 pt-3">
-                <h2>Kaixo, <span th:id="${user.userID}" class="usernameSpan" th:text="${user.username}"></span>!</h2>
+            <div class="greeting d-flex align-items-center ps-3 pt-3">
+                <h2 class="me-1" th:text="#{hello}">Kaixo,</h2>
+                <span th:id="${user.userID}" class="usernameSpan" th:text="${user.username} + '!'"></span>
             </div>
             <div class="users-list-container p-3 pt-2">
                 <ul id="users"></ul>
@@ -26,7 +27,7 @@
 
             <form id="messageForm" name="messageForm" class="d-flex justify-content-center w-100 hidden">
                 <div class="message-input d-flex justify-content-between align-items-center py-2 px-3">
-                    <input autocomplete="off" type="text" placeholder="Type your message..." class="border-0" id="message">
+                    <input autocomplete="off" type="text" th:placeholder="#{type}" class="border-0" id="message">
                     <button class="border-0"><i class="fa-solid fa-paper-plane icons"></i></button>
                 </div>
             </form>    
