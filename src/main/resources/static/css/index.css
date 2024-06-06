@@ -21,7 +21,9 @@ main {
 
 .car-logo {
     width: 60%;
-    height: auto;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: updown 2s infinite;
 }
 
 .img {
@@ -101,6 +103,16 @@ main {
 
 h2, .body {
     margin-bottom: 10px;
+}
+
+@keyframes updown {
+    0%, 100% {
+        top: 48%;
+    }
+
+    50% {
+        top: 52%;
+    }
 }
 
 @media screen and (min-width: 768px) {
