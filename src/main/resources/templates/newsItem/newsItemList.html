@@ -1,67 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Elkar-Ekin</title>
-        <link rel="icon" type="image/x-icon" href="/images/mondragon.ico">
-        <link rel="stylesheet" type="text/css" href="/assets/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="/css/main.css">
-        <link rel="stylesheet" type="text/css" href="/css/header_nav_lang.css">
-        <link rel="stylesheet" type="text/css" href="/css/newsItem.css">
-        <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-        <script src="https://kit.fontawesome.com/7ec78ffc94.js" crossorigin="anonymous"></script>
-    </head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout_main}">
 
-    <body class="d-flex flex-column">  
-        <!-- Language bar -->
-        <div th:replace="fragments/language.html :: language_div"></div>
-        
-        <!-- Login / logout bar -->
-        <div th:if="${user == null}">
-            <header  th:replace="fragments/header_login.html :: header_login"></header>
-        </div>
-        <div th:if="${user != null}" >
-            <header th:replace="fragments/header_logout.html :: header_logout"></header>
-        </div>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/newsItem.css">
+</head>
 
-        <!-- Specific navigation bar -->
-        <div th:switch="${user != null} ? ${user.role} : ''">
-            <div th:case="'C'">
-                <div th:replace="fragments/nav_client.html :: nav"></div>
-            </div>
-            <div th:case="'V'">
-                <div th:replace="fragments/nav_volunteer.html :: nav"></div>
-            </div>
-            <div th:case="'A'">
-                <div th:replace="fragments/nav_admin.html :: nav"></div>
-            </div>
-            <div th:case="*">
-                <div th:replace="fragments/nav_main.html :: nav"></div>
-            </div>
-        </div>
-        <main layout:fragment="content">
-            <div>
-                <form action="/newsItem/search" method="get" class="d-flex w-100">
-                    <input type="search" placeholder="Search news item" id="gsearch" name="keyword" class="flex-grow-3 p-1 rounded-start">
-                    <button type="submit" class="border-0 p-1 rounded-end flex-grow-1">Search</button>
-                </form>
-            </div>
-            <div class="card-container">
-                <div class="card" th:each="newsItem,iter : ${newsItemList}">
-                    <h2 th:text="${newsItem.title}" class="title">TITLE HEADING</h2>
-                    <!-- <h2 th:text="${newsItem.createdAt}">Title description, Dec 7,2017</h2> -->
-                    <div class="body">
-                        <p th:utext="${newsItem.body}"></p>
-                    </div>
-                    <a th:href="@{'/newsItem/' + ${newsItem.newsItemID}}" class="load link text-decoration-none">Load more</a>
-                </div>
-            </div>
-            
-                     
-        </main>
-
-        <script src="/js/cut_content.js"></script>             
-        <script src="/js/newsItemList.js"></script>    
-    </body>
+<body class="d-flex flex-column">
+	<main layout:fragment="content" th:replace="fragments/newsItemList_content :: newsItemList_content"></main>
+</body>
 </html>
