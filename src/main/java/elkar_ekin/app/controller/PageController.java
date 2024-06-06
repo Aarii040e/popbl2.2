@@ -26,12 +26,14 @@ public class PageController {
 			model.addAttribute("newsItemList", allNewsItems);
 		}
 		model.addAttribute("currentPage", "index");
+		
 		return "index";
 	}
 
 	@GetMapping("/login")
 	public String showLoginForm(Model model) {
 		model.addAttribute("currentPage", "login");
+		model.addAttribute("message", "Login Successfully!");
 		return "login";
 	}
 

@@ -9,16 +9,15 @@
     <!-- Main content -->
     <main layout:fragment="content" class="d-flex mx-auto">
         <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0 px-4 px-md-6" th:action="@{/registration/step1}"
-        method="post" role="form" th:object="${userDto}">
+        method="post" th:object="${userDto}">
 
             <h1 class="mt-3 mb-3" th:text="#{signup}">Sign up</h1>
 
             <div class="form-floating">
-                <input name="name" th:field="*{name}" type="text" class="form-control rounded-top"
-                    placeholder="First name" id="name" autocomplete="off" required />
+                <input name="name" th:field="*{name}" type="text" class="form-control rounded-top" 
+                placeholder="First name" id="name" autocomplete="off" required>
                 <label for="name" th:text="#{name}">Name</label>
             </div>
-
             <div class="d-flex mb-3">
                 <div class="form-floating flex-grow-1">
                     <input th:field="*{surname1}" type="text" class="form-control rounded-bottom-left"

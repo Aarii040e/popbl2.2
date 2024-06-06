@@ -1,72 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Elkar-Ekin</title>
-        <link rel="icon" type="image/x-icon" href="/images/mondragon.ico">
-        <link rel="stylesheet" type="text/css" href="/assets/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="/css/main.css">
-        <link rel="stylesheet" type="text/css" href="/css/header_nav_lang.css">
-        <link rel="stylesheet" type="text/css" href="/css/newsItem.css">
-        <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-        <script src="https://kit.fontawesome.com/7ec78ffc94.js" crossorigin="anonymous"></script>
-    </head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout_main}">
 
-    <body class="d-flex flex-column">  
-        <!-- Language bar -->
-        <div th:replace="fragments/language.html :: language_div"></div>
-        
-        <!-- Login / logout bar -->
-        <div th:if="${user == null}">
-            <header  th:replace="fragments/header_login.html :: header_login"></header>
-        </div>
-        <div th:if="${user != null}" >
-            <header th:replace="fragments/header_logout.html :: header_logout"></header>
-        </div>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/newsItem.css">
+</head>
 
-        <!-- Specific navigation bar -->
-        <div th:switch="${user != null} ? ${user.role} : ''">
-            <div th:case="'C'">
-                <div th:replace="fragments/nav_client.html :: nav"></div>
-            </div>
-            <div th:case="'V'">
-                <div th:replace="fragments/nav_volunteer.html :: nav"></div>
-            </div>
-            <div th:case="'A'">
-                <div th:replace="fragments/nav_admin.html :: nav"></div>
-            </div>
-            <div th:case="*">
-                <div th:replace="fragments/nav_main.html :: nav"></div>
-            </div>
-        </div>
-        
-        <main layout:fragment="content">
-            <div class="card">
-                <h2 th:text="${newsItem.title}" class="title">TITLE HEADING</h2>
-                <!-- <h5 th:text="${blog.createdOn}">Title description, Dec 7,2017</h5> -->
-                <p th:utext="${newsItem.body}">Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-            </div>
-            <form th:action="@{'/newsItem/' + ${newsItem.newsItemID} + '/createComment'}" th:object="${commentDto}" method="POST">
-                <!-- <input type="text" class="form-control" th:id="blogId"
-                    th:name="blogId" placeholder="Name"
-                    th:value="${blog_detail.blogId}" hidden="true"> -->
-
-                <div class="form-group">
-                    <label for="comment_content" class="textarea-label my-3">Comment</label>
-                    <textarea class="form-control" id="comment_content" required th:field="*{content}"></textarea>
-                </div>
-                <button type="submit" class="comment my-3 p-2 border-0 rounded">Comment</button>
-            </form>
-
-            <div class="card comment-box" th:each="comment,iter : ${commentList}">
-                <h2 th:text="'@' + ${comment.user.username}">username</h2>
-                <p class="truncated-content" th:utext="${comment.content}">Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-            </div>
-
-            <a href="/newsItem/list" class="fixed-btn p-3 position-fixed d-flex align-items-center justify-content-center text-decoration-none">
-                <i class="fa-solid fa-reply"></i>
-            </a>
-        </main>
-    </body>
+<body class="d-flex flex-column">
+	<main layout:fragment="content" th:replace="fragments/newsItem_content :: newsItem_content"></main>
+</body>
 </html>
