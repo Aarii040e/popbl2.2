@@ -1,9 +1,8 @@
 package elkar_ekin.app.model;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,8 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -50,17 +47,7 @@ public class Task {
     @JoinColumn(name = "volunteerID", nullable = true)
     private User volunteer;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "task_users",
-        joinColumns = @JoinColumn(name = "taskID"),
-        inverseJoinColumns = @JoinColumn(name = "userID")
-    )
-    private Set<User> savedUsers;
-
-
     public Task() {
-        savedUsers = new LinkedHashSet<>();
     }
 
     public Task(DefaultTask taskDefaultID, String description, LocalDate date, String state, LocalTime startTime,
@@ -74,7 +61,6 @@ public class Task {
         this.location = location;
         this.client = client;
         this.volunteer = volunteer;
-        savedUsers = new LinkedHashSet<>();
     }
 
     
@@ -170,15 +156,6 @@ public class Task {
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
-
-    public Set<User> getSavedUsers() {
-        return savedUsers;
-    }
-
-    public void setSavedUsers(Set<User> savedUsers) {
-        this.savedUsers = savedUsers;
-    }
-    
     
 
 }

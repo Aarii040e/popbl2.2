@@ -4,7 +4,7 @@
     <div class="position-relative p-3">
         <div><div class="banner"></div></div>
 
-        <form enctype="multipart/form-data" class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0" th:action="${user.role} == 'C' ? @{/client-view/user/update} : @{/volunteer-view/user/update}" method="post" th:object="${userDto}">         
+        <form enctype="multipart/form-data" class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0" th:action="${user.role} == 'C' ? @{/client-view/user/update} : @{/volunteer-view/user/update}" method="post" role="form" th:object="${userDto}">         
             <div>
                 <div class="pic rounded-circle position-absolute"
                 th:style="'background-image: url(' + (${user.imagePath} != null ? '/img/' + ${user.imagePath} : '/images/blank-pfp.svg') + ');'">
@@ -16,7 +16,7 @@
 
             <h2 class="handle" th:text="'@' + ${user.username}">@username</h2>
 
-            <input name="description" class="biography py-2 my-2 border-0" type="text" autocomplete="off" th:value="${user.description}" disabled>
+            <input name="description" class="biography py-2 my-2 border-0" type="text" autocomplete="off" th:value="${user.description}" disabled/>
                        
             <div class="identity d-flex py-1">
                 <i class="fa-solid fa-circle-user me-1"></i>

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import elkar_ekin.app.model.ChatMessage;
+import elkar_ekin.app.model.ChatNotification;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.dto.ChatMessageDto;
 import elkar_ekin.app.dto.ChatNotificationDto;
@@ -26,6 +28,7 @@ import java.util.List;
 @Controller
 public class ChatController {
 
+    //HORRELA!???????????????????????????????
     private final SimpMessagingTemplate messagingTemplate;
     
     User user;
@@ -68,6 +71,7 @@ public class ChatController {
         String recipientID = String.valueOf(chatMessageDto.getRecipientID());
         ChatNotificationDto notification = new ChatNotificationDto(savedMsg.getChatMessageID(), savedMsg.getSenderID(), savedMsg.getRecipientID(), savedMsg.getContent());
         
+        //We send the message from the sender to the recipient
         messagingTemplate.convertAndSendToUser(recipientID, "/queue/messages", notification);        
     }
 

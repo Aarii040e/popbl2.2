@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import elkar_ekin.app.dto.NewsItemDto;
-import elkar_ekin.app.dto.UserDto;
 import elkar_ekin.app.model.NewsItem;
 import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
@@ -174,10 +173,17 @@ public class AdminController {
 		}
 
 		taskRepository.deleteByClient_UserID(Long.parseLong(clientID));
+		
 		repository.deleteById(Long.parseLong(clientID));
 		return "redirect:/admin-view/clients/list";
 	}
 	
+	// @GetMapping(value = "/clients/{clientID}/delete")
+    // public String deleteClient(@PathVariable("clientID") String clientID, Model model) {
+    //     // Eliminar tareas asociadas al cliente y luego el cliente
+    //     customerService.deleteCustomer(Long.parseLong(clientID));
+    //     return "redirect:/admin-view/clients/list";
+    // }
 	@GetMapping(value = "/clients/{clientID}")
 	public String viewClient(@PathVariable("clientID") String clientID, Model model, Principal principal) {
 
@@ -187,7 +193,6 @@ public class AdminController {
 
 		User client = repository.findByUserID(Long.parseLong(clientID));
 		model.addAttribute("user", client);
-		checkProfilePicture(client);
 
 		Long amount = taskRepository.countByClient(client);
 		model.addAttribute("amount", amount);
@@ -198,17 +203,8 @@ public class AdminController {
 		} else {
 			model.addAttribute("taskList", clientTasks);
 		}
+
 		return "admin/userSpecific";
-	}
-
-	public void checkProfilePicture(User user) {
-		final Path imageLocation = Paths.get("public/img");
-
-		Path filePath = imageLocation.resolve(user.getImagePath());
-
-		if (!Files.exists(filePath) || !Files.isReadable(filePath)) {
-			user.setImagePath(null);
-		}
 	}
 
 	@GetMapping({"/volunteers/list", "/volunteers/"})
@@ -245,7 +241,6 @@ public class AdminController {
 
 		User volunteer = repository.findByUserID(Long.parseLong(volunteerID));
 		model.addAttribute("user", volunteer);
-		checkProfilePicture(volunteer);
 
 		Long amount = taskRepository.countByVolunteer(volunteer);
 		model.addAttribute("amount", amount);

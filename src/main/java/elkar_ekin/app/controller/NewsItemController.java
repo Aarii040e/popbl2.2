@@ -56,12 +56,6 @@ public class NewsItemController {
 		} else {
 			model.addAttribute("newsItemList", allNewsItems);
 		}
-		if(user.getRole().equals("C")){
-			return "client/newsItemList";
-		}
-		else if(user.getRole().equals("V")){
-			return "volunteer/newsItemList";
-		}
 		return "newsItem/newsItemList";
 	}
 
@@ -79,12 +73,6 @@ public class NewsItemController {
 		} else {
 			model.addAttribute("commentList", allComments);
 		}
-		if(user.getRole().equals("C")){
-			return "client/newsItem";
-		}
-		else if(user.getRole().equals("V")){
-			return "volunteer/newsItem";
-		}
 		return "newsItem/newsItem";
 	}
 
@@ -101,12 +89,6 @@ public class NewsItemController {
     public String searchNewsItems(@RequestParam("keyword") String keyword, Model model) {
         List<NewsItem> searchResults = newsItemService.searchNewsItems(keyword);
         model.addAttribute("newsItemList", searchResults);
-		if(user.getRole().equals("C")){
-			return "client/newsItemList";
-		}
-		else if(user.getRole().equals("V")){
-			return "volunteer/newsItemList";
-		}	
         return "newsItem/newsItemList";
     }
 	

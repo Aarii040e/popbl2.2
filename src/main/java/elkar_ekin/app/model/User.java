@@ -2,7 +2,6 @@ package elkar_ekin.app.model;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -48,9 +46,6 @@ public class User {
     private String email;
     private String description;
     private String imagePath;
-
-	@ManyToMany(mappedBy = "savedUsers")
-    private Set<Task> savedTasks;
 	
 	@CreationTimestamp
     @Column(name = "createdAt", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -253,15 +248,6 @@ public class User {
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
-
-	public Set<Task> getSavedTasks() {
-		return savedTasks;
-	}
-
-	public void setSavedTasks(Set<Task> savedTasks) {
-		this.savedTasks = savedTasks;
-	}
-	
 
 
 }
