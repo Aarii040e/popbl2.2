@@ -5,21 +5,56 @@ main {
 }
 
 #myCarousel {
-    background: linear-gradient(to bottom, var(--bg-sec-darker), var(--bg-sec-lighter), var(--bg-primary));
+    /* background: linear-gradient(to bottom, var(--bg-sec-darker), var(--bg-sec-lighter), var(--bg-primary)); */
+    background: var(--bg-languages);
     box-shadow: 0 5px 10px var(--bg-sec-darker);
 }
 
 .carousel-control-prev i, .carousel-control-next i {
     font-size: 15px;
+    color: var(--bg-primary);
 }
 
 #myCarousel, .carousel-inner, .carousel-item {
     height: calc(80vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-small));
 }
 
-img {
-    width: 30%;
-    margin-right: 10px;
+.car-logo {
+    width: 60%;
+    height: auto;
+}
+
+.img {
+    background-size: cover;
+}
+
+.item-child {
+    justify-content: center;
+    height: 100%;
+}
+
+.ods-3 {
+    background-image: url("../images/3.jpg");
+}
+
+.ods-4-10 {
+    background-image: url("../images/4-10.jpg");
+}
+
+.ods-13-15 {
+    background-image: url("../images/13-15.jpg");
+}
+
+.ods3 {
+    height: 50%;
+}
+
+.ods4, .ods10, .ods13, .ods15 {
+    height: 40%;
+}
+
+.heading {
+    display: none;
 }
 
 #statistics {
@@ -81,6 +116,30 @@ h2, .body {
         height: calc(60vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-small));
     }
 
+    .item-child {
+        justify-content: space-around;
+        height: 75%;
+        background: #aaa4;
+    }   
+
+    .ods3 {
+        height: 50%;
+        width: auto;
+    }
+
+    .heading {
+        display: block;
+        color: var(--bg-sec-lighter);
+        font-size: 40px;
+        font-family: Inter, 'Roboto', Arial, Helvetica, sans-serif;
+        max-width: 60%;
+        text-align: right;
+    }
+
+    .dark {
+        background: #3335;
+    }
+
     .carousel-caption {
         display: flex;
         flex-flow: row;
@@ -90,11 +149,6 @@ h2, .body {
     .carousel-caption div {
         flex-flow: column;
         width: 50%;
-    }
-
-    img {
-        margin: 0 0 5px 0;
-        width: 45%;
     }
 
     #statistics div h1:first-child {
