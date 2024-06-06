@@ -47,6 +47,12 @@ body {
     height: 100vh;
 }
 
+.logo {
+    height: 120%;
+    width: auto !important;
+    transform: translateY(-40%);
+}
+
 a {
     transition: color .3s;
 }
