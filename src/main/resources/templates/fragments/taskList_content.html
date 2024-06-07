@@ -30,8 +30,11 @@
             </div>
             <div class="d-flex flex-column align-items-center" th:if="${currentPage != 'clientTaskList'}">
                 <p class="taskIDList" th:text="${savedTaskIDs}" style="display: none;"></p>
+
                 <a th:id="${task.taskID}" class="fa-regular fa-bookmark bookmark text-center position-absolute py-1 px-2 text-decoration-none" th:if="${currentPage != 'taskHistory' && currentPage != 'signedUp'}"></a>
+
                 <a class="signup btnLink position-absolute border-0 rounded-1 py-1 px-2 text-decoration-none" th:href="@{'/volunteer-view/task/' + ${task.taskID} + '/signUp'}" th:if="${currentPage != 'taskHistory' && currentPage != 'signedUp'}" th:text="#{sign_up}">Sign up</a>
+
                 <a class="signup btnLink position-absolute border-0 rounded-1 py-1 px-2 text-decoration-none" th:href="@{'/volunteer-view/task/' + ${task.taskID} + '/unsign'}" th:if="${currentPage != 'taskHistory' && currentPage == 'signedUp'}" th:text="#{unsign}">Unsign</a>
             </div> 
         </div>
