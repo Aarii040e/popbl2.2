@@ -138,6 +138,16 @@ public class ClientController {
 		return "client/user";
 	}
 
+	public void checkProfilePicture(User user) {
+		final Path imageLocation = Paths.get("public/img");
+
+		Path filePath = imageLocation.resolve(user.getImagePath());
+
+		if (!Files.exists(filePath) || !Files.isReadable(filePath) || user.getImagePath().isEmpty()) {
+			user.setImagePath(null);
+		}
+	}
+
 	@PostMapping("/user/update")
 	public String clientUpdateUser(@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model, Principal principal) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());

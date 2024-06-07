@@ -102,11 +102,18 @@ public class VolunteerController {
 		return "volunteer/user";
 	}
 
+	public void checkProfilePicture(User user) {
+		final Path imageLocation = Paths.get("public/img");
+
+		Path filePath = imageLocation.resolve(user.getImagePath());
+
+		if (!Files.exists(filePath) || !Files.isReadable(filePath) || user.getImagePath().isEmpty()) {
+			user.setImagePath(null);
+		}
+	}
+
 	@PostMapping("/user/update")
     public String clientUpdateUser (@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model, Principal principal) {
-		if (result.hasErrors()) {
-            return "volunteer/user";
-        }
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         userService.update(userDto, userDetails);
 		model.addAttribute("guest", guest);
@@ -184,5 +191,77 @@ public class VolunteerController {
 		model.addAttribute("currentPage", "chat");
 		model.addAttribute("user", user);
         return "volunteer/chat";
+    }
+
+	@GetMapping("/task/{taskID}/save")
+    public String saveVolunteerToTask (@PathVariable("taskID") String taskID, Model model, Principal principal, RedirectAttributes redirectAttributes) {
+		// Obtener la tarea por ID
+        Task task = taskService.getTaskByID(Long.parseLong(taskID));
+        // Añadir el usuario a la tarea
+        if (!task.getSavedUsers().contains(user)) {
+			task.getSavedUsers().add(user);
+		}
+        // Guardar la tarea
+        taskRepository.save(task);
+		setTaskListAsAttribute(model);
+        return "redirect:/volunteer-view/task/list";
+    }
+
+	@GetMapping("/task/{taskID}/delete")
+    public String deleteSafeVolunteerToTask (@PathVariable("taskID") String taskID, Model model, Principal principal, RedirectAttributes redirectAttributes) {
+		// Obtener la tarea por ID
+        Task task = taskService.getTaskByID(Long.parseLong(taskID));
+        // Añadir el usuario a la tarea
+        if (task.getSavedUsers().contains(user)) {
+			task.getSavedUsers().remove(user);
+		}
+        // Guardar la tarea
+        taskRepository.save(task);
+		setTaskListAsAttribute(model);
+        return "redirect:/volunteer-view/task/list";
+    }
+
+	private List<Task> setTaskListAsAttribute(Model model){
+		List<Task> allTasks = taskService.getAllActiveTasks();
+		model.addAttribute("currentPage", "volunteerTaskList");
+		if (allTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", allTasks);
+		}
+		return allTasks;
+	}
+
+	@GetMapping({"/saved"})
+	public String showSavedTaskList (Model model, Principal principal) {
+		List<Task> savedTasks = userService.getSavedTasksByUser(user);
+		
+		// Filtrar tareas con usuario nulo
+		List<Task> tasksWithNullUser = savedTasks.stream()
+        .filter(task -> task.getVolunteer() == null)
+        .collect(Collectors.toList());
+
+		model.addAttribute("currentPage", "savedTaskList");
+		if (tasksWithNullUser == null) {
+			model.addAttribute("message", "No hay tareas guardadas.");
+		} else {
+			model.addAttribute("taskList", tasksWithNullUser);
+		}
+		List<String> idList = new ArrayList<>();
+		for (Task task : tasksWithNullUser) {
+			idList.add(String.valueOf(task.getTaskID()));
+		}
+		model.addAttribute("savedTaskIDs", idList);
+		return "volunteer/taskList";
+	}
+	@GetMapping("/task/{taskID}/unsign")
+    public String unsignVolunteerToTask (@PathVariable("taskID") String taskID, Model model, Principal principal, RedirectAttributes redirectAttributes) {
+		Task task = taskService.getTaskByID(Long.parseLong(taskID));
+        task.setVolunteer(null);
+		task.setState("active"); // nombre provisional
+		taskRepository.save(task);
+		// redirectAttributes.addFlashAttribute("error", "You have signed up to the task!"); // no se visualiza
+		model.addAttribute("currentPage", "taskList");
+        return "redirect:/volunteer-view/signedUp";
     }
 }

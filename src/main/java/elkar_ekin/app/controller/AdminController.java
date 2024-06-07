@@ -207,6 +207,16 @@ public class AdminController {
 		return "admin/userSpecific";
 	}
 
+	public void checkProfilePicture(User user) {
+		final Path imageLocation = Paths.get("public/img");
+
+		Path filePath = imageLocation.resolve(user.getImagePath());
+
+		if (!Files.exists(filePath) || !Files.isReadable(filePath) || user.getImagePath().isEmpty()) {
+			user.setImagePath(null);
+		}
+	}
+
 	@GetMapping({"/volunteers/list", "/volunteers/"})
 	public String listVolunteers (Model model, Principal principal) {
 		model.addAttribute("currentPage", "volunteerList");
