@@ -146,7 +146,7 @@ public class ClientController {
 
 		Path filePath = imageLocation.resolve(user.getImagePath());
 
-		if (!Files.exists(filePath) || !Files.isReadable(filePath)) {
+		if (!Files.exists(filePath) || !Files.isReadable(filePath) || user.getImagePath().isEmpty()) {
 			user.setImagePath(null);
 		}
 	}
