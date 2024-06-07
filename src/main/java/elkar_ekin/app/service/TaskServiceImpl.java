@@ -107,6 +107,7 @@ public class TaskServiceImpl implements TaskService {
 		existingTask.setDescription(taskDto.getDescription());
 		existingTask.setStartTime(taskDto.getStartTime());
 		existingTask.setEndTime(taskDto.getEndTime());
+		existingTask.setVolunteer(taskDto.getVolunteer());
 		taskRepository.save(existingTask);
     }
 	
