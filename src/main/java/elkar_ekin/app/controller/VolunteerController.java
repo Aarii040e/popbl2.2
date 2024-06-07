@@ -249,4 +249,14 @@ public class VolunteerController {
 		model.addAttribute("savedTaskIDs", idList);
 		return "volunteer/taskList";
 	}
+	@GetMapping("/task/{taskID}/unsign")
+    public String unsignVolunteerToTask (@PathVariable("taskID") String taskID, Model model, Principal principal, RedirectAttributes redirectAttributes) {
+		Task task = taskService.getTaskByID(Long.parseLong(taskID));
+        task.setVolunteer(null);
+		task.setState("active"); // nombre provisional
+		taskRepository.save(task);
+		// redirectAttributes.addFlashAttribute("error", "You have signed up to the task!"); // no se visualiza
+		model.addAttribute("currentPage", "taskList");
+        return "redirect:/volunteer-view/signedUp";
+    }
 }
