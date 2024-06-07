@@ -1,8 +1,5 @@
 package elkar_ekin.app.controller;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -127,7 +124,6 @@ public class ClientController {
 		model.addAttribute("guest", guest);
 
 		User user = (User) model.getAttribute("user");
-		checkProfilePicture(user);
 
 		Long amount = taskRepository.countByClient(user);
 		model.addAttribute("amount", amount);
@@ -138,17 +134,8 @@ public class ClientController {
 		} else {
 			model.addAttribute("taskList", clientTasks);
 		}
+
 		return "client/user";
-	}
-
-	public void checkProfilePicture(User user) {
-		final Path imageLocation = Paths.get("public/img");
-
-		Path filePath = imageLocation.resolve(user.getImagePath());
-
-		if (!Files.exists(filePath) || !Files.isReadable(filePath)) {
-			user.setImagePath(null);
-		}
 	}
 
 	@PostMapping("/user/update")
@@ -158,6 +145,7 @@ public class ClientController {
 		model.addAttribute("guest", guest);
 		model.addAttribute("message", "Updated Successfully!");
 		return "redirect:/client-view/user";
+		// return "client/user";
 	}
 
 	@GetMapping("/createTask/step1")
@@ -241,7 +229,7 @@ public class ClientController {
 	@GetMapping("/tasks")
 	public String showTaskList(Model model, Principal principal) {
 		List<Task> clientTasks = taskService.getTasksByUser(client);
-		model.addAttribute("currentPage", "clientTaskList");
+		model.addAttribute("currentPage", "taskList");
 		if (clientTasks == null) {
 			model.addAttribute("message", "No hay tareas disponibles.");
 		} else {

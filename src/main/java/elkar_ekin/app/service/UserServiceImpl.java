@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import elkar_ekin.app.dto.UserDto;
-import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.UserRepository;
 
@@ -79,9 +78,4 @@ public class UserServiceImpl implements UserService {
 		}		
 		return userDtos;
 	}
-
-	@Override
-	public List<Task> getSavedTasksByUser(User user) {
-        return userRepository.findSavedTasksByUsername(user.getUsername());
-    }
 }
