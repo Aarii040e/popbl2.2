@@ -1,6 +1,8 @@
 main {
     height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-small));
     margin-top: calc(var(--h-languages) + var(--h-header));
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
 .card {
