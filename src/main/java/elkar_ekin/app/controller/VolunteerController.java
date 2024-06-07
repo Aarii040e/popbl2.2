@@ -117,21 +117,18 @@ public class VolunteerController {
 
 		Path filePath = imageLocation.resolve(user.getImagePath());
 
-		if (!Files.exists(filePath) || !Files.isReadable(filePath)) {
+		if (!Files.exists(filePath) || !Files.isReadable(filePath) || user.getImagePath().isEmpty()) {
 			user.setImagePath(null);
 		}
 	}
 
 	@PostMapping("/user/update")
     public String clientUpdateUser (@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model, Principal principal) {
-		if (result.hasErrors()) {
-			return "volunteer/user";
-        }
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         userService.update(userDto, userDetails);
 		model.addAttribute("guest", guest);
         model.addAttribute("message", "Updated Successfully!");
-        return "user";
+		return "redirect:/volunteer-view/user";
     }
 	
 	@GetMapping({"/task/list", "/task/"})
