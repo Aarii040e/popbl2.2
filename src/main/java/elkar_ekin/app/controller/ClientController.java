@@ -380,4 +380,12 @@ public class ClientController {
 		model.addAttribute("user", client);
         return "client/chat";
     }
+
+	@GetMapping("/ratings")
+	public String showRatings(Model model) {
+		model.addAttribute("currentPage", "ratings");
+        List<UserDto> userList = userService.getAllUsersExcluding(client.getUserID());
+		model.addAttribute("userList", userList);
+		return "client/ratings";
+	}
 }

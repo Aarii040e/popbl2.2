@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-                .antMatchers("/registration/**", "/login/*", "/index", "/tos", "/locale/*", "/newsItem/*", "/chat/*", "/chatMain/*", "**/queue/messages", "/users", "/messages/*").permitAll()
+                .antMatchers("/registration/**", "/login/*", "/index", "/tos", "/error", "/locale/*", "/newsItem/*", "/chat/*", "/chatMain/*", "**/queue/messages", "/users", "/messages/*").permitAll()
                 .antMatchers("/css/**", "/js/**", "/images/**", "/assets/**", "/public/**").permitAll()
                 .antMatchers("/admin-view/**").hasAuthority("A")
                 .antMatchers("/volunteer-view/**").hasAuthority("V")
