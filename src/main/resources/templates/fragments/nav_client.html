@@ -21,7 +21,7 @@
             <span class="d-none d-md-block m-0" th:text="#{chat}">Chat</span>
         </a>
 
-        <a href="/client-view/ratings" class="d-flex flex-column text-decoration-none">
+        <a href="/client-view/ratings" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'ratings'} ? 'active' : ' '">
             <i class="fa-solid fa-star text-center p-1"></i>
             <span class="d-none d-md-block m-0" th:text="#{ratings}">Ratings</span>
         </a>
