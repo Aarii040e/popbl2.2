@@ -2,6 +2,9 @@ package elkar_ekin.app.controller;
 
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,4 +52,14 @@ public class PageController {
 		return "tos";
 	}
 
+	@GetMapping({"/error"})
+	public String getErrorPage(HttpServletRequest request, Model model) {
+        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+		model.addAttribute("currentPage", "error");
+		if (status != null) {
+            int statusCode = Integer.parseInt(status.toString());
+            model.addAttribute("statusCode", statusCode);
+		}
+		return "error";
+	}
 }
