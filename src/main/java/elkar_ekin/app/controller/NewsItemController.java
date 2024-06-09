@@ -56,11 +56,16 @@ public class NewsItemController {
 		} else {
 			model.addAttribute("newsItemList", allNewsItems);
 		}
-		if(user.getRole().equals("C")){
-			return "client/newsItemList";
-		}
-		else if(user.getRole().equals("V")){
-			return "volunteer/newsItemList";
+		if(user != null) {
+			if(user.getRole().equals("C")){
+				return "client/newsItemList";
+			}
+			else if(user.getRole().equals("V")){
+				return "volunteer/newsItemList";
+			}
+			else if(user.getRole().equals("A")){
+				return "admin/newsItemList2";
+			}
 		}
 		return "newsItem/newsItemList";
 	}
@@ -84,6 +89,9 @@ public class NewsItemController {
 		}
 		else if(user.getRole().equals("V")){
 			return "volunteer/newsItem";
+		}
+		else if(user.getRole().equals("A")){
+			return "admin/newsItem";
 		}
 		return "newsItem/newsItem";
 	}
