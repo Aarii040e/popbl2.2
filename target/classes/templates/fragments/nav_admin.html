@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<nav class="menu_bar d-flex bottom-0 z-2 justify-content-around w-100 py-2 order-lg-last" th:fragment="nav">
+    <a href="/admin-view/index" class="d-flex flex-column text-center text-decoration-none" th:classappend="${currentPage == 'index'} ? 'active' : ' '">
+        <i class="fa-solid fa-home p-1"></i>
+        <span class="d-none d-md-block m-0" th:text="#{home}">Home</span>
+    </a>
+
+    <a href="/admin-view/newsItem/" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'newsItemList'} ? 'active' : ' '">
+        <i class="fa-solid fa-list-check text-center p-1"></i>
+        <span class="d-none d-md-block m-0" th:text="#{list_news}">List news items</span>
+    </a>
+
+    <a href="/admin-view/newsItem/create" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'newsItemCreate'} ? 'active' : ' '">
+        <i class="fa-solid fa-list-check text-center p-1"></i>
+        <span class="d-none d-md-block m-0" th:text="#{create_news}">Create news item</span>
+    </a>
+
+    <a href="/admin-view/clients/list" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'clientList'} ? 'active' : ' '">
+        <i class="fa-solid fa-users-line text-center p-1"></i>
+        <span class="d-none d-md-block m-0" th:text="#{clients}">Clients</span>
+    </a>
+
+    <a href="/admin-view/volunteers/list" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'volunteerList'} ? 'active' : ' '">
+        <i class="fa-solid fa-handshake-angle text-center p-1"></i>
+        <span class="d-none d-md-block m-0" th:text="#{volunteers}">Volunteers</span>
+    </a>
+
+    <a href="/admin-view/tasks" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'currentTasks'} ? 'active' : ' '">
+        <i class="fa-solid fa-list-check text-center p-1"></i>
+        <span class="d-none d-md-block m-0" th:text="#{current_tasks}">Current tasks</span>
+    </a>
+
+    <a href="/admin-view/chat" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'chat'} ? 'active' : ' '">
+        <i class="fa-solid fa-comments text-center p-1"></i>
+        <span class="d-none d-md-block m-0" th:text="#{chat}">Chat</span>
+    </a>
+</nav>
+</html>

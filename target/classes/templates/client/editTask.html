@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/layout-C}">
+
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/task_form.css}">
+</head>
+
+<section class="d-flex flex-column">
+    <main layout:fragment="content" class="d-flex justify-content-center align-items-center w-100">
+        <section class="d-flex flex-column">
+            <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0 px-4 px-md-6"
+                th:action="@{/client-view/editTask}" method="post" th:object="${taskDto}">
+                <h1 class="mb-3" th:text="#{edit_task}">Edit task</h1>
+                <input hidden="true" type="number" class="form-control" name="task_ID" th:field="*{taskID}">
+                <input hidden="true" type="text" name="state" class="form-control" th:field="*{state}">
+                <input hidden="true" type="text" name="defaulTask" class="form-control"
+                    th:value="*{taskDefaultID.name}">
+                <div class="d-flex mb-3">
+                    <div class="form-floating flex-grow-1 rounded-end">
+                        <input type="number" class="form-control rounded-start" placeholder="Postal code"
+                            id="postalcode" name="postal_code" th:value="*{location.postCode}" required>
+                        <label for="postalcode" th:text="#{postal_code}">Postal code</label>
+                    </div>
+                    <div class="form-floating flex-grow-1">
+                        <input type="text" class="form-control rounded-end" id="town" name="town" autocomplete="off"
+                            placeholder="Town" th:value="*{location.town}" required>
+                        <label for="town" th:text="#{town}">Town</label>
+                    </div>
+                </div>
+                <div class="d-flex mb-3">
+                    <div class="form-floating flex-grow-1">
+                        <input class="form-control rounded-start" id="direction" name="direction"
+                            placeholder="Direction" th:value="*{location.direction}" required>
+                        <label for="direction" th:text="#{direction}">Direction</label>
+                    </div>
+                    <div class="form-floating flex-grow-1">
+                        <input name="province" type="text" class="form-control rounded-end" placeholder="Province"
+                            id="province" th:value="*{location.province}" required>
+                        <label for="province" th:text="#{province}">Province</label>
+                    </div>
+                </div>
+                <div class="desc d-flex justify-content-between align-items-center py-1 mb-3">
+                    <label for="description" th:text="#{description}">Description</label>
+                    <textarea id="description" name="description" th:field="*{description}"
+                        placeholder="Enter your description" class="px-1 rounded-1 p-1 vh-50"></textarea>
+                </div>
+                <div class="time">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <label for="date" th:text="#{date}">Date</label>
+                        <input type="date" id="date" name="date" class="px-1 rounded-1" required th:field="*{date}">
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <label for="stime" th:text="#{start_time}">Start time</label>
+                        <input type="time" id="startTime" name="startTime" class="px-1 rounded-1" required
+                            th:field="*{startTime}">
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <label for="etime" th:text="#{end_time}">End time</label>
+                        <input type="time" id="endTime" name="endTime" class="px-1 rounded-1" required
+                            th:field="*{endTime}">
+                    </div>
+                </div>
+                <div class="user d-flex py-1 mb-3">
+                    <label for="user" th:text="#{preferred_volunteer}">I
+                        would like this user to
+                        do this task:</label>
+                    <div>
+                        <i class="ms-1">@</i>
+                        <input type="text" name="volunteer" id="user" class="px-1"
+                            th:value="${volunteer?.username ?: ''}">
+                    </div>
+                </div>
+
+                <div class="buttons d-flex">
+                    <button type="submit" class="rounded-1 py-2 w-100 border-0 mx-3">Continue</button>
+                </div>
+            </form>
+        </section>
+    </main>
+    <script src="/js/task_form_step1.js"></script>
+</section>
+
+</html>

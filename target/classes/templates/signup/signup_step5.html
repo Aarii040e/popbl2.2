@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout_main}">
+
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/signup.css}">
+</head>
+
+<section layout:fragment="content" class="d-flex mx-auto">
+
+    <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0 px-4 px-md-6" th:action="@{/registration/step5}"
+        method="post" th:object="${userDto}">
+        <h1 class="mt-3 mb-3" th:text="#{signup}">Sign up</h1>
+
+        <div class="mb-3">
+            <div class="d-flex py-1">
+                <input name="checkbox_client" type="checkbox" data-category="social" class="me-2" id="client" checked>
+                <label for="client" th:text="#{Im_client_message}">I am a client (I want to request a service)</label>
+            </div>
+            <div class="d-flex py-1">
+                <input name="checkbox_volunteer" type="checkbox" data-category="social" class="me-2" id="volunteer">
+                <label for="volunteer" th:text="#{Im_volunteer_message}">I am a volunteer (I want to offer a service)</label>
+            </div>
+        </div>
+
+        <div class="optional hidden">
+            <p class="mb-3" th:text="#{how_much_free_time_question}">How much free time do you have daily, in hours?</p>
+
+            <div class="d-flex">
+                <div class="form-floating flex-grow-1">
+                    <input type="number" class="form-control rounded-start" placeholder="Mo." id="monday">
+                    <label for="monday" th:text="#{monday_short}">Mo.</label>
+                </div>
+
+                <div class="form-floating flex-grow-1">
+                    <input type="number" class="form-control rounded-0" placeholder="Tu." id="tuesday">
+                    <label for="tuesday" th:text="#{tuesday_short}">Tu.</label>
+                </div>
+
+                <div class="form-floating flex-grow-1">
+                    <input type="number" class="form-control rounded-0" placeholder="We." id="wednesday">
+                    <label for="wednesday" th:text="#{wednesday_short}">We.</label>
+                </div>
+
+                <div class="form-floating flex-grow-1">
+                    <input type="number" class="form-control rounded-0" placeholder="Th." id="thursday">
+                    <label for="thursday" th:text="#{thursday_short}">Th.</label>
+                </div>
+
+                <div class="form-floating flex-grow-1">
+                    <input type="number" class="form-control rounded-0" placeholder="Fr." id="friday">
+                    <label for="friday" th:text="#{friday_short}">Fr.</label>
+                </div>
+
+                <div class="form-floating flex-grow-1">
+                    <input type="number" class="form-control rounded-0" placeholder="Sa." id="saturday">
+                    <label for="saturday" th:text="#{saturday_short}">Sa.</label>
+                </div>
+
+                <div class="form-floating flex-grow-1 rounded-end">
+                    <input type="number" class="form-control rounded-end mb-3" placeholder="Su." id="sunday">
+                    <label for="sunday" th:text="#{sunday_short}">Su.</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex py-1 mb-3">
+            <input type="checkbox" data-category="social" class="me-2" id="tos" required>
+            <div>
+                <label for="tos" th:text="#{read_accept}">I have read and accept </label>
+                <a href="/tos" th:text="#{tos}" class="link text-decoration-none">Terms of Service</a>
+            </div>
+        </div>
+        
+        <div class="buttons d-flex">
+            <a href="/registration/step4" class="btnLink text-decoration-none text-center rounded-1 py-2 w-100 border-0 mx-3 mb-5 mb-md-3" th:text="#{previous}">Previous</a>
+
+            <button type="submit" class="rounded-1 py-2 w-100 border-0 mx-3 mb-5 mb-md-3" th:text="#{continue}">Continue</button>
+        </div>
+    </form>
+    <script src="/js/signup_step5.js"></script>
+</section>
+</html>

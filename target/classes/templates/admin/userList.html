@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout-A}">
+
+<head>
+	<link rel="stylesheet" href="/css/newsItem_admin.css">
+</head>
+
+<body class="d-flex flex-column">
+	<main layout:fragment="content" class="d-flex mx-auto p-3">
+		<table class="news_list_table table table-striped table-bordered" th:if="userList != null">
+			<thead class="text-center">
+				<tr>
+					<td th:text="#{userID}">News Item ID</td>
+					<td th:text="#{name}">News Item Title</td>
+					<td th:text="#{surname1}">News Item Title</td>
+					<td th:text="#{surname2}">News Item Title</td>
+					<!-- <td>News Item Date</td> -->
+					<td th:text="#{actions}">Actions</td>
+					<td th:text="#{more_details}">More details</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user,iter : ${userList}">
+					<td th:text="${user.userID}" class="text-center">NewsItem ID</td>
+					<td th:text="${user.name}">NewsItem ID</td>
+					<td th:text="${user.surname1}">NewsItem ID</td>
+					<td th:text="${user.surname2}">NewsItem ID</td>
+					<!-- <td th:text="${newsItem.createdAt}">NewsItem Date</td> -->
+					<!-- <td>
+						<a class="btn btn-danger" th:href="@{'/admin-view/clients/' + ${user.userID} + '/delete'}">Delete</a>
+					</td>
+					<td>
+						<a class="btn btn-primary" th:href="@{'/admin-view/clients/' + ${user.userID}}">...</a>
+					</td> -->
+					<td>
+						<a class="btnLink button d-block btn-danger p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'clientList'}" th:href="@{'/admin-view/clients/' + ${user.userID} + '/delete'}" onclick="return confirm('Are you sure?')">Delete</a>
+
+						<a class="btnLink button d-block btn-danger p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'volunteerList'}" th:href="@{'/admin-view/volunteers/' + ${user.userID} + '/delete'}" onclick="return confirm('Are you sure?')">Delete</a>
+					</td>
+					<td>
+						<a class="btnLink button d-block mb-1 p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'clientList'}" th:href="@{'/admin-view/clients/' + ${user.userID}}">...</a>
+
+						<a class="btnLink button d-block mb-1 p-1 text-decoration-none text-center rounded w-100" th:if="${currentPage == 'volunteerList'}" th:href="@{'/admin-view/volunteers/' + ${user.userID}}">...</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</main>
+</body>
+</html>
