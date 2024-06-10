@@ -116,16 +116,32 @@ public abstract class BaseController {
             if (user != null) {
                 checkProfilePicture(user);
 
-                Long amount = taskRepository.countByVolunteer(user);
-                model.addAttribute("amount", amount);
-
-                Long volunteerId = user.getUserID(); // Assuming User class has a getUserID() method
-                List<HistoricTask> volunteerTasks = historicTaskService.getFirstFiveVolunteerTasks(volunteerId);
-                if (volunteerTasks == null) {
-                    model.addAttribute("message", "No hay tareas disponibles.");
-                } else {
-                    model.addAttribute("taskList", volunteerTasks);
+                if (user.getRole().equals("V")) {
+                    Long amount = taskRepository.countByVolunteer(user);
+                    model.addAttribute("amount", amount);
+    
+                    Long volunteerId = user.getUserID(); // Assuming User class has a getUserID() method
+                    List<HistoricTask> volunteerTasks = historicTaskService.getFirstFiveVolunteerTasks(volunteerId);
+                    if (volunteerTasks == null) {
+                        model.addAttribute("message", "No hay tareas disponibles.");
+                    } else {
+                        model.addAttribute("taskList", volunteerTasks);
+                    }
                 }
+
+                else if (user.getRole().equals("C")) {
+                    Long amount = taskRepository.countByClient(user);
+                    model.addAttribute("amount", amount);
+    
+                    Long clientId = user.getUserID(); // Assuming User class has a getUserID() method
+                    List<HistoricTask> clientTasks = historicTaskService.getFirstFivePastTasks(clientId);
+                    if (clientTasks == null) {
+                        model.addAttribute("message", "No hay tareas disponibles.");
+                    } else {
+                        model.addAttribute("taskList", clientTasks);
+                    }
+                }
+
             }
         }
 		return returnRole+"/user";
@@ -145,25 +161,37 @@ public abstract class BaseController {
     @PostMapping("/user/update")
     public String updateUserView(@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model, Principal principal) {
 		if (result.hasErrors()) {
-			return returnRole+"/user";
+			return "redirect:/" + returnRole + "-view/user";
         }
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         userService.update(userDto, userDetails);
 		model.addAttribute("guest", guest);
         model.addAttribute("message", "Updated Successfully!");
-        return returnRole+"/user";
+        return "redirect:/" + returnRole + "-view/user";
     }
     
     @GetMapping("/history")
 	public String showTaskHistory(Model model, Principal principal) {
-		Long volunteerId = user.getUserID(); // Ensure user has a getUserID() method
-        List<HistoricTask> clientTasks = historicTaskService.getFirstFiveVolunteerTasks(volunteerId);
-        model.addAttribute("currentPage", "taskHistory");
-		if (clientTasks == null) {
-			model.addAttribute("message", "No hay tareas disponibles.");
-		} else {
-			model.addAttribute("taskList", clientTasks);
-		}
+        if (user.getRole().equals("V")) {
+            Long volunteerId = user.getUserID(); // Assuming User class has a getUserID() method
+            List<HistoricTask> volunteerTasks = historicTaskService.getFirstFiveVolunteerTasks(volunteerId);
+            if (volunteerTasks == null) {
+                model.addAttribute("message", "No hay tareas disponibles.");
+            } else {
+                model.addAttribute("taskList", volunteerTasks);
+            }
+        }
+
+        else if (user.getRole().equals("C")) {
+            Long clientId = user.getUserID(); // Assuming User class has a getUserID() method
+            List<HistoricTask> clientTasks = historicTaskService.getFirstFivePastTasks(clientId);
+            if (clientTasks == null) {
+                model.addAttribute("message", "No hay tareas disponibles.");
+            } else {
+                model.addAttribute("taskList", clientTasks);
+            }
+        }
+
 		return returnRole+"/taskList";
 	}
 
