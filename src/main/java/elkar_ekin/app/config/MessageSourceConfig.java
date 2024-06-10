@@ -11,7 +11,7 @@ public class MessageSourceConfig {
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("messages"); // Set the basename for your properties files
+        messageSource.setBasename("messages"); // Set the basename for the files with the content in each language
         messageSource.setDefaultEncoding("UTF-8"); // Set the encoding
         return messageSource;
     }

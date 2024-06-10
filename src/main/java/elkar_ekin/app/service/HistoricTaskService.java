@@ -9,4 +9,5 @@ public interface HistoricTaskService {
     List<HistoricTask> getFirstFivePastTasks(Long clientId);
     List<HistoricTask> getPastVolunteerTasks(Long volunteerId);
     List<HistoricTask> getFirstFiveVolunteerTasks(Long volunteerId);
+    List<HistoricTask> getFirstFiveClientTasks(Long clientId);
 }

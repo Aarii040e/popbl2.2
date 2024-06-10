@@ -28,6 +28,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query("SELECT t FROM Task t WHERE (t.state = 'active' OR t.state IS NULL) AND (:client IS NULL OR t.client = :client) AND t.endTime > :currentTime")
     List<Task> findTasksByClientAndCurrentTimeAfter(@Param("client") User client, @Param("currentTime") LocalTime currentTime);
     
+    
     long countByVolunteer(User volunteer);
 
     long countByClient(User volunteer);

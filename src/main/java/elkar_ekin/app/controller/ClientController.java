@@ -47,16 +47,22 @@ public class ClientController extends BaseController {
     private UserService userService;
     
     @Autowired
+    private UserRepository userRepository;
+    
+    @Autowired
     private DefaultTaskRepository defaultTaskRepository;
 	@Autowired
     private TaskService taskService;
     private final LocationService locationService;
 
     public ClientController(UserRepository userRepository, TaskRepository taskRepository,
-                            UserDetailsService userDetailsService, HistoricTaskService historicTaskService, 
-                            NewsItemService newsItemService, UserService userService, 
+                            DefaultTaskRepository defaultTaskRepository, 
+                            UserDetailsService userDetailsService, 
+                            HistoricTaskService historicTaskService, 
+                            NewsItemService newsItemService, 
+                            UserService userService, 
                             LocationService locationService) {
-        super(userRepository, taskRepository, userDetailsService, historicTaskService, newsItemService, userService);
+        super(userRepository, taskRepository, defaultTaskRepository, userDetailsService, historicTaskService, newsItemService, userService);
         this.locationService = locationService;
     }
 
