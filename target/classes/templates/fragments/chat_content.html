@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<main th:fragment="chat_content">
+    <div class="chat-container d-flex h-100">
+        <div class="users-list position-fixed h-100">
+            <!-- SPAN HORI EZ BORRAU -->
+            <div class="greeting d-flex align-items-center ps-3 pt-3">
+                <h2 class="me-1" th:text="#{hello}">Kaixo,</h2>
+                <span th:id="${user.userID}" class="usernameSpan" th:text="${user.username} + '!'"></span>
+            </div>
+            <div class="users-list-container p-3 pt-2">
+                <ul id="users"></ul>
+            </div>
+        </div>
+
+        <div class="chat-area chat-area-parent hidden">
+            <div class="chat-area chat-area-child" id="chat-messages"></div>
+            <div class="filler"></div>
+
+            <!-- <form id="messageForm" name="messageForm" class="hidden">
+                <div class="message-input d-flex justify-content-center w-100">
+                    <input autocomplete="off" type="text" id="message" placeholder="Type your message...">
+                    <button class="border-0 rounded p-2">Send</button>
+                </div>
+            </form> -->
+
+            <form id="messageForm" name="messageForm" class="d-flex justify-content-center w-100 hidden">
+                <div class="message-input d-flex justify-content-between align-items-center py-2 px-3">
+                    <input autocomplete="off" type="text" th:placeholder="#{type}" class="border-0" id="message">
+                    <button class="border-0"><i class="fa-solid fa-paper-plane icons"></i></button>
+                </div>
+            </form>    
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="/js/chat.js"></script>
+</main>
+</html>
