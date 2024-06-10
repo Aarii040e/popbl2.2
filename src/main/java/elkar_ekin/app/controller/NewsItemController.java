@@ -65,7 +65,7 @@ public class NewsItemController {
 				return "volunteer/newsItemList";
 			}
 			else if(user.getRole().equals("A")){
-				return "admin/newsItemList2";
+				return "admin/baseNewsItemList";
 			}
 		}
 
