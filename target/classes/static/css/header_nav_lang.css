@@ -1,0 +1,66 @@
+.login_logout, .menu_bar {
+    box-sizing: border-box;
+    z-index: 100;
+    position: fixed;
+}
+
+.language {
+    background: var(--bg-languages);
+}
+
+.language a {
+    color: var(--bg-primary);
+    font-weight: 700;
+}
+
+.language a:hover {
+    color: var(--bg-sec-darker);
+}
+
+.login_logout {
+    background: var(--bg-languages);
+    top: var(--h-languages);
+    height: var(--h-header);
+}
+
+.selected, .language button:hover {
+    background: var(--link-lighter-2);
+}
+
+.login_logout button {
+    height: 30px;
+    padding: 0 7px;
+    background: var(--bg-menu_bar);
+}
+
+.login_logout > * {
+    color: var(--font-languages);
+}
+
+.login_logout button:hover {
+    background: var(--link-lighter-2);
+}
+
+.menu_bar {
+    background: var(--bg-menu_bar);
+}
+
+.menu_bar a > * {
+    transition: color .3s;
+}
+
+.menu_bar a:not(.active):hover > * {
+    color: var(--font-lighter);
+}
+
+.active > * {
+    color: var(--link-lighter-2);
+}
+
+@media screen and (min-width: 992px) {
+    .menu_bar {
+        position: fixed;
+        height: var(--h-menu_bar-big);
+        top: calc(var(--h-languages) + var(--h-header));
+    }
+}

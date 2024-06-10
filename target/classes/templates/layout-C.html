@@ -1,0 +1,20 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorate="~{base}">
+<head>
+
+</head>
+<body>
+    <!-- Logout bar -->
+    <header layout:fragment="loginLogoutBar" th:replace="fragments/header_logout :: header_logout">
+    </header>
+    
+    <!-- Client menuBar -->
+    <div layout:fragment="menuBar" th:replace="fragments/nav_client :: nav">
+    </div>
+
+    <!-- Main content -->
+    <div layout:fragment="content">
+        <!-- Page-specific content will be here -->
+    </div>
+</body>
+</html>

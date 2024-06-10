@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <nav class="menu_bar d-flex bottom-0 z-2 justify-content-around w-100 py-2 order-lg-last" th:fragment="nav">
+        <a href="/client-view/index" class="d-flex flex-column text-center text-decoration-none" th:classappend="${currentPage == 'index'} ? 'active' : ''">
+            <i class="fa-solid fa-home p-1"></i>
+            <span class="d-none d-md-block m-0" th:text="#{home}">Home</span>
+        </a>
+
+        <a href="/client-view/tasks" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'clientTaskList'} ? 'active' : ' '">
+            <i class="fa-solid fa-bookmark text-center p-1"></i>
+            <span class="d-none d-md-block m-0" th:text="#{my_tasks}">My tasks</span>
+        </a>
+
+        <a href="/client-view/createTask/step1" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'createTask'} ? 'active' : ' '">
+            <i class="fa-solid fa-plus text-center p-1"></i>
+            <span class="d-none d-md-block m-0" th:text="#{create_tasks}">Create task</span>
+        </a>
+
+        <a href="/client-view/chat" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'chat'} ? 'active' : ' '">
+            <i class="fa-solid fa-comments text-center p-1"></i>
+            <span class="d-none d-md-block m-0" th:text="#{chat}">Chat</span>
+        </a>
+
+        <a href="/client-view/ratings" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'ratings'} ? 'active' : ' '">
+            <i class="fa-solid fa-star text-center p-1"></i>
+            <span class="d-none d-md-block m-0" th:text="#{ratings}">Ratings</span>
+        </a>
+
+        <a href="/client-view/user" class="d-flex flex-column text-decoration-none" th:classappend="${currentPage == 'user'} ? 'active' : ' '">
+            <i class="fa-solid fa-user text-center p-1"></i>
+            <span class="d-none d-md-block m-0" th:text="#{profile}">Profile</span>
+        </a>
+    </nav>
+</html>

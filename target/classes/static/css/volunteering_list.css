@@ -1,0 +1,109 @@
+main {
+    height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-small));
+    margin-top: calc(var(--h-languages) + var(--h-header));
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.card {
+    background: var(--bg-sec-lighter);
+    border-radius: 15px;
+    box-shadow: 0 3px 5px var(--bg-sec-darker-2);
+}
+
+.card:last-child {
+    margin-bottom: 53px;
+}
+
+.title {
+    margin: -10px;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 12px;
+    color: var(--bg-primary);
+}
+
+.pfp {
+    width: 40px;
+    height: 40px;
+    right: 15px;
+    top: 24px;
+    transition: filter .3s;
+}
+
+.pfp:hover {
+    filter: brightness(90%);
+    cursor: pointer;
+}
+
+.description {
+    text-align: justify;
+}
+
+.educativeBorder {
+    border: 1.5px solid var(--educative);
+}
+
+.environmentalBorder {
+    border: 1.5px solid var(--environmental);
+}
+
+.sportsBorder {
+    border: 1.5px solid var(--sports);
+}
+
+.socialBg {
+    background: var(--social);
+    transition: background .3s;
+}
+
+.socialBorder {
+    border: 1.5px solid var(--social);
+}
+
+.fa-bookmark {
+    right: 80px;
+    bottom: 18.5px;
+}
+
+.fa-bookmark:hover {
+    cursor: pointer;
+}
+
+.right {
+    right: 18.5px;
+}
+
+.signup {
+    bottom: 15px;
+    right: 15px;
+    background: var(--button);
+    transition: background .2s;
+}
+
+.signup:hover {
+    background: var(--button-darker);
+}
+
+.button-group {
+    bottom: 15px;
+    right: 15px; 
+}
+
+@media screen and (min-width: 768px) {
+    main > div {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    main > div {
+        grid-template-columns: 1fr 1fr 1fr;
+        margin-bottom: var(--h-header + --h-languages);
+    }
+    main{
+        height: calc(100vh - var(--h-languages) - var(--h-menu_bar-big) - var(--h-header));
+        margin-top: calc(var(--h-languages) + var(--h-header) + var(--h-menu_bar-big));
+    }
+}

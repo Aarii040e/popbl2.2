@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout-C}">
+
+    <head>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/ratings.css}">
+    </head>
+
+    <main layout:fragment="content" class="p-2">
+
+        <div class="ratings">
+            <div class="rating d-flex align-items-center justify-content-between rounded p-3 mb-2" th:each="user,iter : ${userList}">
+                <div class="info d-flex flex-column">
+                    <h1 class="py-1" th:text="${user.username}">username</h1>
+                    <span class="py-1">Task name</span>
+                    <span class="py-1">Task date</span>
+                </div>
+                <div class="stars">
+                    <i class="fa-regular fa-star star"></i>
+                    <i class="fa-regular fa-star star"></i>
+                    <i class="fa-regular fa-star star"></i>
+                    <i class="fa-regular fa-star star"></i>
+                    <i class="fa-regular fa-star star"></i>
+                </div>
+            </div>
+        </div>
+
+        <script src="/js/ratings.js"></script>
+    </main>
+
+</html>

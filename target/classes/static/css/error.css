@@ -1,0 +1,33 @@
+body {
+    height: calc(100vh - var(--h-languages) - var(--h-header));
+}
+
+main {
+    height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-small));
+    margin-top: calc(var(--h-languages) + var(--h-header));
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+.error_div {
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    main {
+        height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-big));
+    }
+}
+
+@media screen and (min-width: 992px) {
+    body {
+        height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-big));
+    }
+
+    main {
+        margin-top: calc(var(--h-languages) + var(--h-header) + var(--h-menu_bar-big));
+    }
+}
