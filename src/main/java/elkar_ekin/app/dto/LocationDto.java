@@ -2,18 +2,14 @@ package elkar_ekin.app.dto;
 
 public class LocationDto {
 	
-	//Same fields as User except the ID
-
+    //Parameters
     private String postCode;
-
     private String direction;
-
     private String town;
-
     private String province;
 
     
-
+    //Constructors
 	public LocationDto(){
 	}
 
@@ -23,23 +19,8 @@ public class LocationDto {
 		this.town = town;
 		this.province = province;
 	}
-	// public LocationDto(Long postCode, String direction, String town, String province) {
-	// 	this.postCode = postCode;
-	// 	this.direction = direction;
-	// 	this.town = town;
-	// 	this.province = province;
-	// }
-
-	// public Long getPostCode() {
-	// 	return postCode;
-	// }
-
-	// public void setPostCode(Long postCode) {
-	// 	this.postCode = postCode;
-	// }
-
 	
-
+    //Getters and Setters
 	public String getDirection() {
 		return direction;
 	}

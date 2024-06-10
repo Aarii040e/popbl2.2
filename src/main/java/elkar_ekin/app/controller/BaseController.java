@@ -157,6 +157,7 @@ public abstract class BaseController {
         return returnRole + "/user";
     }
 
+    // Checks and updates the profile picture path if it is invalid
     private void checkProfilePicture(User user) {
         //Searches the profile picture path in the /public/img/ folder and sets it to the user
         if (user != null && user.getImagePath() != null) {
@@ -211,7 +212,6 @@ public abstract class BaseController {
                 model.addAttribute("taskList", historicTasks);
                 model.addAttribute("defaultTaskList", defaultTasks);
         }
-        
         return returnRole + "/historicTaskList";
     }
 

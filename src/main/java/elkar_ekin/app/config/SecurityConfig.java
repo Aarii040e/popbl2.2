@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-                .antMatchers("/registration/**", "/login/*", "/index", "/tos", "/error", "/locale/*", "/newsItem/*", "/chat/*", "/chatMain/*", "**/queue/messages", "/users", "/messages/*").permitAll()
+                .antMatchers("/registration/**", "/login/*", "/index", "/forgotPassword", "/resetPassword", "/tos", "/error", "/locale/*", "/newsItem/*", "/chat/*", "/chatMain/*", "**/queue/messages", "/users", "/messages/*").permitAll()
                 .antMatchers("/css/**", "/js/**", "/images/**", "/assets/**", "/public/**").permitAll()
                 .antMatchers("/admin-view/**").hasAuthority("A")
                 .antMatchers("/volunteer-view/**").hasAuthority("V")
@@ -82,5 +82,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
     //The function above manages all the permissions in the website
-	
 }

@@ -3,13 +3,14 @@ package elkar_ekin.app.dto;
 
 public class ChatNotificationDto {
     
+    //Parameters
     private Long notificationID;
     private Long senderID;
     private Long recipientID;
     private String content;
 
     
-
+    //Constructors
     public ChatNotificationDto(Long notificationID, Long senderID, Long recipientID, String content) {
         this.notificationID = notificationID;
         this.senderID = senderID;
@@ -24,6 +25,7 @@ public class ChatNotificationDto {
         return notificationID;
     }
 
+    //Getters and Setters
     public void setNotificationID(Long notificationID) {
         this.notificationID = notificationID;
     }
@@ -51,7 +53,5 @@ public class ChatNotificationDto {
     public void setRecipientID(Long recipientID) {
         this.recipientID = recipientID;
     }
-
-    
 
 }

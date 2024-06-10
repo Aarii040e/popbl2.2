@@ -2,13 +2,14 @@ package elkar_ekin.app.dto;
 
 public class ChatMessageDto {
     
+    //Parameters
     Long chatMessageID;
     String chatRoomID;
     Long senderID;
     Long recipientID;
     String content;
 
-    
+    //Constructors
     public ChatMessageDto(Long chatMessageID, String chatRoomID, Long senderID, Long recipientID, String content) {
         this.chatMessageID = chatMessageID;
         this.chatRoomID = chatRoomID;
@@ -17,8 +18,6 @@ public class ChatMessageDto {
         this.content = content;
     }
 
-
-    //Este se utiliza para crear el message antes de mandarlo desde javascript
     public ChatMessageDto(Long senderID, Long recipientID, String content) {
         this.senderID = senderID;
         this.recipientID = recipientID;
@@ -28,6 +27,7 @@ public class ChatMessageDto {
     public ChatMessageDto() {
     }
     
+    //Getters and Setters
     public Long getChatMessageID() {
         return chatMessageID;
     }
@@ -76,7 +76,5 @@ public class ChatMessageDto {
     public void setContent(String content) {
         this.content = content;
     }
-
     
-
 }

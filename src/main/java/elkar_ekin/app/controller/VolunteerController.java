@@ -46,7 +46,7 @@ public class VolunteerController extends BaseController{
 			UserDetailsService userDetailsService, HistoricTaskService historicTaskService, TaskService taskService, NewsItemService newsItemService,
 			UserService userService) {
 				super(userRepository, taskRepository, defaultTaskRepository, userDetailsService, historicTaskService, newsItemService, userService);
-        		this.userService = userService;
+				this.userService = userService;
 				this.taskRepository = taskRepository;
 	}
 
@@ -58,6 +58,7 @@ public class VolunteerController extends BaseController{
         }
     }
 
+	//// Display the list of tasks available to volunteers
 	@GetMapping({"/task/list", "/task/"})
 	public String showTaskList (Model model, Principal principal) {
 		String username=principal.getName();
@@ -76,6 +77,7 @@ public class VolunteerController extends BaseController{
 		return "volunteer/taskList";
 	}
 
+	// Manage volunteer tasks such as signing up, saving, or unsigning
 	@GetMapping("/task/{taskID}/{action}")
 	public String manageVolunteerTask(@PathVariable("taskID") String taskID, @PathVariable("action") String action, 
 	Model model, Principal principal, RedirectAttributes redirectAttributes) {
@@ -123,6 +125,8 @@ public class VolunteerController extends BaseController{
 		return redirectUrl;
 	}
 
+
+	// Display the list of tasks that the volunteer can sign up for
 	private void setTaskListAsAttribute(Model model, Principal principal){
         List<Task> allTasks = taskService.getAllActiveTasks();
 		model.addAttribute("currentPage", "volunteerTaskList");
@@ -133,6 +137,7 @@ public class VolunteerController extends BaseController{
 		}
 	}
 
+	// Display the list of tasks that the volunteer has signed up for
 	@GetMapping("/signedUp")
 	public String showSignedUpTaskList (Model model, Principal principal) {
 		List<Task> allTasks = taskService.getVolunteerTasks(user);
@@ -145,6 +150,8 @@ public class VolunteerController extends BaseController{
 		return "volunteer/taskList";
 	}
 
+
+    // Display the list of saved tasks by the volunteer
 	@GetMapping({"/saved"})
 	public String showSavedTaskList (Model model, Principal principal) {
 		List<Task> savedTasks = userService.getSavedTasksByUser(user);
