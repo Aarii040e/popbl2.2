@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <div class="stats d-flex pt-1 pb-3" th:if="${user.role != 'A'}">
+            <div class="stats d-flex pt-1 pb-3">
                 <i class="fa-solid fa-award me-1"></i>
                 <div class="d-flex">
                     <p class="me-1" th:text="${user.role == 'V'} ? #{volunteer_times} : #{upload_times}">This user has volunteered this many times:</p>
@@ -37,15 +37,15 @@
             </div>
 
             <div class="d-flex" th:if="${guest != null}">
-                <button class="edit border-0 rounded-1 py-1 px-2 me-1" th:if="${guest.name} == ${user.name}" th:text="#{edit}" th:classappend="${user.role == 'A'} ? 'mt-3' : ' '">Edit profile</button>
+                <button class="edit border-0 rounded-1 py-1 px-2 me-1" th:if="${guest.name} == ${user.name}" th:text="#{edit}">Edit profile</button>
                 <button type="submit" class="apply d-none border-0 rounded-1 py-1 px-2 me-1" th:if="${guest.name} == ${user.name}" th:text="#{apply}">Apply changes</button>
             </div>
         </form>
     </div>
 
-    <hr class="border-0 m-auto" th:if="${user.role != 'A'}">
+    <hr class="border-0 m-auto">
 
-    <div id="history" class="py-2 px-3" th:if="${user.role != 'A'}">
+    <div id="history" class="py-2 px-3">
 
         <h1 class="big mb-3" th:text="#{history}">History</h1>
 

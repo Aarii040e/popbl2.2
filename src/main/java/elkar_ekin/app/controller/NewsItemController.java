@@ -39,12 +39,11 @@ public class NewsItemController {
 	private User user;
 
 	@ModelAttribute
-	public void commonUser(Model model, Principal principal) {
-		// UserDetails userDetails =
-		// userDetailsService.loadUserByUsername(principal.getName());
+	public void commonUser (Model model, Principal principal) {
+		// UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		// model.addAttribute("role", "client");
 		if (principal != null) {
-			String username = principal.getName();
+			String username=principal.getName();
 			user = repository.findByUsername(username);
 			model.addAttribute("user", user);
 		}
@@ -86,53 +85,45 @@ public String listNewsItem(Model model, Principal principal) {
 	public String deleteNewsItem(@PathVariable("newsItemID") String newsItemID, Model model) {
 		NewsItem newsItem = newsItemService.getNewsItemByID(Long.parseLong(newsItemID));
 		model.addAttribute("newsItem", newsItem);
-		// To comments
+		//To 																																																						 comments
 		CommentDto commentDto = new CommentDto();
 		model.addAttribute("commentDto", commentDto);
-		// To list all the comments
+		//To list all the comments
 		List<Comment> allComments = newsItemService.getAllCommentsByNewsItemId(newsItem);
 		if (allComments == null) {
 			model.addAttribute("message", "No hay comentarios.");
 		} else {
 			model.addAttribute("commentList", allComments);
 		}
-		if (user != null){
-			if (user.getRole().equals("C")) {
-				return "client/newsItem";
-			} else if (user.getRole().equals("V")) {
-				return "volunteer/newsItem";
-			} else if (user.getRole().equals("A")) {
-				return "admin/newsItem";
-			}
+		if(user.getRole().equals("C")){
+			return "client/newsItem";
 		}
-		else if(user.getRole().equals("A")){
-			return "admin/newsItem";
+		else if(user.getRole().equals("V")){
+			return "volunteer/newsItem";
 		}
 		return "newsItem/newsItem";
 	}
 
 	@PostMapping("/{newsItemID}/createComment")
-	public String createComment(@PathVariable("newsItemID") String newsItemID,
-			@ModelAttribute("commentDto") CommentDto commentDto, Model model) {
+	public String createComment(@PathVariable("newsItemID") String newsItemID,@ModelAttribute("commentDto") CommentDto commentDto, Model model) {
 		NewsItem newsItem = newsItemService.getNewsItemByID(Long.parseLong(newsItemID));
 		commentDto.setNewsItem(newsItem);
 		commentDto.setUser(user);
 		newsItemService.saveComment(commentDto);
-		return "redirect:/newsItem/" + newsItem.getNewsItemID();
+		return "redirect:/newsItem/"+newsItem.getNewsItemID();
 	}
 
 	@GetMapping("/search")
-	public String searchNewsItems(@RequestParam("keyword") String keyword, Model model) {
-		List<NewsItem> searchResults = newsItemService.searchNewsItems(keyword);
-		model.addAttribute("newsItemList", searchResults);
-		if (user.getRole().equals("C")) {
+    public String searchNewsItems(@RequestParam("keyword") String keyword, Model model) {
+        List<NewsItem> searchResults = newsItemService.searchNewsItems(keyword);
+        model.addAttribute("newsItemList", searchResults);
+		if(user.getRole().equals("C")){
 			return "client/newsItemList";
-		} else if (user.getRole().equals("V")) {
-			return "volunteer/newsItemList";
-		} else if (user.getRole().equals("A")) {
-			return "admin/baseNewsItemList";
 		}
-		return "newsItem/newsItemList";
-	}
-
+		else if(user.getRole().equals("V")){
+			return "volunteer/newsItemList";
+		}	
+        return "newsItem/newsItemList";
+    }
+	
 }

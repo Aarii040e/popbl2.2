@@ -29,6 +29,9 @@ public class PasswordResetServiceImpl implements PasswordResetService {
     private PasswordResetTokenRepository tokenRepository;
 
     @Autowired
+    private EmailService emailService;
+
+    @Autowired
     private JavaMailSender mailSender;
 
     @Autowired

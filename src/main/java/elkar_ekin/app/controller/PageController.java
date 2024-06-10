@@ -1,45 +1,21 @@
 package elkar_ekin.app.controller;
 
 import java.util.List;
-import java.security.Principal;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import elkar_ekin.app.model.NewsItem;
-import elkar_ekin.app.model.User;
-import elkar_ekin.app.repositories.UserRepository;
 import elkar_ekin.app.service.NewsItemService;
 
 
 @Controller
 public class PageController {
 
-	private User user;
-
 	@Autowired
 	NewsItemService newsItemService;
-
-	@Autowired
-	private UserRepository repository;
-
-		@ModelAttribute
-	public void commonUser (Model model, Principal principal) {
-		// UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		// model.addAttribute("role", "client");
-		if (principal != null) {
-			String username=principal.getName();
-			user = repository.findByUsername(username);
-			model.addAttribute("user", user);
-		}
-		// model.addAttribute("currentPage", "index");
-	}
 		
 	@GetMapping({"/", "/index", "/index.html"})
 	public String getIndexPage(Model model) {
@@ -73,25 +49,4 @@ public class PageController {
 		return "tos";
 	}
 
-	@GetMapping({"/error"})
-	public String getErrorPage(HttpServletRequest request, Model model) {
-        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-		model.addAttribute("currentPage", "error");
-		if (status != null) {
-            int statusCode = Integer.parseInt(status.toString());
-            model.addAttribute("statusCode", statusCode);
-		}
-		if(user != null) {
-			if(user.getRole().equals("C")){
-				return "client/error";
-			}
-			else if(user.getRole().equals("V")){
-				return "volunteer/error";
-			}
-			else if(user.getRole().equals("A")){
-				return "admin/error";
-			}
-		}
-		return "admin/error";
-	}
 }
