@@ -16,7 +16,9 @@ public class PasswordResetController {
     private PasswordResetService passwordResetService;
 
     @GetMapping("/forgotPassword")
-    public String showForgotPasswordForm() {
+    public String showForgotPasswordForm(Model model) {
+        model.addAttribute("currentPage", "forgotPassword");
+        System.out.println("En password recovery");
         return "forgotPassword";
     }
 
@@ -28,7 +30,7 @@ public class PasswordResetController {
         } catch (IllegalArgumentException | MessagingException e) {
             model.addAttribute("error", e.getMessage());
         }
-        return "forgotPassword";
+            return "forgotPassword";
     }
 
     @GetMapping("/resetPassword")

@@ -72,7 +72,7 @@ public String listNewsItem(Model model, Principal principal) {
             } else if ("V".equals(role)) {
                 return "volunteer/newsItemList";
             } else if ("A".equals(role)) {
-                return "admin/newsItemList";
+                return "admin/baseNewsItemList";
             }
         }
     }
