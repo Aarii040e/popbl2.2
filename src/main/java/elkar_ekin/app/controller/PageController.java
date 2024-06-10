@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import elkar_ekin.app.model.NewsItem;
+import elkar_ekin.app.model.User;
 import elkar_ekin.app.service.NewsItemService;
 
 
