@@ -1,8 +1,0 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <nav class="menu_bar d-flex bottom-0 z-2 justify-content-start w-100 py-2 order-lg-last" th:fragment="nav">
-        <a href="/index" class="d-flex flex-column text-center text-decoration-none ms-3" th:classappend="${currentPage == 'index'} ? 'active' : ''">
-            <i class="fa-solid fa-home p-1"></i>
-            <span class="d-none d-md-block m-0" th:text="#{home}">Home</span></a>
-    </nav>
-</html>
