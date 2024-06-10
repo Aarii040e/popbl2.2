@@ -272,7 +272,8 @@ public class ClientController extends BaseController {
     @GetMapping("/ratings")
     public String showRatings(Model model) {
         model.addAttribute("currentPage", "ratings");
-        List<UserDto> userList = userService.getAllUsersExcluding(user.getUserID());
+        // List<UserDto> userList = userService.getAllUsersExcluding(user.getUserID());
+        List<UserDto> userList = userService.getRelevantUsersForChat(user.getUserID(), user.getRole());
         model.addAttribute("userList", userList);
         return "client/ratings";
     }
