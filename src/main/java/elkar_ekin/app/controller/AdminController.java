@@ -19,14 +19,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import elkar_ekin.app.dto.NewsItemDto;
-import elkar_ekin.app.dto.UserDto;
+import elkar_ekin.app.model.HistoricTask;
 import elkar_ekin.app.model.NewsItem;
 import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.TaskRepository;
 import elkar_ekin.app.repositories.UserRepository;
+import elkar_ekin.app.service.HistoricTaskService;
 import elkar_ekin.app.service.NewsItemService;
 import elkar_ekin.app.service.TaskService;
+import elkar_ekin.app.service.UserService;
 
 @Controller
 @RequestMapping("/admin-view")
@@ -36,7 +38,7 @@ public class AdminController {
 	private User guest;
 
 	@Autowired
-	private UserRepository repository;
+	private UserRepository userRepository;
 
 	@Autowired
 	private TaskRepository taskRepository;
@@ -47,10 +49,15 @@ public class AdminController {
 	@Autowired
 	NewsItemService newsItemService;
 
-	private final TaskService taskService;
+	@Autowired
+    private UserService userService;
 
-	public AdminController(TaskService taskService) {
+	private final TaskService taskService;
+	private final HistoricTaskService historicTaskService;
+
+	public AdminController(TaskService taskService, HistoricTaskService hisotricTaskService) {
 		this.taskService = taskService;
+		this.historicTaskService = hisotricTaskService;
 	}
 
 	@ModelAttribute("newsItemDto")
@@ -61,7 +68,7 @@ public class AdminController {
 	@ModelAttribute
 	public void commonUser (Model model, Principal principal) {
 		String username=principal.getName();
-		user = repository.findByUsername(username);
+		user = userRepository.findByUsername(username);
 		System.out.println(user);
 		model.addAttribute("user", user);
 	}
@@ -101,17 +108,17 @@ public class AdminController {
 		return "admin/newsItemForm";
 	}
 
-	@PostMapping("/createNewsItem")
+	@PostMapping({"createNewsItem"})
 	public String createNewsItem(@ModelAttribute("newsItem") NewsItemDto newsItemDto, BindingResult result) {
 		if (result.hasErrors()) {
 			return "/admin-view/createNewsItem";
 		}
 		newsItemDto.setUser(user);
 		newsItemService.save(newsItemDto);
-		return "admin/newsItemList";
+		return "redirect:/admin-view/newsItem/list";
 	}
 
-	@GetMapping(value = "/newsItem/{newsItemID}/delete")
+	@GetMapping("/newsItem/{newsItemID}/delete")
 	public String deleteNewsItem(@PathVariable("newsItemID") String newsItemID, Model model) {
 		newsItemService.deleteNewsItem(Long.parseLong(newsItemID));
 		return "redirect:/admin-view/newsItem/list";
@@ -145,8 +152,9 @@ public class AdminController {
 			newsItemService.editNewsItem(newsItemDto.getNewsItemID(), newsItemDto);
 		} else {
 			// Es una creación
-			newsItemDto.setUser(user);
-			newsItemService.save(newsItemDto);
+			NewsItemDto newNewsItemDto = new NewsItemDto();
+			newNewsItemDto.setUser(user);
+			newsItemService.save(newNewsItemDto);
 		}
 		return "redirect:/admin-view/newsItem/list";
 	}
@@ -154,7 +162,7 @@ public class AdminController {
 	@GetMapping({"/clients/list", "/clients/"})
 	public String listClients (Model model, Principal principal) {
 		model.addAttribute("currentPage", "clientList");
-		List<User> userList = repository.getUsersByRole("C");
+		List<User> userList = userRepository.getUsersByRole("C");
 		if (userList == null) {
 			model.addAttribute("message", "No hay clientes disponibles.");
 		} else {
@@ -163,36 +171,27 @@ public class AdminController {
 		return "admin/userList";
 	}
 
-	@GetMapping(value = "/clients/{clientID}/delete")
-	public String deleteClient(@PathVariable("clientID") String clientID, Model model) {
-		//Delete the image if exists
-		User client = repository.findByUserID(Long.parseLong(clientID));
-		Path imagePath = Paths.get("public/img", client.getImagePath());
-		try{
-			Files.delete(imagePath);
-		}catch(Exception e){
-		}
-
-		taskRepository.deleteByClient_UserID(Long.parseLong(clientID));
-		repository.deleteById(Long.parseLong(clientID));
-		return "redirect:/admin-view/clients/list";
-	}
+	@GetMapping("/clients/{clientID}/delete")
+    public String deleteClient(@PathVariable("clientID") Long clientId) {
+        userService.deleteUser(clientId);
+        return "redirect:/admin-view/clients/list";
+    }
 	
-	@GetMapping(value = "/clients/{clientID}")
+	@GetMapping("/clients/{clientID}")
 	public String viewClient(@PathVariable("clientID") String clientID, Model model, Principal principal) {
 
 		String admin = principal.getName();
-		guest = repository.findByUsername(admin);
+		guest = userRepository.findByUsername(admin);
 		model.addAttribute("guest", guest);
 
-		User client = repository.findByUserID(Long.parseLong(clientID));
+		User client = userRepository.findByUserID(Long.parseLong(clientID));
 		model.addAttribute("user", client);
 		checkProfilePicture(client);
 
 		Long amount = taskRepository.countByClient(client);
 		model.addAttribute("amount", amount);
 
-		List<Task> clientTasks = taskService.getFirstFivePastTasks(client);
+		List<HistoricTask> clientTasks = historicTaskService.getFirstFivePastTasks(Long.parseLong(clientID));
 		if (clientTasks == null) {
 			model.addAttribute("message", "No hay tareas disponibles.");
 		} else {
@@ -214,7 +213,7 @@ public class AdminController {
 	@GetMapping({"/volunteers/list", "/volunteers/"})
 	public String listVolunteers (Model model, Principal principal) {
 		model.addAttribute("currentPage", "volunteerList");
-		List<User> userList = repository.getUsersByRole("V");
+		List<User> userList = userRepository.getUsersByRole("V");
 		if (userList == null) {
 			model.addAttribute("message", "No hay clientes disponibles.");
 		} else {
@@ -226,31 +225,31 @@ public class AdminController {
 	@GetMapping("/volunteers/{volunteerID}/delete")
 	public String deleteVolunteer(@PathVariable("volunteerID") String volunteerID, Model model) {
 		//Delete the image if exists
-		User volunteer = repository.findByUserID(Long.parseLong(volunteerID));
+		User volunteer = userRepository.findByUserID(Long.parseLong(volunteerID));
 		Path imagePath = Paths.get("public/img", volunteer.getImagePath());
 		try{
 			Files.delete(imagePath);
 		}catch(Exception e){
 		}
-		repository.deleteById(Long.parseLong(volunteerID));
+		userRepository.deleteById(Long.parseLong(volunteerID));
 		return "redirect:/admin-view/volunteers/list";
 	}
 	
-	@GetMapping(value = "/volunteers/{volunteerID}")
+	@GetMapping("/volunteers/{volunteerID}")
 	public String viewVolunteer(@PathVariable("volunteerID") String volunteerID, Model model, Principal principal) {
 		
 		String admin = principal.getName();
-		guest = repository.findByUsername(admin);
+		guest = userRepository.findByUsername(admin);
 		model.addAttribute("guest", guest);
 
-		User volunteer = repository.findByUserID(Long.parseLong(volunteerID));
+		User volunteer = userRepository.findByUserID(Long.parseLong(volunteerID));
 		model.addAttribute("user", volunteer);
 		checkProfilePicture(volunteer);
 
 		Long amount = taskRepository.countByVolunteer(volunteer);
 		model.addAttribute("amount", amount);
 
-		List<Task> volunteerTasks = taskService.getFirstFiveVolunteerTasks(volunteer);
+		List<HistoricTask> volunteerTasks = historicTaskService.getFirstFiveVolunteerTasks(volunteer.getUserID());
 		if (volunteerTasks == null) {
 			model.addAttribute("message", "No hay tareas disponibles.");
 		} else {
@@ -261,16 +260,17 @@ public class AdminController {
 	}
 	@GetMapping("/tasks")
 	public String showTaskList(Model model, Principal principal) {
-		List<Task> allTasks = taskService.getAllActiveTasks();
-		model.addAttribute("currentPage", "taskList");
-		if (allTasks == null) {
-			model.addAttribute("message", "No hay tareas disponibles.");
-		} else {
-			model.addAttribute("taskList", allTasks);
-		}
-		return "admin/taskList";
-	}
-	@GetMapping(value = "/task/{taskID}/delete")
+        List<Task> clientTasks = taskService.getAllTasks();
+        model.addAttribute("currentPage", "volunteerTaskList");
+        if (clientTasks.isEmpty()) {
+            model.addAttribute("message", "No hay tareas disponibles.");
+        } else {
+            model.addAttribute("taskList", clientTasks);
+        }
+        return "admin/taskList";
+    }
+
+	@GetMapping("/task/{taskID}/delete")
 	public String deleteTask(@PathVariable("taskID") String taskID, Model model) {
 		model.addAttribute("currentPage", "deleteTask");
 		taskService.deleteTask(Long.parseLong(taskID));
@@ -283,4 +283,17 @@ public class AdminController {
 		model.addAttribute("user", user);
 		return "admin/chat";
 	} 
+
+	@GetMapping("/history")
+	public String showTaskHistory(Model model, Principal principal) {
+		User user = (User) model.getAttribute("user");
+		List<HistoricTask> clientTasks = historicTaskService.getPastVolunteerTasks(user.getUserID());
+		model.addAttribute("currentPage", "taskHistory");
+		if (clientTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", clientTasks);
+		}
+		return "admin/taskList";
+	}
 }

@@ -4,8 +4,8 @@
         <!-- <span>logo</span> -->
         <img src="/images/icono.png" alt="Elkar-Ekin logo" class="logo">
         <div>
-            <button class="logout rounded border-0" th:text="#{logout}">Log out</button>
+            <a th:href="@{/logout}" class="logout rounded border-0" th:text="#{logout}">Log out</a>
         </div>
-        <script src="/js/header_logout.js"></script>
+        <!-- <script src="/js/header_logout.js"></script> -->
     </header>
 </html>

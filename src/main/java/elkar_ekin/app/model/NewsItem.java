@@ -1,7 +1,9 @@
 package elkar_ekin.app.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,6 +38,9 @@ public class NewsItem {
 	@CreationTimestamp
     @Column(name = "createdAt", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime createdAt;
+
+	@OneToMany(mappedBy = "newsItem", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
 
 	public Long getNewsItemID() {
 		return newsItemID;

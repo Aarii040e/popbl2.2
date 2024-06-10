@@ -28,4 +28,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("SELECT u.savedTasks FROM User u WHERE u.username = ?1")
     List<Task> findSavedTasksByUsername(String username);
 
+	@Query("SELECT u FROM User u WHERE u.role = 'A' OR u.userID IN (SELECT t.client.userID FROM Task t WHERE t.volunteer.userID = ?1)")
+    List<User> findVolunteersContacts(Long volunteerId);
+
+    // @Query("SELECT u FROM User u WHERE u.role = 'A' OR u.userID IN (SELECT t.volunteerID FROM Task t WHERE t.clientID = ?1)")
+	@Query("SELECT u FROM User u WHERE u.role = 'A' OR u.userID IN (SELECT t.volunteer.userID FROM Task t WHERE t.client.userID = ?1)")
+    List<User> findClientsContacts(Long clientId);
+
 }

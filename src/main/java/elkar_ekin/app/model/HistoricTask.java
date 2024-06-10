@@ -1,22 +1,18 @@
 package elkar_ekin.app.model;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "historic_tasks")
-public class HistoricTasks {
+public class HistoricTask {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -33,10 +29,10 @@ public class HistoricTasks {
     private Long clientId;
     private Long volunteerId;
 
-    public HistoricTasks() {
+    public HistoricTask() {
     }    
 
-    public HistoricTasks(Long taskID, Long defaultTaskID, String description, LocalDate date, String state,
+    public HistoricTask(Long taskID, Long defaultTaskID, String description, LocalDate date, String state,
             LocalTime startTime, LocalTime endTime, Long locationID, Long clientId, Long volunteerId) {
         this.taskID = taskID;
         this.defaultTaskID = defaultTaskID;

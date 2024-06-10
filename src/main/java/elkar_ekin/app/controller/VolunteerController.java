@@ -1,140 +1,67 @@
 package elkar_ekin.app.controller;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.core.io.UrlResource;
 
-import elkar_ekin.app.dto.TaskDto;
-import elkar_ekin.app.dto.UserDto;
-import elkar_ekin.app.model.NewsItem;
 import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.TaskRepository;
 import elkar_ekin.app.repositories.UserRepository;
 import elkar_ekin.app.service.TaskService;
+import elkar_ekin.app.service.HistoricTaskService;
 import elkar_ekin.app.service.NewsItemService;
 import elkar_ekin.app.service.UserService;
 
 @Controller
 @RequestMapping("/volunteer-view")
-public class VolunteerController {
-
+@PreAuthorize("hasRole('VOLUNTEER')")
+public class VolunteerController extends BaseController{
+	
+	private final UserService userService;
+	private final TaskRepository taskRepository;
+	
 	@Autowired
-	private UserRepository repository;
+	private TaskService taskService;
 
-	@Autowired
-	private TaskRepository taskRepository;
-
-	@Autowired
-	UserDetailsService userDetailsService;
-
-	@Autowired
-	TaskService taskService;
-
-	@Autowired
-	NewsItemService newsItemService;
-
-    @Autowired
-    ResourceLoader resourceLoader;
-
-	private User guest;
 	private User user;
 
-	private final UserService userService;
-
-	public VolunteerController (UserService userService) {
-        this.userService = userService;
-    }
+	public VolunteerController(UserRepository userRepository, TaskRepository taskRepository,
+			UserDetailsService userDetailsService, HistoricTaskService historicTaskService, TaskService taskService, NewsItemService newsItemService,
+			UserService userService) {
+				super(userRepository, taskRepository, userDetailsService, historicTaskService, newsItemService, userService);
+				this.userService = userService;
+				this.taskRepository = taskRepository;
+	}
 
 	@ModelAttribute
-	public void commonUser (Model model, Principal principal) {
-		String username=principal.getName();
-		user = repository.findByUsername(username);
-		model.addAttribute("user", user);
-	}
-
-	@GetMapping("/index")
-	public String volunteerIndex (Model model, Principal principal) {
-		List<NewsItem> allNewsItems = newsItemService.getLastFiveNewsItems();
-		if (allNewsItems == null) {
-			model.addAttribute("message", "No hay noticias disponibles.");
-		} else {
-			model.addAttribute("newsItemList", allNewsItems);
-		}
-		
-		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		model.addAttribute("user", userDetails);
-		model.addAttribute("currentPage", "index");
-		return "volunteer/index";
-	}
-
-	@GetMapping("/user")
-	public String clientUser (Model model, Principal principal) {
-		model.addAttribute("currentPage", "user");
-		
-		String admin = principal.getName();
-		guest = repository.findByUsername(admin);
-		model.addAttribute("guest", guest);
-		
-		User user = (User) model.getAttribute("user");
-		checkProfilePicture(user);
-
-		Long amount = taskRepository.countByVolunteer(user);
-		model.addAttribute("amount", amount);
-		
-		List<Task> volunteerTasks = taskService.getFirstFiveVolunteerTasks(user);
-		if (volunteerTasks == null) {
-			model.addAttribute("message", "No hay tareas disponibles.");
-		} else {
-			model.addAttribute("taskList", volunteerTasks);
-		}
-		
-		return "volunteer/user";
-	}
-
-	public void checkProfilePicture(User user) {
-		final Path imageLocation = Paths.get("public/img");
-
-		Path filePath = imageLocation.resolve(user.getImagePath());
-
-		if (!Files.exists(filePath) || !Files.isReadable(filePath) || user.getImagePath().isEmpty()) {
-			user.setImagePath(null);
-		}
-	}
-
-	@PostMapping("/user/update")
-    public String clientUpdateUser (@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model, Principal principal) {
-		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-        userService.update(userDto, userDetails);
-		model.addAttribute("guest", guest);
-        model.addAttribute("message", "Updated Successfully!");
-		return "redirect:/volunteer-view/user";
+    public void initUser(Model model, Principal principal) {
+        if (user == null) {  // Ensure initialization happens only once
+            super.commonUser(model, principal);
+            user = (User) model.getAttribute("user");
+        }
     }
-	
+
 	@GetMapping({"/task/list", "/task/"})
 	public String showTaskList (Model model, Principal principal) {
-		setTaskListAsAttribute(model);
+		String username=principal.getName();
+		User user = userRepository.findByUsername(username);
+		
+		setTaskListAsAttribute(model, principal);
 		model.addAttribute("currentPage", "volunteerTaskList");
+		
 		//Saved tasks for current user
 		List<Task> savedTasks = userService.getSavedTasksByUser(user);
 		List<String> idList = new ArrayList<>();
@@ -145,19 +72,65 @@ public class VolunteerController {
 		return "volunteer/taskList";
 	}
 
-	@GetMapping("/task/{taskID}/signUp")
-    public String singUpVolunteerToTask (@PathVariable("taskID") String taskID, Model model, Principal principal, RedirectAttributes redirectAttributes) {
+	@GetMapping("/task/{taskID}/{action}")
+	public String manageVolunteerTask(@PathVariable("taskID") String taskID, @PathVariable("action") String action, 
+	Model model, Principal principal, RedirectAttributes redirectAttributes) {
+		// Obtain the task by ID
 		Task task = taskService.getTaskByID(Long.parseLong(taskID));
-        task.setVolunteer(user);
-		task.setState("closed"); // nombre provisional
+		User volunteer = userService.findByUsername(principal.getName());
+		switch (action) {
+			case "signUp":
+				task.setVolunteer(volunteer);
+				task.setState("closed");
+				break;
+			case "save":
+				if (!task.getSavedUsers().contains(volunteer)) {
+					task.getSavedUsers().add(volunteer);
+				}
+				break;
+			case "delete":
+				if (task.getSavedUsers().contains(volunteer)) {
+					task.getSavedUsers().remove(volunteer);
+				}
+				break;
+			case "unsign":
+				task.setVolunteer(null);
+				task.setState("active"); // provisional name
+				break;
+			default:
+				redirectAttributes.addFlashAttribute("error", "Unknown action.");
+				return "redirect:/volunteer-view/task/list";
+		}
+
+		// Save the task
 		taskRepository.save(task);
-		// redirectAttributes.addFlashAttribute("error", "You have signed up to the task!"); // no se visualiza
-        return "redirect:/volunteer-view/signedUp";
-    }
+
+		// Update the task list in the model
+		setTaskListAsAttribute(model, principal);
+
+		// Determine the redirect URL based on the action
+		String redirectUrl = "redirect:/volunteer-view/";
+		if (action.equals("signUp") || action.equals("unsign")) {
+			redirectUrl += "signedUp";
+		} else {
+			redirectUrl += "task/list";
+		}
+
+		return redirectUrl;
+	}
+
+	private void setTaskListAsAttribute(Model model, Principal principal){
+        List<Task> allTasks = taskService.getAllActiveTasks();
+		model.addAttribute("currentPage", "volunteerTaskList");
+		if (allTasks == null) {
+			model.addAttribute("message", "No hay tareas disponibles.");
+		} else {
+			model.addAttribute("taskList", allTasks);
+		}
+	}
 
 	@GetMapping("/signedUp")
 	public String showSignedUpTaskList (Model model, Principal principal) {
-		// User user = (User) model.getAttribute("user");
 		List<Task> allTasks = taskService.getVolunteerTasks(user);
 		model.addAttribute("currentPage", "signedUp");
 		if (allTasks == null) {
@@ -166,65 +139,6 @@ public class VolunteerController {
 			model.addAttribute("taskList", allTasks);
 		}
 		return "volunteer/taskList";
-	}
-
-	@GetMapping("/history")
-	public String showTaskHistory(Model model, Principal principal) {
-		User user = (User) model.getAttribute("user");
-		List<Task> clientTasks = taskService.getPastVolunteerTasks(user);
-		model.addAttribute("currentPage", "taskHistory");
-		if (clientTasks == null) {
-			model.addAttribute("message", "No hay tareas disponibles.");
-		} else {
-			model.addAttribute("taskList", clientTasks);
-		}
-		return "volunteer/taskList";
-	}
-
-	@GetMapping("/chat")
-    public String showChat(Model model) {
-		model.addAttribute("currentPage", "chat");
-		model.addAttribute("user", user);
-        return "volunteer/chat";
-    }
-
-	@GetMapping("/task/{taskID}/save")
-    public String saveVolunteerToTask (@PathVariable("taskID") String taskID, Model model, Principal principal, RedirectAttributes redirectAttributes) {
-		// Obtener la tarea por ID
-        Task task = taskService.getTaskByID(Long.parseLong(taskID));
-        // Añadir el usuario a la tarea
-        if (!task.getSavedUsers().contains(user)) {
-			task.getSavedUsers().add(user);
-		}
-        // Guardar la tarea
-        taskRepository.save(task);
-		setTaskListAsAttribute(model);
-        return "redirect:/volunteer-view/task/list";
-    }
-
-	@GetMapping("/task/{taskID}/delete")
-    public String deleteSafeVolunteerToTask (@PathVariable("taskID") String taskID, Model model, Principal principal, RedirectAttributes redirectAttributes) {
-		// Obtener la tarea por ID
-        Task task = taskService.getTaskByID(Long.parseLong(taskID));
-        // Añadir el usuario a la tarea
-        if (task.getSavedUsers().contains(user)) {
-			task.getSavedUsers().remove(user);
-		}
-        // Guardar la tarea
-        taskRepository.save(task);
-		setTaskListAsAttribute(model);
-        return "redirect:/volunteer-view/task/list";
-    }
-
-	private List<Task> setTaskListAsAttribute(Model model){
-		List<Task> allTasks = taskService.getAllActiveTasks();
-		model.addAttribute("currentPage", "volunteerTaskList");
-		if (allTasks == null) {
-			model.addAttribute("message", "No hay tareas disponibles.");
-		} else {
-			model.addAttribute("taskList", allTasks);
-		}
-		return allTasks;
 	}
 
 	@GetMapping({"/saved"})
@@ -249,14 +163,4 @@ public class VolunteerController {
 		model.addAttribute("savedTaskIDs", idList);
 		return "volunteer/taskList";
 	}
-	@GetMapping("/task/{taskID}/unsign")
-    public String unsignVolunteerToTask (@PathVariable("taskID") String taskID, Model model, Principal principal, RedirectAttributes redirectAttributes) {
-		Task task = taskService.getTaskByID(Long.parseLong(taskID));
-        task.setVolunteer(null);
-		task.setState("active"); // nombre provisional
-		taskRepository.save(task);
-		// redirectAttributes.addFlashAttribute("error", "You have signed up to the task!"); // no se visualiza
-		model.addAttribute("currentPage", "taskList");
-        return "redirect:/volunteer-view/signedUp";
-    }
 }

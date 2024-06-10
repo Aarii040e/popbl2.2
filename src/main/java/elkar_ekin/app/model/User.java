@@ -2,8 +2,10 @@ package elkar_ekin.app.model;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,10 +15,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.CreationTimestamp;
+
 
 
 @Entity
@@ -40,10 +44,7 @@ public class User {
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "locationID", nullable = false)
     private Location location;
-    // private Long postCode;
-    // private String direction;
-    // private String town;
-    // private String province;
+	
     private String telephone;
     private String email;
     private String description;
@@ -51,6 +52,24 @@ public class User {
 
 	@ManyToMany(mappedBy = "savedUsers")
     private Set<Task> savedTasks;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
+
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks;
+
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ChatMessage> messagesSent;
+
+    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ChatMessage> messagesReceived;
+
+    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ChatRoom> chatRoomsAsRecipient;
+
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ChatRoom> chatRoomsAsSender;
 	
 	@CreationTimestamp
     @Column(name = "createdAt", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -59,28 +78,6 @@ public class User {
 	public User() {
 		super();
 	}
-
-
-	// public User(String username, String password, String role, String name, String surname1, String surname2,
-	// 		String gender, Date birthDate, Long postCode, String direction, String town, String province,
-	// 		String telephone, String email, String description, String imagePath) {
-	// 	this.username = username;
-	// 	this.password = password;
-	// 	this.role = role;
-	// 	this.name = name;
-	// 	this.surname1 = surname1;
-	// 	this.surname2 = surname2;
-	// 	this.gender = gender;
-	// 	this.birthDate = birthDate;
-	// 	this.postCode = postCode;
-	// 	this.direction = direction;
-	// 	this.town = town;
-	// 	this.province = province;
-	// 	this.telephone = telephone;
-	// 	this.email = email;
-	// 	this.description = description;
-	// 	this.imagePath = imagePath;
-	// }
 
 	public User(String username, String password, String role, String name, String surname1, String surname2,
 			String gender, Date birthDate, Location location, String telephone, String email, String description,
@@ -164,39 +161,6 @@ public class User {
 		this.birthDate = birthDate;
 	}
 
-	
-	// public String getDirection() {
-	// 	return direction;
-	// }
-
-	// public void setDirection(String direction) {
-	// 	this.direction = direction;
-	// }
-
-	// public String getTown() {
-	// 	return town;
-	// }
-
-	// public void setTown(String town) {
-	// 	this.town = town;
-	// }
-
-	// public String getProvince() {
-	// 	return province;
-	// }
-
-	// public void setProvince(String province) {
-	// 	this.province = province;
-	// }
-	
-	// public Long getPostCode() {
-	// 	return postCode;
-	// }
-
-	// public void setPostCode(Long postCode) {
-	// 	this.postCode = postCode;
-	// }
-
 	public String getTelephone() {
 		return telephone;
 	}
@@ -260,6 +224,14 @@ public class User {
 
 	public void setSavedTasks(Set<Task> savedTasks) {
 		this.savedTasks = savedTasks;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 	
 

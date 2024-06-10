@@ -1,6 +1,7 @@
 package elkar_ekin.app.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,7 +24,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("user not found");
 		}
 		
-		return new CustomUserDetail(user);
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+                AuthorityUtils.createAuthorityList(user.getRole()));
 	}
 
 }

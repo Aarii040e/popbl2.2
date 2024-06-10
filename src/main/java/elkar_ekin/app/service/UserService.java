@@ -19,4 +19,10 @@ public interface UserService {
 	public List<UserDto> getAllUsersExcluding(Long userId);
 
 	public List<Task> getSavedTasksByUser(User user);
+
+	public User findByUsername(String username);
+
+	List<UserDto> getRelevantUsersForChat(Long userId, String role);
+	
+	public void deleteUser(Long clientId);
 }

@@ -5,11 +5,11 @@
 </head>
 <body>
     <!-- Login bar -->
-    <header layout:fragment="loginLogoutBar" th:replace="fragments/header_login :: header_login">
+    <header layout:fragment="loginLogoutBar" th:replace="~{fragments/header_login :: header_login}">
     </header>
     
     <!-- Main menuBar -->
-    <div layout:fragment="menuBar" th:replace="fragments/nav_main :: nav">
+    <div layout:fragment="menuBar" th:replace="~{fragments/nav_main :: nav}">
     </div>
 
     <!-- Main content -->

@@ -42,7 +42,7 @@ public class Task {
     @JoinColumn(name = "locationID", nullable = false)
     private Location location;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // Cascade delete
     @JoinColumn(name = "clientID", nullable = false)
     private User client;
 

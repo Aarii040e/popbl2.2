@@ -19,6 +19,7 @@ import elkar_ekin.app.model.NewsItem;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.UserRepository;
 import elkar_ekin.app.service.NewsItemService;
+import elkar_ekin.app.service.UserService;
 
 @Controller
 @RequestMapping("/newsItem")
@@ -29,6 +30,8 @@ public class NewsItemController {
 
 	@Autowired
 	NewsItemService newsItemService;
+	@Autowired
+	UserService userService;
 
 	@Autowired
 	private UserRepository repository;
@@ -48,22 +51,35 @@ public class NewsItemController {
 	}
 
 	@GetMapping({"/list", "/"})
-	public String listNewsItem (Model model, Principal principal) {
-		List<NewsItem> allNewsItems = newsItemService.getAllNewsItems();
-		model.addAttribute("currentPage", "newsList");
-		if (allNewsItems == null) {
-			model.addAttribute("message", "No hay noticias disponibles.");
-		} else {
-			model.addAttribute("newsItemList", allNewsItems);
-		}
-		if(user.getRole().equals("C")){
-			return "client/newsItemList";
-		}
-		else if(user.getRole().equals("V")){
-			return "volunteer/newsItemList";
-		}
-		return "newsItem/newsItemList";
-	}
+public String listNewsItem(Model model, Principal principal) {
+    List<NewsItem> allNewsItems = newsItemService.getAllNewsItems();
+    model.addAttribute("currentPage", "newsList");
+    if (allNewsItems == null) {
+        model.addAttribute("message", "No hay noticias disponibles.");
+    } else {
+        model.addAttribute("newsItemList", allNewsItems);
+    }
+
+    if (principal != null) {
+        // Assuming you have a service to fetch user by username
+        User user = userService.findByUsername(principal.getName());
+
+        if (user != null) {
+            String role = user.getRole();
+            if ("C".equals(role)) {
+                return "client/newsItemList";
+            } else if ("V".equals(role)) {
+                return "volunteer/newsItemList";
+            } else if ("A".equals(role)) {
+                return "admin/newsItemList";
+            }
+        }
+    }
+
+    // Default view if user is not logged in or role is not recognized
+    return "newsItem/newsItemList";
+}
+
 
 	@GetMapping(value = "/{newsItemID}")
 	public String deleteNewsItem(@PathVariable("newsItemID") String newsItemID, Model model) {

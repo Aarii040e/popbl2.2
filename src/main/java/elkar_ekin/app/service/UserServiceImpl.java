@@ -7,6 +7,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,8 +20,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import elkar_ekin.app.dto.UserDto;
+import elkar_ekin.app.model.ChatRoom;
 import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
+import elkar_ekin.app.repositories.ChatRoomRepository;
+import elkar_ekin.app.repositories.TaskRepository;
 import elkar_ekin.app.repositories.UserRepository;
 
 @Service
@@ -26,7 +34,13 @@ public class UserServiceImpl implements UserService {
 	private PasswordEncoder passwordEncoder;
 
 	@Autowired
-	private UserRepository userRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private ChatRoomRepository chatRoomRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
 	@Override
 	public User save(UserDto userDto) {
@@ -84,4 +98,87 @@ public class UserServiceImpl implements UserService {
 	public List<Task> getSavedTasksByUser(User user) {
         return userRepository.findSavedTasksByUsername(user.getUsername());
     }
+
+	@Override
+	public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public List<UserDto> getRelevantUsersForChat(Long userId, String role) {
+        List<User> relevantUsers;
+
+        switch (role) {
+            case "A":
+                relevantUsers = userRepository.findAll(); // Admins see all users
+                break;
+            case "V":
+                relevantUsers = userRepository.findVolunteersContacts(userId); // Custom query to get clients and admins related to the volunteer
+                break;
+            case "C":
+                relevantUsers = userRepository.findClientsContacts(userId); // Custom query to get volunteers and admins related to the client
+                break;
+            default:
+                relevantUsers = List.of();
+                break;
+        }
+
+        return relevantUsers.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    private UserDto convertToDto(User user) {
+        UserDto dto = new UserDto();
+        dto.setUserID(user.getUserID());
+        dto.setUsername(user.getUsername());
+        dto.setEmail(user.getEmail());
+        dto.setRole(user.getRole());
+        return dto;
+    }
+
+	@Transactional
+    public void deleteUser(Long clientId) {
+        Optional<User> userOptional = userRepository.findById(clientId);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+
+            // Fetch all related chat rooms to manage references
+            List<ChatRoom> chatRoomsAsRecipient = chatRoomRepository.findAllByRecipient(user);
+            List<ChatRoom> chatRoomsAsSender = chatRoomRepository.findAllBySender(user);
+
+            // Clear messages in chat rooms
+            for (ChatRoom chatRoom : chatRoomsAsRecipient) {
+                chatRoom.clearMessages();
+            }
+            for (ChatRoom chatRoom : chatRoomsAsSender) {
+                chatRoom.clearMessages();
+            }
+
+            // Save changes to detach references
+            chatRoomRepository.saveAll(chatRoomsAsRecipient);
+            chatRoomRepository.saveAll(chatRoomsAsSender);
+
+            // Delete chat rooms after clearing messages
+            chatRoomRepository.deleteAll(chatRoomsAsRecipient);
+            chatRoomRepository.deleteAll(chatRoomsAsSender);
+
+            // Delete related tasks
+            taskRepository.deleteByClient_UserID(clientId);
+
+            // Delete user image if exists
+            Path imagePath = Paths.get("public/img", user.getImagePath());
+            try {
+                Files.delete(imagePath);
+            } catch (Exception e) {
+                System.out.println("Failed to delete image: " + e.getMessage());
+            }
+
+            // Finally, delete the user
+            userRepository.delete(user);
+        } else {
+            throw new EntityNotFoundException("User not found with ID: " + clientId);
+        }
+    }
+
+	
 }

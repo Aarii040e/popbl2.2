@@ -23,7 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// @Autowired
 	// private DataSource dataSource;
 
-	
+	@Autowired
+    private CustomUserDetailsService userDetailsService;
+
 	@Autowired
 	CustomSuccessHandler customSuccessHandler;
 	
@@ -53,9 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
-	}
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
 
 	@Override
     protected void configure(HttpSecurity http) throws Exception {

@@ -28,7 +28,11 @@ public class NewsItemDto {
 		this.user = user;
 	}
 
-	public void setTitle(String title) {
+	public NewsItemDto(Long newsItemID2, User user2, String title2, String body2) {
+        //TODO Auto-generated constructor stub
+    }
+
+    public void setTitle(String title) {
 		this.title = title;
 	}
 

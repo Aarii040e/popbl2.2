@@ -5,13 +5,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +17,6 @@ import elkar_ekin.app.service.UserService;
 import elkar_ekin.app.dto.UserDto;
 import elkar_ekin.app.dto.LocationDto;
 import elkar_ekin.app.model.Location;
-import elkar_ekin.app.repositories.UserRepository;
 
 @Controller
 @RequestMapping("/registration")
@@ -29,13 +25,11 @@ public class RegistrationController {
 
     private final UserService userService;
     private final LocationService locationService;
-    private UserRepository userRepository;
     private Location userLocation;
 
-    public RegistrationController(UserService userService, LocationService locationService, UserRepository userRepository) {
+    public RegistrationController(UserService userService, LocationService locationService) {
         this.userService = userService;
         this.locationService = locationService;
-        this.userRepository=userRepository;
     }
 
     @ModelAttribute("userDto")

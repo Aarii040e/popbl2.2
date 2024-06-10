@@ -14,9 +14,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-
 @Entity
 @Table(name = "messages")
 public class ChatMessage {
@@ -26,15 +23,15 @@ public class ChatMessage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //Horrek primary keya automatikoki sortzen du
 	private Long messageID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "chatRoomID", nullable = false)
     private ChatRoom chatRoom;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "senderID", nullable = false)
     private User sender;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "recipientID", nullable = false)
     private User recipient;
 

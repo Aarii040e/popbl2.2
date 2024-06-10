@@ -1,6 +1,5 @@
 package elkar_ekin.app.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -72,8 +71,8 @@ public class ChatController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<UserDto>> findExcludedUsers() {
-        List<UserDto> userList = userService.getAllUsersExcluding(user.getUserID());
+    public ResponseEntity<List<UserDto>> findRelevantUsers() {
+        List<UserDto> userList = userService.getRelevantUsersForChat(user.getUserID(), user.getRole());
         return ResponseEntity.ok(userList);
     }
     

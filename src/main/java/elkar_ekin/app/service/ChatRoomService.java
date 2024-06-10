@@ -1,14 +1,10 @@
 package elkar_ekin.app.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import elkar_ekin.app.dto.UserDto;
 import elkar_ekin.app.model.ChatRoom;
 import elkar_ekin.app.model.User;
 import elkar_ekin.app.repositories.ChatRoomRepository;

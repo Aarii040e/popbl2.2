@@ -8,7 +8,7 @@
     <body class="d-flex flex-column">
         <main layout:fragment="content" class="d-flex mx-auto">
             
-            <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0 px-4 px-md-6" action="/userLogin" method="post">
+            <form class="d-flex flex-column justify-content-center flex-grow-2 py-3 py-md-0 px-4 px-md-6" th:action="@{/userLogin}" method="post">
                 <!-- Mensajes  -->
                 <div th:if="${param.error}">
                     <span class="message error_div p-3 alert-danger" th:text="#{error.wrong_credentials}"></span>
@@ -32,6 +32,11 @@
                     <p class="py-2" th:text="#{not_account_yet}">Don't have an account?</p>
                     <a class="link ms-1" href="/registration/step1" th:text="#{signup}">Sign Up</a>
                 </div>  
+                <!-- Link to reset password -->
+                <div class="d-flex justify-content-between align-items-center py-2">
+                    <p class="py-2 mb-0" th:text="#{forgot_password}">Forgot your password?</p>
+                    <a class="link ms-1" th:href="@{/forgotPassword}" th:text="#{reset_password}">Reset Password</a>
+                </div>
             </form>
         </main>
     </body>
