@@ -12,10 +12,15 @@ main {
     font-weight: 700;
 }
 
+.users-list-container {
+    overflow-y: auto;
+    height: calc(100vh - var(--h-languages) - var(--h-header) - var(--h-menu_bar-small) - 53px);
+    box-sizing: border-box;
+}
+
 .users-list {
     background: var(--bg-sec-lighter);
     width: 100vw;
-    overflow-y: auto;
 }
 
 .user-item {

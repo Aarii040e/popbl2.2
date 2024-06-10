@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getRelevantUsersForChat(Long userId, String role) {
+    public List<UserDto> getRelevantUsersForChat(Long userId, String role) {    // Get users related to the current user for chat
         List<User> relevantUsers;
 
         switch (role) {
@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
         return relevantUsers.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    private UserDto convertToDto(User user) {
+    private UserDto convertToDto(User user) {   // Convert User entity to UserDto
         UserDto dto = new UserDto();
         dto.setUserID(user.getUserID());
         dto.setUsername(user.getUsername());

@@ -5,10 +5,13 @@ import elkar_ekin.app.model.User;
 
 public class CommentDto {
 
+    //Parameters
     private String content;
     private User user;
     private NewsItem newsItem;
 	
+
+    //Constructors
 	public CommentDto() {
 	}
 
@@ -18,6 +21,7 @@ public class CommentDto {
 		this.newsItem = newsItem;
 	}
 
+    //Getters and Setters
 	public String getContent() {
 		return content;
 	}

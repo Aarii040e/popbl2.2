@@ -20,15 +20,12 @@ import elkar_ekin.app.service.CustomUserDetailsService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	// @Autowired
-	// private DataSource dataSource;
 
 	@Autowired
     private CustomUserDetailsService userDetailsService;
 
 	@Autowired
 	CustomSuccessHandler customSuccessHandler;
-	
 		
 	@Bean
 	public UserDetailsService userDetailsService() {
@@ -84,6 +81,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login?logout")
                 .permitAll();
     }
-
-	
+    //The function above manages all the permissions in the website
 }

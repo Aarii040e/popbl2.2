@@ -20,16 +20,8 @@ edit.addEventListener("click", e => {
     apply.classList.remove("d-none");
 });
 
-apply.addEventListener("click", e => {
-    e.preventDefault();
+apply.addEventListener("click", () => document.querySelector("form").submit());
 
-    // if (document.querySelector(".role p").textContent.includes("Volunteer")) {
-    //     document.querySelector("form").action = "/volunteer-view/user/update";
-    // }
-
-    document.querySelector("form").submit();
-});
-
-//
+// Código show more/less
 
 cut(".description", 120);

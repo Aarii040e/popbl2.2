@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import elkar_ekin.app.dto.LocationDto;
 import elkar_ekin.app.dto.TaskDto;
+import elkar_ekin.app.dto.UserDto;
 import elkar_ekin.app.model.DefaultTask;
 import elkar_ekin.app.model.Location;
 import elkar_ekin.app.model.Task;
@@ -47,16 +48,22 @@ public class ClientController extends BaseController {
     private UserService userService;
     
     @Autowired
+    private UserRepository userRepository;
+    
+    @Autowired
     private DefaultTaskRepository defaultTaskRepository;
 	@Autowired
     private TaskService taskService;
     private final LocationService locationService;
 
     public ClientController(UserRepository userRepository, TaskRepository taskRepository,
-                            UserDetailsService userDetailsService, HistoricTaskService historicTaskService, 
-                            NewsItemService newsItemService, UserService userService, 
+                            DefaultTaskRepository defaultTaskRepository, 
+                            UserDetailsService userDetailsService, 
+                            HistoricTaskService historicTaskService, 
+                            NewsItemService newsItemService, 
+                            UserService userService, 
                             LocationService locationService) {
-        super(userRepository, taskRepository, userDetailsService, historicTaskService, newsItemService, userService);
+        super(userRepository, taskRepository, defaultTaskRepository, userDetailsService, historicTaskService, newsItemService, userService);
         this.locationService = locationService;
     }
 
@@ -83,24 +90,28 @@ public class ClientController extends BaseController {
         }
     }
 
+    // Handler for GET request to the first step of task creation
     @GetMapping("/createTask/step1")
     public String createTaskStep1(Model model) {
         model.addAttribute("currentPage", "createTask");
         return "client/createTask_1";
     }
 
+    // Handler for POST request to process the first step of task creation
     @PostMapping("/createTask/step1")
     public String processStep1(@ModelAttribute("defaultTask") DefaultTask task, BindingResult result) {
         defaultTask = defaultTaskRepository.findByName(task.getName());
         return "redirect:/client-view/createTask/step2";
     }
 
+    // Handler for GET request to the second step of task creation
     @GetMapping("/createTask/step2")
     public String createTaskStep2(Model model) {
         model.addAttribute("currentPage", "createTask");
         return "client/createTask_2";
     }
 
+    // Handler for POST request to process the second step of task creation
     @PostMapping("/createTask/step2")
     public String processStep2(@ModelAttribute("taskDto") TaskDto taskDto, BindingResult result, Model model,
                                @RequestParam(name = "postal_code") String postalCode,
@@ -123,12 +134,14 @@ public class ClientController extends BaseController {
         return "client/createTask_2";
     }
 
+    // Handler for GET request to delete a task by ID
     @GetMapping("/task/{taskID}/delete")
     public String deleteTask(@PathVariable("taskID") String taskID) {
         taskService.deleteTask(Long.parseLong(taskID));
         return "redirect:/client-view/tasks";
     }
 
+    // Handler for GET request to show the list of tasks for the client
     @GetMapping("/tasks")
     public String showTaskList(Model model, Principal principal) {
         User client = userService.findByUsername(principal.getName());
@@ -142,7 +155,7 @@ public class ClientController extends BaseController {
         return "client/taskList";
     }
 
-
+    // Handler for GET request to show the form to edit a task by ID
     @GetMapping({ "/task/{taskID}/edit" })
     public String showTaskForm(@PathVariable("taskID") Long taskID, Model model) {
         TaskDto taskDto = prepareTaskDto(taskID);
@@ -152,6 +165,7 @@ public class ClientController extends BaseController {
         return "client/editTask";
     }
 
+    // Handler for POST request to update a task
     @PostMapping({ "/editTask" })
     public String updateTask(@ModelAttribute("taskDto") TaskDto taskDto, BindingResult result,
                             @RequestParam(name = "task_ID", required = false) String strTaskId,
@@ -260,5 +274,14 @@ public class ClientController extends BaseController {
             return true;
         }
         return false;
+    }
+
+    @GetMapping("/ratings")
+    public String showRatings(Model model) {
+        model.addAttribute("currentPage", "ratings");
+        // List<UserDto> userList = userService.getAllUsersExcluding(user.getUserID());
+        List<UserDto> userList = userService.getRelevantUsersForChat(user.getUserID(), user.getRole());
+        model.addAttribute("userList", userList);
+        return "client/ratings";
     }
 }

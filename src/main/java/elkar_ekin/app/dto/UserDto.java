@@ -8,6 +8,7 @@ import elkar_ekin.app.model.Location;
 
 public class UserDto {
 	
+    //Parameters
 	Long userID;
     private String name;
     private String surname1;
@@ -23,6 +24,8 @@ public class UserDto {
     private String description;
     private MultipartFile imageFile;
 
+
+    //Constructors
 	public UserDto(){
 	}
 
@@ -44,7 +47,7 @@ public class UserDto {
 		this.description = description;
 	}
 
-
+    //Getters and Setters
 	public String getUsername() {
 		return username;
 	}

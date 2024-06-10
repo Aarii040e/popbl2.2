@@ -31,19 +31,16 @@ public class PageController {
 
 		@ModelAttribute
 	public void commonUser (Model model, Principal principal) {
-		// UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		// model.addAttribute("role", "client");
 		if (principal != null) {
 			String username=principal.getName();
 			user = repository.findByUsername(username);
 			model.addAttribute("user", user);
 		}
-		// model.addAttribute("currentPage", "index");
 	}
 		
 	@GetMapping({"/", "/index", "/index.html"})
 	public String getIndexPage(Model model) {
-		List<NewsItem> allNewsItems = newsItemService.getLastFiveNewsItems();
+		List<NewsItem> allNewsItems = newsItemService.getLastFiveNewsItems();	// Get the last five news items
 		if (allNewsItems == null) {
 			model.addAttribute("message", "No hay noticias disponibles.");
 		} else {
@@ -74,12 +71,12 @@ public class PageController {
 	}
 
 	@GetMapping({"/error"})
-	public String getErrorPage(HttpServletRequest request, Model model) {
+	public String getErrorPage(HttpServletRequest request, Model model) {	// In case of error get the error page
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-		model.addAttribute("currentPage", "error");
-		if (status != null) {
-            int statusCode = Integer.parseInt(status.toString());
-            model.addAttribute("statusCode", statusCode);
+		model.addAttribute("currentPage", "error");	
+		if (status != null) {	
+            int statusCode = Integer.parseInt(status.toString());	
+            model.addAttribute("statusCode", statusCode);		
 		}
 		if(user != null) {
 			if(user.getRole().equals("C")){

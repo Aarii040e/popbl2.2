@@ -17,6 +17,7 @@ public class LocaleController {
 
     @GetMapping("/change")
     public String changeLocale(@RequestParam("lang") String lang, HttpServletRequest request, HttpServletResponse response) {
+        // Create a new Locale object based on the 'lang' parameter
         Locale locale = new Locale(lang);
         request.getSession().setAttribute("lang", locale);
         return "redirect:" + request.getHeader("Referer");
@@ -24,6 +25,7 @@ public class LocaleController {
 
     @GetMapping("/currentLocale")
     public String currentLocale(HttpServletRequest request) {
+        // Get the current locale from the request context
         java.util.Locale locale = RequestContextUtils.getLocale(request);
         return "Current Locale: " + locale.toString();
     }
