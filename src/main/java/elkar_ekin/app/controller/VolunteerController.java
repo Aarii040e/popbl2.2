@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
+import elkar_ekin.app.repositories.DefaultTaskRepository;
 import elkar_ekin.app.repositories.TaskRepository;
 import elkar_ekin.app.repositories.UserRepository;
 import elkar_ekin.app.service.TaskService;
@@ -33,16 +34,19 @@ public class VolunteerController extends BaseController{
 	private final UserService userService;
 	private final TaskRepository taskRepository;
 	
+    @Autowired
+    private UserRepository userRepository;
 	@Autowired
 	private TaskService taskService;
 
 	private User user;
 
 	public VolunteerController(UserRepository userRepository, TaskRepository taskRepository,
+                            DefaultTaskRepository defaultTaskRepository, 
 			UserDetailsService userDetailsService, HistoricTaskService historicTaskService, TaskService taskService, NewsItemService newsItemService,
 			UserService userService) {
-				super(userRepository, taskRepository, userDetailsService, historicTaskService, newsItemService, userService);
-				this.userService = userService;
+				super(userRepository, taskRepository, defaultTaskRepository, userDetailsService, historicTaskService, newsItemService, userService);
+        		this.userService = userService;
 				this.taskRepository = taskRepository;
 	}
 

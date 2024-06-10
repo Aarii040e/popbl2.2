@@ -15,17 +15,19 @@ import javax.persistence.Table;
 public class DefaultTask {
     
     @Id
-    @Column(nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Horrek primary keya automatikoki sortzen du
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "default_taskid", nullable = false, updatable = false)
     private Long defaultTaskID;
+
 
     private String name;
 
     private Integer estimatedTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoryID", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "categoryID", nullable = false)
     private Category category;
+
 
     public DefaultTask() {
     }

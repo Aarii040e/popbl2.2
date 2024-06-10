@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout-A}">
+
+<head>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/volunteering_list.css}">
+</head>
+
+<body class="d-flex flex-column">
+	<main layout:fragment="content" th:replace="~{fragments/historicTaskList_content :: taskList_content}"></main>
+</body>
+</html>

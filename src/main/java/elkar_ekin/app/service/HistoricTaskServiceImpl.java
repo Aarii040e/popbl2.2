@@ -43,4 +43,12 @@ public class HistoricTaskServiceImpl implements HistoricTaskService {
                 .limit(5)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional
+    public List<HistoricTask> getFirstFiveClientTasks(Long clientId) {
+        return historicTaskRepository.findByClientId(clientId).stream()
+                .limit(5)
+                .collect(Collectors.toList());
+    }
 }

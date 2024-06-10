@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import elkar_ekin.app.dto.NewsItemDto;
+import elkar_ekin.app.model.DefaultTask;
 import elkar_ekin.app.model.HistoricTask;
 import elkar_ekin.app.model.NewsItem;
 import elkar_ekin.app.model.Task;
 import elkar_ekin.app.model.User;
+import elkar_ekin.app.repositories.DefaultTaskRepository;
 import elkar_ekin.app.repositories.TaskRepository;
 import elkar_ekin.app.repositories.UserRepository;
 import elkar_ekin.app.service.HistoricTaskService;
@@ -52,6 +55,9 @@ public class AdminController {
 	@Autowired
     private UserService userService;
 
+	@Autowired
+    private DefaultTaskRepository defaultTaskRepository;
+
 	private final TaskService taskService;
 	private final HistoricTaskService historicTaskService;
 
@@ -67,6 +73,7 @@ public class AdminController {
 
 	@ModelAttribute
 	public void commonUser (Model model, Principal principal) {
+		//Gets the user that is in the session and saves it in the "user" attribute
 		String username=principal.getName();
 		user = userRepository.findByUsername(username);
 		System.out.println(user);
@@ -91,6 +98,7 @@ public class AdminController {
 	@GetMapping({"/newsItem/", "/newsItem/list"})
 	public String listNewsItem (Model model, Principal principal) {
 		List<NewsItem> allNewsItems = newsItemService.getAllNewsItems();
+	    //Sets the current page 
 		model.addAttribute("currentPage", "newsItemList");
 		if (allNewsItems == null) {
 			model.addAttribute("message", "No hay noticias disponibles.");
@@ -103,6 +111,7 @@ public class AdminController {
 	@GetMapping({"/newsItem/create"})
 	public String showNewsForm(Model model) {
 		NewsItemDto newsItemDto = new NewsItemDto();
+	    //Sets the current page 
 		model.addAttribute("currentPage", "newsItemCreate");
 		model.addAttribute("newsItemDto", newsItemDto);
 		return "admin/newsItemForm";
@@ -186,17 +195,33 @@ public class AdminController {
 
 		User client = userRepository.findByUserID(Long.parseLong(clientID));
 		model.addAttribute("user", client);
-		checkProfilePicture(client);
+		if(client.getImagePath() != null){
+			checkProfilePicture(client);
+		}
 
 		Long amount = taskRepository.countByClient(client);
 		model.addAttribute("amount", amount);
 
-		List<HistoricTask> clientTasks = historicTaskService.getFirstFivePastTasks(Long.parseLong(clientID));
-		if (clientTasks == null) {
+		List<HistoricTask> historicTasks = new ArrayList<>();
+		
+		historicTasks = historicTaskService.getFirstFiveVolunteerTasks(Long.parseLong(clientID));
+		model.addAttribute("currentPage", "taskHistory");
+		if (historicTasks == null) {
 			model.addAttribute("message", "No hay tareas disponibles.");
-		} else {
-			model.addAttribute("taskList", clientTasks);
+			} else {
+		List<DefaultTask> defaultTasks = new ArrayList<>();
+		if (historicTasks != null) {
+			for (HistoricTask task : historicTasks) {
+				DefaultTask defaultTask = defaultTaskRepository.findById(task.getTaskDefaultID().getDefaultTaskID()).orElse(null);
+				if (defaultTask != null) {
+					defaultTasks.add(defaultTask);
+				}
+				}
+			model.addAttribute("defaultTaskList", defaultTasks);
 		}
+	}
+
+		model.addAttribute("taskList", historicTasks);
 		return "admin/userSpecific";
 	}
 
@@ -244,18 +269,34 @@ public class AdminController {
 
 		User volunteer = userRepository.findByUserID(Long.parseLong(volunteerID));
 		model.addAttribute("user", volunteer);
-		checkProfilePicture(volunteer);
+		if(volunteer.getImagePath() != null){
+			checkProfilePicture(volunteer);
+		}
 
 		Long amount = taskRepository.countByVolunteer(volunteer);
 		model.addAttribute("amount", amount);
 
-		List<HistoricTask> volunteerTasks = historicTaskService.getFirstFiveVolunteerTasks(volunteer.getUserID());
-		if (volunteerTasks == null) {
+        
+		List<HistoricTask> historicTasks = new ArrayList<>();
+		
+		historicTasks = historicTaskService.getFirstFiveVolunteerTasks(Long.parseLong(volunteerID));
+		model.addAttribute("currentPage", "taskHistory");
+		if (historicTasks == null) {
 			model.addAttribute("message", "No hay tareas disponibles.");
-		} else {
-			model.addAttribute("taskList", volunteerTasks);
+			} else {
+		List<DefaultTask> defaultTasks = new ArrayList<>();
+		if (historicTasks != null) {
+			for (HistoricTask task : historicTasks) {
+				DefaultTask defaultTask = defaultTaskRepository.findById(task.getTaskDefaultID().getDefaultTaskID()).orElse(null);
+				if (defaultTask != null) {
+					defaultTasks.add(defaultTask);
+				}
+				}
+			model.addAttribute("defaultTaskList", defaultTasks);
 		}
+	}
 
+		model.addAttribute("taskList", historicTasks);
 		return "admin/userSpecific";
 	}
 	@GetMapping("/tasks")
@@ -284,16 +325,16 @@ public class AdminController {
 		return "admin/chat";
 	} 
 
-	@GetMapping("/history")
-	public String showTaskHistory(Model model, Principal principal) {
-		User user = (User) model.getAttribute("user");
-		List<HistoricTask> clientTasks = historicTaskService.getPastVolunteerTasks(user.getUserID());
-		model.addAttribute("currentPage", "taskHistory");
-		if (clientTasks == null) {
-			model.addAttribute("message", "No hay tareas disponibles.");
-		} else {
-			model.addAttribute("taskList", clientTasks);
-		}
-		return "admin/taskList";
-	}
+	// @GetMapping("/history")
+	// public String showTaskHistory(Model model, Principal principal) {
+	// 	User user = (User) model.getAttribute("user");
+	// 	List<HistoricTask> clientTasks = historicTaskService.getAllPastTasks(user.getUserID());
+	// 	model.addAttribute("currentPage", "taskHistory");
+	// 	if (clientTasks == null) {
+	// 		model.addAttribute("message", "No hay tareas disponibles.");
+	// 	} else {
+	// 		model.addAttribute("taskList", clientTasks);
+	// 	}
+	// 	return "admin/taskList";
+	// }
 }
