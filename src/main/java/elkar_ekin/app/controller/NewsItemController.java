@@ -121,12 +121,14 @@ public String listNewsItem(Model model, Principal principal) {
 	public String searchNewsItems(@RequestParam("keyword") String keyword, Model model) {	// Search for news items
 		List<NewsItem> searchResults = newsItemService.searchNewsItems(keyword);
 		model.addAttribute("newsItemList", searchResults);
-		if (user.getRole().equals("C")) {
-			return "client/newsItemList";
-		} else if (user.getRole().equals("V")) {
-			return "volunteer/newsItemList";
-		} else if (user.getRole().equals("A")) {
-			return "admin/baseNewsItemList";
+		if(user!=null){
+			if (user.getRole().equals("C")) {
+				return "client/newsItemList";
+			} else if (user.getRole().equals("V")) {
+				return "volunteer/newsItemList";
+			} else if (user.getRole().equals("A")) {
+				return "admin/baseNewsItemList";
+			}
 		}
 		return "newsItem/newsItemList";
 	}
