@@ -17,7 +17,9 @@ public class PasswordResetController {
 
     // Display the forgot password form
     @GetMapping("/forgotPassword")
-    public String showForgotPasswordForm() {
+    public String showForgotPasswordForm(Model model) {
+        model.addAttribute("currentPage", "forgotPassword");
+        System.out.println("En password recovery");
         return "forgotPassword";
     }
 
@@ -32,7 +34,7 @@ public class PasswordResetController {
             // Handle errors
             model.addAttribute("error", e.getMessage());
         }
-        return "forgotPassword";
+            return "forgotPassword";
     }
 
     // Display the reset password form
