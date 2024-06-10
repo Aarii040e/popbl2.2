@@ -53,6 +53,15 @@ body {
     transform: translateY(-40%);
 }
 
+.logout {
+    background: var(--bg-menu_bar);
+    transition: background .2s;
+}
+
+.logout:hover {
+    background: var(--link-lighter-2);
+}
+
 a {
     transition: color .3s;
 }

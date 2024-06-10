@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import elkar_ekin.app.dto.LocationDto;
 import elkar_ekin.app.dto.TaskDto;
+import elkar_ekin.app.dto.UserDto;
 import elkar_ekin.app.model.DefaultTask;
 import elkar_ekin.app.model.Location;
 import elkar_ekin.app.model.Task;
@@ -260,5 +261,13 @@ public class ClientController extends BaseController {
             return true;
         }
         return false;
+    }
+
+    @GetMapping("/ratings")
+    public String showRatings(Model model) {
+        model.addAttribute("currentPage", "ratings");
+        List<UserDto> userList = userService.getAllUsersExcluding(user.getUserID());
+        model.addAttribute("userList", userList);
+        return "client/ratings";
     }
 }
