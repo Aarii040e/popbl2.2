@@ -172,15 +172,15 @@ public abstract class BaseController {
 
     @PostMapping("/user/update")
     public String updateUserView(@ModelAttribute("userDto") UserDto userDto, BindingResult result, Model model, Principal principal) {
-        if (result.hasErrors()) {
-            return returnRole + "/user";
+		if (result.hasErrors()) {
+			return "redirect:/" + returnRole + "-view/user";
         }
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         //Updates the data from the userDto to the user model
         userService.update(userDto, userDetails);
         model.addAttribute("guest", guest);
         model.addAttribute("message", "Updated Successfully!");
-        return returnRole + "/user";
+        return "redirect:/" + returnRole + "-view/user";
     }
 
     @GetMapping("/history")
