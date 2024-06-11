@@ -31,7 +31,6 @@ public class ChatRoom {
 
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ChatMessage> messages = new HashSet<>();
-    /* Constructores */
 
 
     public ChatRoom() {

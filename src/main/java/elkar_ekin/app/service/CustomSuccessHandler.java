@@ -18,9 +18,10 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String redirectUrl = null;
-        
+        // Get the authorities (roles) of the authenticated user
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         
+        // Determine the redirect URL based on the user's role
         for (GrantedAuthority grantedAuthority : authorities) {
             if (grantedAuthority.getAuthority().equals("A")) {
                 redirectUrl = "/admin-view/index";
@@ -33,11 +34,11 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
                 break;
             }
         }
-        
+        // If no redirect URL is found, throw an exception
         if (redirectUrl == null) {
             throw new IllegalStateException();
         }
-        
+        // Redirect the user to the appropriate URL
         response.sendRedirect(redirectUrl);
     }
 }

@@ -39,15 +39,12 @@ public class NewsItemController {
 	private User user;
 
 	@ModelAttribute
-	public void commonUser (Model model, Principal principal) {
-		// UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		// model.addAttribute("role", "client");
+	public void commonUser(Model model, Principal principal) {
 		if (principal != null) {
 			String username=principal.getName();
 			user = repository.findByUsername(username);
 			model.addAttribute("user", user);
 		}
-		// model.addAttribute("currentPage", "index");
 	}
 
 	@GetMapping({"/list", "/"})
@@ -71,7 +68,7 @@ public String listNewsItem(Model model, Principal principal) {
             } else if ("V".equals(role)) {
                 return "volunteer/newsItemList";
             } else if ("A".equals(role)) {
-                return "admin/newsItemList";
+                return "admin/baseNewsItemList";
             }
         }
     }
@@ -85,7 +82,7 @@ public String listNewsItem(Model model, Principal principal) {
 	public String deleteNewsItem(@PathVariable("newsItemID") String newsItemID, Model model) {
 		NewsItem newsItem = newsItemService.getNewsItemByID(Long.parseLong(newsItemID));
 		model.addAttribute("newsItem", newsItem);
-		//To 																																																						 comments
+		// DTO comments
 		CommentDto commentDto = new CommentDto();
 		model.addAttribute("commentDto", commentDto);
 		//To list all the comments
@@ -95,30 +92,43 @@ public String listNewsItem(Model model, Principal principal) {
 		} else {
 			model.addAttribute("commentList", allComments);
 		}
-		if(user.getRole().equals("C")){
-			return "client/newsItem";
-		}
-		else if(user.getRole().equals("V")){
-			return "volunteer/newsItem";
+
+		// Check the role of the current user and determine the appropriate view to return
+		if (user != null){
+			if (user.getRole().equals("C")) {
+				return "client/newsItem";
+			} else if (user.getRole().equals("V")) {
+				return "volunteer/newsItem";
+			} else if (user.getRole().equals("A")) {
+				return "admin/newsItem";
+			}
 		}
 		return "newsItem/newsItem";
 	}
 
 	@PostMapping("/{newsItemID}/createComment")
-	public String createComment(@PathVariable("newsItemID") String newsItemID,@ModelAttribute("commentDto") CommentDto commentDto, Model model) {
-		NewsItem newsItem = newsItemService.getNewsItemByID(Long.parseLong(newsItemID));
+	public String createComment(@PathVariable("newsItemID") String newsItemID,
+			@ModelAttribute("commentDto") CommentDto commentDto, Model model) {
+		NewsItem newsItem = newsItemService.getNewsItemByID(Long.parseLong(newsItemID));	// Get the news item
 		commentDto.setNewsItem(newsItem);
 		commentDto.setUser(user);
-		newsItemService.saveComment(commentDto);
-		return "redirect:/newsItem/"+newsItem.getNewsItemID();
+		newsItemService.saveComment(commentDto);	// Save the comment
+
+		return "redirect:/newsItem/" + newsItem.getNewsItemID();	
 	}
 
 	@GetMapping("/search")
-    public String searchNewsItems(@RequestParam("keyword") String keyword, Model model) {
-        List<NewsItem> searchResults = newsItemService.searchNewsItems(keyword);
-        model.addAttribute("newsItemList", searchResults);
-		if(user.getRole().equals("C")){
-			return "client/newsItemList";
+	public String searchNewsItems(@RequestParam("keyword") String keyword, Model model) {	// Search for news items
+		List<NewsItem> searchResults = newsItemService.searchNewsItems(keyword);
+		model.addAttribute("newsItemList", searchResults);
+		if(user!=null){
+			if (user.getRole().equals("C")) {
+				return "client/newsItemList";
+			} else if (user.getRole().equals("V")) {
+				return "volunteer/newsItemList";
+			} else if (user.getRole().equals("A")) {
+				return "admin/baseNewsItemList";
+			}
 		}
 		else if(user.getRole().equals("V")){
 			return "volunteer/newsItemList";

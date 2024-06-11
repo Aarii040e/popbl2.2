@@ -20,14 +20,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/user");
+        registry.enableSimpleBroker("/user"); //each user will subscribe to a queue called /user/ID/queue/messages
         registry.setApplicationDestinationPrefixes("/app");
         registry.setUserDestinationPrefix("/user");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws")
+        registry.addEndpoint("/ws") //It sets the end point for the WebSocket
                 .withSockJS();
     }
 

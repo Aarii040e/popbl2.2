@@ -19,11 +19,14 @@ public class EmailService {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(to);
+            // Set the email subject
             helper.setSubject(subject);
+            // Set the email content as HTML (true indicates HTML content)
             helper.setText(content, true);
+            // Send the email using JavaMailSender
             mailSender.send(message);
         } catch (MessagingException e) {
-            // Log the exception
+            // Log the exception (printing to stderr for simplicity, consider using a logging framework)
             System.err.println("Failed to send email: " + e.getMessage());
             throw e;
         }

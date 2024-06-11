@@ -4,11 +4,13 @@ import elkar_ekin.app.model.User;
 
 public class NewsItemDto {
 	
+    //Parameters
 	private Long newsItemID;
 	private String title;
     private String body;
     private User user;
 
+    //Constructors
 	public NewsItemDto(){
 	}
 	
@@ -32,6 +34,7 @@ public class NewsItemDto {
         //TODO Auto-generated constructor stub
     }
 
+    //Getters and Setters
     public void setTitle(String title) {
 		this.title = title;
 	}

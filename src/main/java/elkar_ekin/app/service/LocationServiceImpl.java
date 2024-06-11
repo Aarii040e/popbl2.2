@@ -13,6 +13,7 @@ public class LocationServiceImpl implements LocationService {
 	@Autowired
 	private LocationRepository locationRepository;
 
+	//Save location data based on the provided LocationDto.
 	@Override
 	public Location saveLocation(LocationDto locationDto) {
 		Location location = new Location(locationDto.getPostCode(), locationDto.getDirection(), locationDto.getTown(), locationDto.getProvince());

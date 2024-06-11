@@ -9,6 +9,7 @@ import elkar_ekin.app.model.User;
 
 public class TaskDto {
     
+    //Parameters
     private Long taskID;
     private DefaultTask taskDefaultID;
     private String description;
@@ -20,9 +21,9 @@ public class TaskDto {
     private User volunteer;
     private User client;
     
+    //Constructors
     public TaskDto() {
     }
-
 
     public TaskDto(DefaultTask taskDefaultID, String description, LocalDate date, String state, LocalTime startTime,
             LocalTime endTime, Location location, User volunteer, User client) {
@@ -37,8 +38,7 @@ public class TaskDto {
         this.client = client;
     }
 
-    
-
+    //Getters and Setters
     public DefaultTask getTaskDefaultID() {
         return taskDefaultID;
     }

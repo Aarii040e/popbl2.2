@@ -37,6 +37,7 @@ public class PasswordResetServiceImpl implements PasswordResetService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    // Creates a password reset token for the given user.
     @Override
     public void createPasswordResetTokenForUser(User user, String token) {
         PasswordResetToken myToken = new PasswordResetToken();
@@ -46,42 +47,45 @@ public class PasswordResetServiceImpl implements PasswordResetService {
         tokenRepository.save(myToken);
     }
 
+    // Sends a password reset email to the user with a unique token.
     @Override
-    public void sendPasswordResetEmail(String username) throws MessagingException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new IllegalArgumentException("No user found with username: " + username);
-        }
-
-        String token = UUID.randomUUID().toString();
-        createPasswordResetTokenForUser(user, token);
-
-        String resetUrl = "http://localhost:8080/resetPassword?token=" + token;
-
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-
-        helper.setTo(user.getEmail());
-        helper.setSubject("Password Reset Request");
-
-        String content = "<html><body>" +
-                "<img src='cid:headerImage' style='width:100%;'/><br>" +
-                "<p>Click the link below to reset your password:</p>" +
-                "<p><a href=\"" + resetUrl + "\">Reset Password</a></p>" +
-                "<img src='cid:footerImage' style='width:100%;'/><br>" +
-                "</body></html>";
-
-        helper.setText(content, true);
-
-        ClassPathResource headerImage = new ClassPathResource("static/images/icono.png");
-        ClassPathResource footerImage = new ClassPathResource("static/images/icono.png");
-
-        helper.addInline("headerImage", headerImage);
-        helper.addInline("footerImage", footerImage);
-
-        mailSender.send(mimeMessage);
+public void sendPasswordResetEmail(String username) throws MessagingException {
+    User user = userRepository.findByUsername(username);
+    if (user == null) {
+        throw new IllegalArgumentException("No user found with username: " + username);
     }
 
+    String token = UUID.randomUUID().toString();
+    createPasswordResetTokenForUser(user, token);
+
+    // Base URL should be configured in application.properties or application.yml
+    String baseUrl = "http://localhost:8080"; // replace with configurable property
+    String resetUrl = baseUrl + "/resetPassword?token=" + token;
+
+    MimeMessage mimeMessage = mailSender.createMimeMessage();
+    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+    helper.setTo(user.getEmail());
+    helper.setSubject("Password Reset Request");
+
+    String content = "<html><body>" +
+            "<p>Click the link below to reset your password:</p>" +
+            "<p><a href=\"" + resetUrl + "\">Reset Password</a></p>" +
+            "<div style='background-color:#000000; padding:1px; text-align:center;'>" +
+            "<img src='cid:footerImage' style='width:90px;' alt='Company Logo'/>" +
+            "</div>" +
+            "</body></html>";
+
+    helper.setText(content, true);
+
+    ClassPathResource footerImage = new ClassPathResource("static/images/icono.png");
+    helper.addInline("footerImage", footerImage);
+
+    mailSender.send(mimeMessage);
+}
+
+
+    //Validates a password reset token to ensure it is not expired.
     @Override
     public PasswordResetToken validatePasswordResetToken(String token) {
         PasswordResetToken passToken = tokenRepository.findByToken(token);
@@ -91,6 +95,7 @@ public class PasswordResetServiceImpl implements PasswordResetService {
         return passToken;
     }
 
+    // Resets the password for a user using a valid token and the new password.
     @Override
     @Transactional
     public void resetPassword(String token, String newPassword) {

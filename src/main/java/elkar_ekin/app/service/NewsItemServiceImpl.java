@@ -24,22 +24,27 @@ public class NewsItemServiceImpl implements NewsItemService {
 		this.newsItemRepository = newsItemRepository;
 		this.commentRepository = commentRepository;
 	}
+
+	// Save a news item based on the provided NewsItemDto.
 	@Override
 	public NewsItem save(NewsItemDto newsItemDto) {
 		NewsItem newsItem = new NewsItem(newsItemDto.getTitle(), newsItemDto.getBody(), newsItemDto.getUser());
 		return newsItemRepository.save(newsItem);
 	}
 
+	//Retrieve all news items sorted by creation date in descending order.
 	@Override
 	public List<NewsItem> getAllNewsItems() {
         return newsItemRepository.findAllByOrderByCreatedAtDesc();
     }
 
+	// Retrieve the last five news items sorted by creation date in descending order.
 	@Override
 	public List<NewsItem> getLastFiveNewsItems() {
         return newsItemRepository.findAllByOrderByCreatedAtDesc().stream().limit(5).toList();
     }
 
+	// Delete a news item by its ID.
     @Override
     public String deleteNewsItem(Long newsItemID) {
         Optional<NewsItem> newsItemOptional = newsItemRepository.findById(newsItemID);
@@ -47,7 +52,7 @@ public class NewsItemServiceImpl implements NewsItemService {
 		if(newsItemOptional.isPresent()) {
 			newsItem = newsItemOptional.get();
 		}
-		// Borrar los comentarios asociados a la noticia
+		// Delete the comments related to the newsItem
         commentRepository.deleteByNewsItem_NewsItemID(newsItemID);
 		newsItemRepository.delete(newsItem);
 		return "DELETED";
@@ -86,12 +91,9 @@ public class NewsItemServiceImpl implements NewsItemService {
         return commentRepository.save(comment);
     }
 
+	//Finds all the newsItems by the keyword
 	@Override
 	public List<NewsItem> searchNewsItems(String keyword) {
         return newsItemRepository.findByTitleContainingIgnoreCaseOrBodyContainingIgnoreCase(keyword, keyword);
     }
-
-
-	
-
 }

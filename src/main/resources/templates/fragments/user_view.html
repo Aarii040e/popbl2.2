@@ -59,12 +59,12 @@
 					<i class="fa-regular fa-circle-check me-1" th:classappend="${task.taskDefaultID.category.name}"></i>
 					<p th:text="#{${task.taskDefaultID.category.name}}">Category</p>
 				</div>
-				<i class="d-block py-2" th:text="${task.location.direction}">Task Location</i>
+				<i class="d-block py-2" th:text="${task.locationID}">Task Location</i>
 			</div>
 
         </div>
 
-        <a th:href="${user.role} == 'C' ? @{/client-view/history} : @{/volunteer-view/history}" class="btnLink button p-2 text-decoration-none rounded" th:text="#{details}" th:if="${guest.name != 'admin'}">See more details</a>
+        <a th:href="${user.role} == 'C' ? @{/client-view/history} : @{/volunteer-view/history}" class="btnLink button p-2 text-decoration-none rounded" th:text="#{details}" th:unless="${guest.role == 'A'}">See more details</a>
     </div>
     <script src="/js/header_logout.js"></script>
 	<script src="/js/cut_content.js"></script>

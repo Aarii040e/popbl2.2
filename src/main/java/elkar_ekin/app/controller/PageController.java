@@ -16,10 +16,22 @@ public class PageController {
 
 	@Autowired
 	NewsItemService newsItemService;
+
+	@Autowired
+	private UserRepository repository;
+
+		@ModelAttribute
+	public void commonUser (Model model, Principal principal) {
+		if (principal != null) {
+			String username=principal.getName();
+			user = repository.findByUsername(username);
+			model.addAttribute("user", user);
+		}
+	}
 		
 	@GetMapping({"/", "/index", "/index.html"})
 	public String getIndexPage(Model model) {
-		List<NewsItem> allNewsItems = newsItemService.getLastFiveNewsItems();
+		List<NewsItem> allNewsItems = newsItemService.getLastFiveNewsItems();	// Get the last five news items
 		if (allNewsItems == null) {
 			model.addAttribute("message", "No hay noticias disponibles.");
 		} else {
@@ -49,4 +61,25 @@ public class PageController {
 		return "tos";
 	}
 
+	@GetMapping({"/error"})
+	public String getErrorPage(HttpServletRequest request, Model model) {	// In case of error get the error page
+        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+		model.addAttribute("currentPage", "error");	
+		if (status != null) {	
+            int statusCode = Integer.parseInt(status.toString());	
+            model.addAttribute("statusCode", statusCode);		
+		}
+		if(user != null) {
+			if(user.getRole().equals("C")){
+				return "client/error";
+			}
+			else if(user.getRole().equals("V")){
+				return "volunteer/error";
+			}
+			else if(user.getRole().equals("A")){
+				return "admin/error";
+			}
+		}
+		return "admin/error";
+	}
 }
