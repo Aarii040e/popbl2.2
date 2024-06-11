@@ -207,7 +207,10 @@ public class ClientController extends BaseController {
         User volunteer = userRepository.findByUsername(volunteerName);
         if (volunteer != null) {
 			taskDto.setVolunteer(volunteer);
-		}
+            taskDto.setState("closed");
+		}else{
+            taskDto.setState("active");
+        }
         taskDto.setClient(user);
         taskDto.setTaskDefaultID(defaultTask);
     }
